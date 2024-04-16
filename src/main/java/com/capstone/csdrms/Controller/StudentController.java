@@ -50,5 +50,10 @@ public class StudentController {
 		public String deleteStudent(@PathVariable String sid) {
 			return sserv.deleteStudent(sid);
 		}
+		
+		 @GetMapping("/getStudent/{sid}")
+		public StudentEntity getStudentById(@PathVariable String sid) {
+			return sserv.getStudentById(sid);
+		}
 	
 }

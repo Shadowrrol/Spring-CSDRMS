@@ -54,6 +54,11 @@ public class StudentService {
 		}
 	}
 	
+	public StudentEntity getStudentById(String sid) {
+		StudentEntity student = srepo.findBySid(sid);
+		return student;
+	}
+	
 	
 	public String deleteStudent(String sid) {
 		StudentEntity existingStudent = srepo.findBySid(sid);
