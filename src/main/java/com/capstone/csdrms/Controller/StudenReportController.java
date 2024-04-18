@@ -23,7 +23,7 @@ import com.capstone.csdrms.Service.StudentReportService;
 @RequestMapping("/student-report")
 public class StudenReportController {
 
-	@Autowired
+	 @Autowired
 	StudentReportService sserv;
 	
 	@PostMapping("/insertReport")
