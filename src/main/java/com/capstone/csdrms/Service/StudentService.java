@@ -32,13 +32,11 @@ public class StudentService {
 		return srepo.findAll();
 	}
 	
-	
 	@SuppressWarnings("finally")
 	public StudentEntity updateStudent(String sid, StudentEntity newStudentDetails) {
 		StudentEntity student = new StudentEntity();
 	    try {
 	    	student = srepo.findBySid(sid);
-
 	    	student.setFirstname(newStudentDetails.getFirstname());
 	    	student.setMiddlename(newStudentDetails.getMiddlename());
 	    	student.setLastname(newStudentDetails.getLastname());
