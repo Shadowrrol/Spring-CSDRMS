@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.capstone.csdrms.Entity.PrincipalEntity;
@@ -20,13 +21,16 @@ public class PrincipalService {
 
 	//add new principal
 	public PrincipalEntity insertPrincipal(PrincipalEntity principal) {
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		String encryptedPassword = bcrypt.encode(principal.getPassword());
+		principal.setPassword(encryptedPassword);
 		return arepo.save(principal);
 	}
 	
 	//get a principal by ID
-	public PrincipalEntity getPrincipalById(int aid){
+	public PrincipalEntity getPrincipalById(int pid){
 		PrincipalEntity principal = new PrincipalEntity();
-		principal = arepo.findById(aid).get();
+		principal = arepo.findById(pid).get();
 		return principal;
 	}
 
@@ -65,4 +69,17 @@ public class PrincipalService {
 		}else
 			return "Principal " + principalid + " does not exist!";
 	}
+	
+	public PrincipalEntity login(String username, String password) {
+        // Retrieve user by username
+        PrincipalEntity user = arepo.findByUsername(username);
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		
+        // Check if user exists and if password matches
+        if (user != null && bcrypt.matches(user.getPassword(), password)) {
+            return user; // Login successful
+        } else {
+            return null; // Login failed
+        }
+    }
 }

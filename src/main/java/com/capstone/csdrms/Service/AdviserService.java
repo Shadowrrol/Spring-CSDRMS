@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.capstone.csdrms.Entity.AdviserEntity;
@@ -66,4 +67,17 @@ public class AdviserService {
 		}else
 			return "Adviser " + adviserid + " does not exist!";
 	}
+
+	public AdviserEntity login(String username, String password) {
+        // Retrieve user by username
+        AdviserEntity user = arepo.findByUsername(username);
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		
+        // Check if user exists and if password matches
+        if (user != null && bcrypt.matches(user.getPassword(), password)) {
+            return user; // Login successful
+        } else {
+            return null; // Login failed
+        }
+    }
 }

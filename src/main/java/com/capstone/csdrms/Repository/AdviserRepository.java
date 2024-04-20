@@ -7,4 +7,5 @@ import com.capstone.csdrms.Entity.AdviserEntity;
 
 @Repository
 public interface AdviserRepository extends JpaRepository<AdviserEntity, Integer> {
+    AdviserEntity findByUsername(String username);
 }

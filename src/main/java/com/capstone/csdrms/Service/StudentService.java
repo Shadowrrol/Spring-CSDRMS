@@ -18,8 +18,7 @@ public class StudentService {
 	@Autowired
 	StudentRepository srepo;
 	
-	
-	/*
+	/*old
 	public StudentEntity insertStudent(StudentEntity student) {
 		StudentEntity existingStudent = srepo.findBySid(student.getSchoolId());
 	    if (existingStudent != null) {
@@ -27,12 +26,21 @@ public class StudentService {
 	    }
 	    return srepo.save(student);
 	}
-
-	*/public StudentEntity insertStudent(StudentEntity student) {
-	    return srepo.save(student);
+	*/
+	public StudentEntity insertStudent(StudentEntity newStudent) {
+        // Retrieve all entities from the database
+        List<StudentEntity> students = srepo.findAll();
+		String schoolID;
+        // Iterate through each entity and access its attributes
+        for (StudentEntity a : students) {
+			schoolID = a.getSchoolId();
+			if (schoolID == newStudent.getSchoolId()) {
+				throw new IllegalArgumentException("Student with school id " + newStudent.getSchoolId() + " already exists");
+			}
+			
+        }
+		return srepo.save(newStudent);
 	}
-
-	
 	public List<StudentEntity> getStudents(){
 		return srepo.findAll();
 	}
@@ -42,6 +50,7 @@ public class StudentService {
 		StudentEntity student = new StudentEntity();
 	    try {
 	    	student = srepo.findById(sid).get();
+			student.setSchoolId(newStudentDetails.getSchoolId());
 	    	student.setFirstname(newStudentDetails.getFirstname());
 	    	student.setMiddlename(newStudentDetails.getMiddlename());
 	    	student.setLastname(newStudentDetails.getLastname());
@@ -65,7 +74,10 @@ public class StudentService {
 	public StudentEntity getStudentBySchoolId(String sid) {
 		StudentEntity student = srepo.findBySid(sid);
 		return student;
-	}*/
+	}
+	gagamit ta og string id aron ma find nato pero mag error siya basta tagaan nako og auto generated int id ang studentEntity.
+	e keep unta ni nako ning searching gamit string pero dili mo coexist.
+	*/
 		
 	/*public String deleteStudent(String sid) {
 		StudentEntity existingStudent = srepo.findBySid(sid);

@@ -43,20 +43,20 @@ public class PrincipalController {
 	
 	//U - Update an adviser record
 	@PutMapping("/updatePrincipal")
-	public PrincipalEntity updatePrincipal(@RequestParam int aid,@RequestBody PrincipalEntity newPrincipalDetails){
-		return pserv.updatePrincipal(aid, newPrincipalDetails);
+	public PrincipalEntity updatePrincipal(@RequestParam int pid,@RequestBody PrincipalEntity newPrincipalDetails){
+		return pserv.updatePrincipal(pid, newPrincipalDetails);
 	}
 	
 	//D - Delete an adviser record
 	@DeleteMapping("/deletePrincipal/{sid}")	
-	public String deletePrincipal(@PathVariable int aid) {
-		return pserv.deletePrincipal(aid);
+	public String deletePrincipal(@PathVariable int pid) {
+		return pserv.deletePrincipal(pid);
 	}
 
 	// Get adviser by id
 	 @GetMapping("/getPrincipal/{sid}")
-	public PrincipalEntity getPrincipalById(@PathVariable int aid) {
-		return pserv.getPrincipalById(aid);
+	public PrincipalEntity getPrincipalById(@PathVariable int pid) {
+		return pserv.getPrincipalById(pid);
 	}
 	
 }
