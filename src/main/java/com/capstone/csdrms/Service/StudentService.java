@@ -19,11 +19,16 @@ public class StudentService {
 	StudentRepository srepo;
 	
 	
+	/*
 	public StudentEntity insertStudent(StudentEntity student) {
-		StudentEntity existingStudent = srepo.findBySid(student.getSid());
+		StudentEntity existingStudent = srepo.findBySid(student.getSchoolId());
 	    if (existingStudent != null) {
-	        throw new IllegalArgumentException("Student with id " + student.getSid() + " already exists");
+	        throw new IllegalArgumentException("Student with id " + student.getSchoolId() + " already exists");
 	    }
+	    return srepo.save(student);
+	}
+
+	*/public StudentEntity insertStudent(StudentEntity student) {
 	    return srepo.save(student);
 	}
 
@@ -33,10 +38,10 @@ public class StudentService {
 	}
 	
 	@SuppressWarnings("finally")
-	public StudentEntity updateStudent(String sid, StudentEntity newStudentDetails) {
+	public StudentEntity updateStudent(int sid, StudentEntity newStudentDetails) {
 		StudentEntity student = new StudentEntity();
 	    try {
-	    	student = srepo.findBySid(sid);
+	    	student = srepo.findById(sid).get();
 	    	student.setFirstname(newStudentDetails.getFirstname());
 	    	student.setMiddlename(newStudentDetails.getMiddlename());
 	    	student.setLastname(newStudentDetails.getLastname());
@@ -52,21 +57,28 @@ public class StudentService {
 		}
 	}
 	
-	public StudentEntity getStudentById(String sid) {
-		StudentEntity student = srepo.findBySid(sid);
+	public StudentEntity getStudentById(int sid) {
+		StudentEntity student = srepo.findById(sid).get();
 		return student;
 	}
-	
-	
-	public String deleteStudent(String sid) {
+	/*gamit string id mo error ambot mano
+	public StudentEntity getStudentBySchoolId(String sid) {
+		StudentEntity student = srepo.findBySid(sid);
+		return student;
+	}*/
+		
+	/*public String deleteStudent(String sid) {
 		StudentEntity existingStudent = srepo.findBySid(sid);
-	    if (existingStudent != null) {
+	*/ 
+
+	public String deleteStudent(int sid) {
+		StudentEntity existingStudent = srepo.findById(sid).get();
+		if (existingStudent != null) {
 	        srepo.delete(existingStudent);
 	        return "Student " + sid + " is successfully deleted!";
 	    } else {
 	        return "Student " + sid + " does not exist";
 	    }
-	}
-	
-	
+		
+	} 
 }

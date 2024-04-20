@@ -16,39 +16,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capstone.csdrms.Entity.UserEntity;
+import com.capstone.csdrms.Entity.SSOEntity;
 import com.capstone.csdrms.Methods.LoginRequest;
-import com.capstone.csdrms.Service.UserService;
+import com.capstone.csdrms.Service.SSOService;
 
-
-//control test
+//Mao ni ang UserController sauna
+//wala ra nako gichange kining mapping nila kay mag ilis nasad mo sa postman
+//basin mabungkag frontend pod
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
-public class UserController {
+public class SSOController {
 
 	@Autowired
-	UserService userv;
-	
-	
-	
+	SSOService userv;
 	
 	//C - Create a user record
 	@PostMapping("/insertUser")
-	public UserEntity insertUser(@RequestBody UserEntity user) {
+	public SSOEntity insertUser(@RequestBody SSOEntity user) {
 		return userv.insertUser(user);
 	}
 	
-	//R - Read all user records in tblUser
+	//R - Read all user records in SSOUser
 	@GetMapping("/getAllUsers")
-	public List<UserEntity> getUsers(){
+	public List<SSOEntity> getUsers(){
 		return userv.getUsers();
 	}
 	
 	//U - Update a user record
 	@PutMapping("/updateUser")
-	public UserEntity updateUser(@RequestParam int uid,@RequestBody UserEntity newUserDetails){
+	public SSOEntity updateUser(@RequestParam int uid,@RequestBody SSOEntity newUserDetails){
 		return userv.updateUser(uid, newUserDetails);
 	}
 	
@@ -64,7 +62,7 @@ public class UserController {
 	        String password = loginRequest.getPassword();
 
 	        // Call the login method in UserService
-	        UserEntity user = userv.login(username, password);
+	        SSOEntity user = userv.login(username, password);
 
 	        if (user != null) {
 	            // Return user details if login is successful

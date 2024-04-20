@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.csdrms.Methods.LoginRequest;
 import com.capstone.csdrms.Service.AdviserService;
-import com.capstone.csdrms.Service.UserService;
+import com.capstone.csdrms.Service.SSOService;
 import com.capstone.csdrms.Entity.AdviserEntity;
-import com.capstone.csdrms.Entity.UserEntity;
+import com.capstone.csdrms.Entity.SSOEntity;
 
 
 @RestController
@@ -32,33 +32,33 @@ public class AdviserController {
 	AdviserService aserv;
 	
 	//C - Create an adviser record
-		@PostMapping("/insertAdviser")
-		public AdviserEntity insertAdviser(@RequestBody AdviserEntity adviser) {
-			return aserv.insertAdviser(adviser);
-		}
-		
-		//R - Read all advieser records in tblAdviser
-		@GetMapping("/getAllAdvisers")
-		public List<AdviserEntity> getAdvisers(){
-			return aserv.getAllAdviser();
-		}
-		
-		//U - Update an adviser record
-		@PutMapping("/updateAdviser")
-		public AdviserEntity updateAdviser(@RequestParam String sid,@RequestBody AdviserEntity newAdviserDetails){
-			return aserv.updateAdviser(sid, newAdviserDetails);
-		}
-		
-		//D - Delete an adviser record
-		@DeleteMapping("/deleteAdviser/{sid}")	
-		public String deleteAdviser(@PathVariable String sid) {
-			return aserv.deleteAdviser(sid);
-		}
+	@PostMapping("/insertAdviser")
+	public AdviserEntity insertAdviser(@RequestBody AdviserEntity adviser) {
+		return aserv.insertAdviser(adviser);
+	}
+	
+	//R - Read all advieser records in tblAdviser
+	@GetMapping("/getAllAdvisers")
+	public List<AdviserEntity> getAdvisers(){
+		return aserv.getAllAdviser();
+	}
+	
+	//U - Update an adviser record
+	@PutMapping("/updateAdviser")
+	public AdviserEntity updateAdviser(@RequestParam int aid,@RequestBody AdviserEntity newAdviserDetails){
+		return aserv.updateAdviser(aid, newAdviserDetails);
+	}
+	
+	//D - Delete an adviser record
+	@DeleteMapping("/deleteAdviser/{sid}")	
+	public String deleteAdviser(@PathVariable int aid) {
+		return aserv.deleteAdviser(aid);
+	}
 
-		// Get adviser by id
-		 @GetMapping("/getAdviser/{sid}")
-		public AdviserEntity getAdviserById(@PathVariable int sid) {
-			return aserv.getAdviserById(sid);
-		}
+	// Get adviser by id
+	 @GetMapping("/getAdviser/{sid}")
+	public AdviserEntity getAdviserById(@PathVariable int aid) {
+		return aserv.getAdviserById(aid);
+	}
 	
 }

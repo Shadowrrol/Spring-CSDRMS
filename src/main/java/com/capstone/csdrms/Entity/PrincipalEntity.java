@@ -8,12 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tbladviser")
-public class AdviserEntity {
+@Table(name="tblprincipal")
+public class PrincipalEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int aid;
+	private int pid;
 
 	private String school_ID;
 	private String firstname;
@@ -21,33 +21,31 @@ public class AdviserEntity {
 	private String username;
 	private String password;
 	private String email;
-	private String section;
-	
+
 	@Column(name = "contact_number")
 	private String con_num;
 
-	public AdviserEntity() {
+	public PrincipalEntity() {
 		super();
 	}
 
-	public AdviserEntity(int aid, String school_ID, String firstname, String lastname, String username, String password, String email, String section,
-			String con_num) {
+	public PrincipalEntity(int pid, String school_ID, String firstname, String lastname, String username, String password, String email, String con_num) {
 		super();
-		this.aid = aid;
+		this.pid = pid;
 		this.school_ID = school_ID;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.email = email;
-		this.section = section;
+		this.con_num =	con_num;
 	}
 
 	public int getAid() {
-		return aid;
+		return pid;
 	}
 
-	public void setAid(int aid) {
-		this.aid = aid;
+	public void setAid(int pid) {
+		this.pid = pid;
 	}
 	public String getSchoolId() {
 		return school_ID;
@@ -96,14 +94,6 @@ public class AdviserEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
 	}
 
 	public String getCon_num() {

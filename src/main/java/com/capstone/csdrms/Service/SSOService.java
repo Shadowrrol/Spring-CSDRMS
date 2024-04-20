@@ -6,20 +6,20 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capstone.csdrms.Entity.UserEntity;
-import com.capstone.csdrms.Repository.UserRepository;
+import com.capstone.csdrms.Entity.SSOEntity;
+import com.capstone.csdrms.Repository.SSORepository;
 
 
-
+//Mao ni ang UserService sauna
 @Service
-public class UserService {
+public class SSOService {
 	
 	@Autowired
-	UserRepository urepo;
+	SSORepository urepo;
 	
 	
-	public UserEntity insertUser(UserEntity user) {
-	    UserEntity existingUser = urepo.findByUsername(user.getUsername());
+	public SSOEntity insertUser(SSOEntity user) {
+	    SSOEntity existingUser = urepo.findByUsername(user.getUsername());
 	    if (existingUser != null) {
 	        throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
 	    }
@@ -27,14 +27,14 @@ public class UserService {
 	}
 
 	
-	public List<UserEntity> getUsers(){
+	public List<SSOEntity> getUsers(){
 		return urepo.findAll();
 	}
 	
 	
-	public UserEntity updateUser(int uid, UserEntity newUserDetails) {
+	public SSOEntity updateUser(int uid, SSOEntity newUserDetails) {
 	    try {
-	        UserEntity user = urepo.findById(uid).orElseThrow(() -> new NoSuchElementException("User " + uid + " does not exist!"));
+	        SSOEntity user = urepo.findById(uid).orElseThrow(() -> new NoSuchElementException("User " + uid + " does not exist!"));
 
 	        // Update the user details
 	        user.setPassword(newUserDetails.getPassword());
@@ -60,9 +60,9 @@ public class UserService {
 	    }
 	}
 	
-	public UserEntity login(String username, String password) {
+	public SSOEntity login(String username, String password) {
         // Retrieve user by username
-        UserEntity user = urepo.findByUsername(username);
+        SSOEntity user = urepo.findByUsername(username);
         
         // Check if user exists and if password matches
         if (user != null && user.getPassword().equals(password)) {

@@ -12,9 +12,11 @@ import jakarta.persistence.Table;
 public class StudentEntity {
 	
 	@Id
-	@Column(name = "studentID")
-	private String sid;
+	@Column(name = "student_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int sid;
 	
+	private String school_ID;
 	private String firstname;
 	private String middlename;
 	private String lastname;
@@ -28,10 +30,11 @@ public class StudentEntity {
 		super();
 	}
 
-	public StudentEntity(String sid, String firstname, String middlename, String lastname, int grade, String section,
+	public StudentEntity(int sid, String school_ID, String firstname, String middlename, String lastname, int grade, String section,
 			String con_num) {
 		super();
 		this.sid = sid;
+		this.school_ID = school_ID;
 		this.firstname = firstname;
 		this.middlename = middlename;
 		this.lastname = lastname;
@@ -40,14 +43,22 @@ public class StudentEntity {
 		this.con_num = con_num;
 	}
 
-	public String getSid() {
+	public int getSid() {
 		return sid;
 	}
 
-	public void setSid(String sid) {
+	public void setSid(int sid) {
 		this.sid = sid;
 	}
 
+	public String getSchoolId() {
+		return this.school_ID;
+	}
+
+	public void setSchoolId(String school_ID) {
+		this.school_ID = school_ID;
+	}
+	
 	public String getFirstname() {
 		return firstname;
 	}

@@ -37,11 +37,11 @@ public class AdviserService {
 
 	//update an adviser
 	@SuppressWarnings("finally")
-	public AdviserEntity updateAdviser(String adviserid, AdviserEntity newAdviserDetails) {
+	public AdviserEntity updateAdviser(int adviserid, AdviserEntity newAdviserDetails) {
 		AdviserEntity adviser = new AdviserEntity();
 		try {
 			
-			adviser = arepo.findByAid(adviserid);	    	
+			adviser = arepo.findById(adviserid).get();	    	
 			adviser.setFirstname(newAdviserDetails.getFirstname());
 	    	adviser.setLastname(newAdviserDetails.getLastname());
 	    	adviser.setUsername(newAdviserDetails.getuserename());
@@ -58,8 +58,8 @@ public class AdviserService {
 	}
 	
 	//delete an adviser
-	public String deleteAdviser(String adviserid) {
-		AdviserEntity existingAdviser = arepo.findByAid(adviserid);
+	public String deleteAdviser(int adviserid) {
+		AdviserEntity existingAdviser = arepo.findById(adviserid).get();
 		if(existingAdviser!=null) {
 			arepo.delete(existingAdviser);
 			return "Adviser " + adviserid + " is successfully deleted!";

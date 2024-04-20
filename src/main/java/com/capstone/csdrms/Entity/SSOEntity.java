@@ -1,7 +1,5 @@
 package com.capstone.csdrms.Entity;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,14 +7,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
+//Mao ni ang UserEntity sauna
+//Wala ra nako tang tanga ang usertype kay basin mabungkag sa frontend haha
 @Entity
-@Table(name="tblUser")
-public class UserEntity {
+@Table(name="tblSSO")
+public class SSOEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
-	private int uid;
+	@Column(name = "sso_id")
+	private int sid;
 	 
 	private String username;
 	private String password;
@@ -26,14 +27,14 @@ public class UserEntity {
 	private String section;
 	private int userType;
 	 
-	public UserEntity() {
+	public SSOEntity() {
 		super();
 	}
 
-	public UserEntity(int uid, String username, String password, String firstname, String lastname, String email,
+	public SSOEntity(int sid, String username, String password, String firstname, String lastname, String email,
 			String section, int userType) {
 		super();
-		this.uid = uid;
+		this.sid = sid;
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
@@ -44,11 +45,11 @@ public class UserEntity {
 	}
 
 	public int getUid() {
-		return uid;
+		return sid;
 	}
 
-	public void setUid(int uid) {
-		this.uid = uid;
+	public void setUid(int sid) {
+		this.sid = sid;
 	}
 
 	public String getUsername() {
