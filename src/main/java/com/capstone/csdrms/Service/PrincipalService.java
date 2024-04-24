@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.capstone.csdrms.Entity.AdviserEntity;
 import com.capstone.csdrms.Entity.PrincipalEntity;
+import com.capstone.csdrms.Entity.SSOEntity;
+import com.capstone.csdrms.Repository.AdviserRepository;
 import com.capstone.csdrms.Repository.PrincipalRepository;
+import com.capstone.csdrms.Repository.SSORepository;
 
 
 
@@ -17,26 +21,38 @@ import com.capstone.csdrms.Repository.PrincipalRepository;
 public class PrincipalService {
 
 	@Autowired
-	PrincipalRepository arepo;
+	PrincipalRepository prepo;
+	
+	@Autowired
+	AdviserRepository arepo;
+	
+	@Autowired
+	SSORepository srepo;
 
 	//add new principal
 	public PrincipalEntity insertPrincipal(PrincipalEntity principal) {
+		SSOEntity existingUser = srepo.findByUsername(principal.getUsername());
+	    AdviserEntity existingUser1 = arepo.findByUsername(principal.getUsername());
+	    PrincipalEntity existingUser2 = prepo.findByUsername(principal.getUsername());
+	    if (existingUser != null || existingUser1 != null || existingUser2 != null ) {
+	        throw new IllegalArgumentException("User with username " + principal.getUsername() + " already exists");
+	    }
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		String encryptedPassword = bcrypt.encode(principal.getPassword());
 		principal.setPassword(encryptedPassword);
-		return arepo.save(principal);
+		return prepo.save(principal);
 	}
 	
 	//get a principal by ID
 	public PrincipalEntity getPrincipalById(int pid){
 		PrincipalEntity principal = new PrincipalEntity();
-		principal = arepo.findById(pid).get();
+		principal = prepo.findById(pid).get();
 		return principal;
 	}
 
 	//get all principal? murag wala rani gi kinihanglan?
 	public List<PrincipalEntity> getAllPrincipal(){
-		return arepo.findAll();
+		return prepo.findAll();
 	}
 
 	//update a principal
@@ -45,10 +61,9 @@ public class PrincipalService {
 		PrincipalEntity principal = new PrincipalEntity();
 		try {
 			
-			principal = arepo.findById(principalid).get();	    	
+			principal = prepo.findById(principalid).get();	    	
 			principal.setFirstname(newPrincipalDetails.getFirstname());
 	    	principal.setLastname(newPrincipalDetails.getLastname());
-	    	principal.setUsername(newPrincipalDetails.getuserename());
 	    	principal.setEmail(newPrincipalDetails.getEmail());
 	    	principal.setCon_num(newPrincipalDetails.getCon_num());
 	    	
@@ -56,15 +71,15 @@ public class PrincipalService {
 			throw new NoSuchElementException("Principal " + principalid + "does not exist!");
 			
 		}finally{
-			return arepo.save(principal);
+			return prepo.save(principal);
 		}
 	}
 	
 	//delete a principal
 	public String deletePrincipal(int principalid) {
-		PrincipalEntity existingPrincipal = arepo.findById(principalid).get();
+		PrincipalEntity existingPrincipal = prepo.findById(principalid).get();
 		if(existingPrincipal!=null) {
-			arepo.delete(existingPrincipal);
+			prepo.delete(existingPrincipal);
 			return "Principal " + principalid + " is successfully deleted!";
 		}else
 			return "Principal " + principalid + " does not exist!";
@@ -72,7 +87,7 @@ public class PrincipalService {
 	
 	public PrincipalEntity login(String username, String password) {
         // Retrieve user by username
-        PrincipalEntity user = arepo.findByUsername(username);
+        PrincipalEntity user = prepo.findByUsername(username);
         BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		
         // Check if user exists and if password matches

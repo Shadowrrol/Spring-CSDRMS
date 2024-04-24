@@ -9,7 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.capstone.csdrms.Entity.AdviserEntity;
+import com.capstone.csdrms.Entity.PrincipalEntity;
+import com.capstone.csdrms.Entity.SSOEntity;
 import com.capstone.csdrms.Repository.AdviserRepository;
+import com.capstone.csdrms.Repository.PrincipalRepository;
+import com.capstone.csdrms.Repository.SSORepository;
 
 
 
@@ -18,9 +22,24 @@ public class AdviserService {
 
 	@Autowired
 	AdviserRepository arepo;
+	
+	@Autowired
+	PrincipalRepository prepo;
+	
+	@Autowired
+	SSORepository srepo;
 
 	//add new adviser
 	public AdviserEntity insertAdviser(AdviserEntity adviser) {
+		 SSOEntity existingUser = srepo.findByUsername(adviser.getUsername());
+		    AdviserEntity existingUser1 = arepo.findByUsername(adviser.getUsername());
+		    PrincipalEntity existingUser2 = prepo.findByUsername(adviser.getUsername());
+		    if (existingUser != null || existingUser1 != null || existingUser2 != null ) {
+		        throw new IllegalArgumentException("User with username " + adviser.getUsername() + " already exists");
+		    }
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		String encryptedPassword = bcrypt.encode(adviser.getPassword());
+		adviser.setPassword(encryptedPassword);
 		return arepo.save(adviser);
 	}
 	
@@ -45,7 +64,6 @@ public class AdviserService {
 			adviser = arepo.findById(adviserid).get();	    	
 			adviser.setFirstname(newAdviserDetails.getFirstname());
 	    	adviser.setLastname(newAdviserDetails.getLastname());
-	    	adviser.setUsername(newAdviserDetails.getuserename());
 	    	adviser.setEmail(newAdviserDetails.getEmail());
 	    	adviser.setSection(newAdviserDetails.getSection());
 	    	adviser.setCon_num(newAdviserDetails.getCon_num());
@@ -68,16 +86,4 @@ public class AdviserService {
 			return "Adviser " + adviserid + " does not exist!";
 	}
 
-	public AdviserEntity login(String username, String password) {
-        // Retrieve user by username
-        AdviserEntity user = arepo.findByUsername(username);
-        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		
-        // Check if user exists and if password matches
-        if (user != null && bcrypt.matches(user.getPassword(), password)) {
-            return user; // Login successful
-        } else {
-            return null; // Login failed
-        }
-    }
 }
