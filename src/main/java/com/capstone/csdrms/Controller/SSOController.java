@@ -26,51 +26,35 @@ import com.capstone.csdrms.Service.SSOService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/user")
+@RequestMapping("/sso")
 public class SSOController {
 
 	@Autowired
 	SSOService userv;
 	
 	//C - Create a user record
-	@PostMapping("/insertUser")
+	@PostMapping("/insertSSO")
 	public SSOEntity insertUser(@RequestBody SSOEntity user) {
 		return userv.insertUser(user);
 	}
 	
 	//R - Read all user records in SSOUser
-	@GetMapping("/getAllUsers")
+	@GetMapping("/getAllSSO")
 	public List<SSOEntity> getUsers(){
 		return userv.getUsers();
 	}
 	
 	//U - Update a user record
-	@PutMapping("/updateUser")
-	public SSOEntity updateUser(@RequestParam int uid,@RequestBody SSOEntity newUserDetails){
-		return userv.updateUser(uid, newUserDetails);
+	@PutMapping("/updateSSO") 
+	public SSOEntity updateUser(@RequestParam int sid,@RequestBody SSOEntity newUserDetails){
+		return userv.updateUser(sid, newUserDetails);
 	}
 	
 	//D - Delete a user record
-	@DeleteMapping("/deleteUser/{uid}")
-	public String deleteUser(@PathVariable int uid) {
-		return userv.deleteUser(uid);
+	@DeleteMapping("/deleteSSO/{uid}")
+	public String deleteUser(@PathVariable int sid) {
+		return userv.deleteUser(sid);
 	}
 	
-	 @PostMapping("/login")
-	    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
-	        String username = loginRequest.getUsername();
-	        String password = loginRequest.getPassword();
-
-	        // Call the login method in UserService
-	        SSOEntity user = userv.login(username, password);
-
-	        if (user != null) {
-	            // Return user details if login is successful
-	            return new ResponseEntity<>(user, HttpStatus.OK);
-	        } else {
-	            // Return error message if login fails
-	            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
-	        }
-	    }
 	
 }
