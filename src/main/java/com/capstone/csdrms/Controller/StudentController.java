@@ -53,5 +53,9 @@ public class StudentController {
 			public StudentEntity getStudentById(@PathVariable String sid) {
 				return sserv.getStudentById(sid);
 			}
+		 @GetMapping("/getStudentsBySection/{section}")
+		    public List<StudentEntity> getStudentsBySection(@PathVariable String section) {
+		        return sserv.getStudentsBySection(section);
+		    }
 	
 }

@@ -32,7 +32,10 @@ public class StudentService {
 		return srepo.findAll();
 	}
 	
-	
+	public List<StudentEntity> getStudentsBySection(String section) {
+        return srepo.findAllBySection(section);
+    }
+
 	@SuppressWarnings("finally")
 	public StudentEntity updateStudent(String sid, StudentEntity newStudentDetails) {
 		StudentEntity student = new StudentEntity();
