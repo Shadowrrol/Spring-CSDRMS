@@ -25,6 +25,17 @@ public class StudentReportService {
 		return srepo.findAll();
 	}
 	
+	public List<StudentReportEntity> getAllStudentReportsByYear(String year) {
+        if (year == null || year.isEmpty()) {
+            return srepo.findAll(); // Return all reports if year is not specified
+        } else {
+            // Assuming the date format is "yyyy-MM-dd"
+            String startDate = year + "-01-01";
+            String endDate = year + "-12-31";
+            return srepo.findAllByDateBetween(startDate, endDate);
+        }
+    }
+	
 	public List<StudentReportEntity> getStudentReportsById(String sid) {
 		return srepo.findAllBySid(sid);
 	}

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,7 @@ public class StudenReportController {
 		return sserv.getStudentReportsById(sid);
 	}
 	
+	@PutMapping("/updateStudentReport")
 	public StudentReportEntity updateStudentReport(@RequestParam int rid,@RequestBody StudentReportEntity newStudentReportDetails) {
 		return sserv.updateStudentReport(rid, newStudentReportDetails);
 	}
@@ -49,5 +51,10 @@ public class StudenReportController {
 	public String deleteStudentReport(@PathVariable int rid) {
 		return sserv.deleteStudent(rid);
 	}
+	
+	@GetMapping("/getAllStudentReportsByYear")
+    public List<StudentReportEntity> getAllStudentReportsByYear(@RequestParam(required = false) String year) {
+        return sserv.getAllStudentReportsByYear(year);
+    }
 	
 }

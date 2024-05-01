@@ -16,4 +16,6 @@ public interface StudentReportRepository extends JpaRepository<StudentReportEnti
 	StudentReportEntity findBySid(String sid);
 	
 	List<StudentReportEntity> findAllBySid(String sid);
+
+	List<StudentReportEntity> findAllByDateBetween(String startDate, String endDate);
 }
