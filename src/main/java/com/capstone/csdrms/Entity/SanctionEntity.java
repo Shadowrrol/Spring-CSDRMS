@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,7 +23,13 @@ public class SanctionEntity {
 	private String behaviorDetails;
 	private String sanctionRecommendation;
 	private int isApproved;
+	 
+	@ManyToOne
+	@JoinColumn(name = "studentID", referencedColumnName = "studentID", insertable = false, updatable = false)
+	private StudentEntity student;
 	
+	 
+
 	public SanctionEntity() {
 		super();
 	} 
@@ -73,6 +81,14 @@ public class SanctionEntity {
 
 	public void setIsApproved(int isApproved) {
 		this.isApproved = isApproved;
+	}
+	
+	public StudentEntity getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentEntity student) {
+		this.student = student;
 	}
 	
 	

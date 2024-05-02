@@ -24,15 +24,13 @@ public class SSOEntity {
 	private String firstname;
 	private String lastname;
 	private String email;
-	private String section;
 	private int userType;
 	 
 	public SSOEntity() {
 		super();
 	}
 
-	public SSOEntity(int sid, String username, String password, String firstname, String lastname, String email,
-			String section, int userType) {
+	public SSOEntity(int sid, String username, String password, String firstname, String lastname, String email, int userType) {
 		super();
 		this.sid = sid;
 		this.username = username;
@@ -40,10 +38,9 @@ public class SSOEntity {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
-		this.section = section;
 		this.userType = userType;
 	}
-
+ 
 	public int getUid() {
 		return sid;
 	}
@@ -90,14 +87,6 @@ public class SSOEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
 	}
 
 	public int getUserType() {

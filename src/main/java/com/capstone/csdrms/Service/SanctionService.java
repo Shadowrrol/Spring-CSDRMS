@@ -20,9 +20,9 @@ public class SanctionService {
 	public SanctionEntity insertSanction(SanctionEntity sanction) {
 		return srepo.save(sanction);
 	}
-	
+	 
 	public List<SanctionEntity> getSanctions(){
-		return srepo.findByIsApproved(0);
+		return srepo.findAllSanctionAndIsApprovedWithStudent(0);
 	}
 	
 	 @Transactional

@@ -15,7 +15,6 @@ public class AdviserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int aid;
 
-	private String school_ID;
 	private String firstname;
 	private String lastname;
 	private String username;
@@ -31,11 +30,10 @@ public class AdviserEntity {
 		super();
 	}
 
-	public AdviserEntity(int aid, String school_ID, String firstname, String lastname, String username, String password,
+	public AdviserEntity(int aid, String firstname, String lastname, String username, String password,
 			String email, String section, int userType, String con_num) {
 		super();
 		this.aid = aid;
-		this.school_ID = school_ID;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
@@ -52,14 +50,6 @@ public class AdviserEntity {
 
 	public void setAid(int aid) {
 		this.aid = aid;
-	}
-
-	public String getSchool_ID() {
-		return school_ID;
-	}
-
-	public void setSchool_ID(String school_ID) {
-		this.school_ID = school_ID;
 	}
 
 	public String getFirstname() {

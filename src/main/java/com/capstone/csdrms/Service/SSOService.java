@@ -59,7 +59,6 @@ public class SSOService {
 	        user.setFirstname(newUserDetails.getFirstname());
 	        user.setLastname(newUserDetails.getLastname());
 	        user.setEmail(newUserDetails.getEmail());
-	        user.setSection(newUserDetails.getSection());
 
 	        // Save the updated user
 	        return urepo.save(user);
