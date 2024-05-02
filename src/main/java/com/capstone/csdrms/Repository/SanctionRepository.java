@@ -13,6 +13,8 @@ public interface SanctionRepository extends JpaRepository<SanctionEntity, Intege
 
     List<SanctionEntity> findByIsApproved(int isApproved);
 
-    @Query("SELECT s FROM SanctionEntity s JOIN FETCH s.student")
-    List<SanctionEntity> findAllSanctionAndIsApprovedWithStudent(int isApproved);
+    @Query("SELECT s FROM SanctionEntity s JOIN FETCH s.student WHERE s.isApproved = 0")
+    List<SanctionEntity> findAllPendingSanctions();
+
+    List<SanctionEntity> findByIsApprovedIn(List<Integer> isApprovedValues);
 }

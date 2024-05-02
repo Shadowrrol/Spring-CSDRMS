@@ -21,9 +21,9 @@ public class SanctionService {
 		return srepo.save(sanction);
 	}
 	 
-	public List<SanctionEntity> getSanctions(){
-		return srepo.findAllSanctionAndIsApprovedWithStudent(0);
-	}
+	public List<SanctionEntity> getPendingSanctions(){
+        return srepo.findAllPendingSanctions();
+    }
 	
 	 @Transactional
 	    public boolean approveSanction(int sanctionId) {
@@ -47,5 +47,9 @@ public class SanctionService {
 	            return true;
 	        }
 	        return false;
+	    }
+	 
+	 public List<SanctionEntity> getApprovedAndDeclinedSanctions() {
+		 return srepo.findByIsApprovedIn(List.of(1, 2));
 	    }
 }

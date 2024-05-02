@@ -28,10 +28,10 @@ public class SanctionController {
 		return sserv.insertSanction(sanction);
 	}
 	
-	@GetMapping("/getAllSanctions")
-	public List<SanctionEntity> getSanctions(){
-		return sserv.getSanctions();
-	}
+	@GetMapping("/getAllPendingSanctions")
+	public List<SanctionEntity> getPendingSanctions(){
+        return sserv.getPendingSanctions();
+    }
 	
 	@PostMapping("/approveSanction")
 	public boolean approveSanction(@RequestParam int sanctionId) {
@@ -41,5 +41,10 @@ public class SanctionController {
 	@PostMapping("/declineSanction")
 	public boolean declineSanction(@RequestParam int sanctionId) {
 		return sserv.declineSanction(sanctionId);
-	} 
+	}
+	
+	@GetMapping("/getApprovedAndDeclinedSanctions")
+	public List<SanctionEntity> getApprovedAndDeclinedSanctions() {
+	    return sserv.getApprovedAndDeclinedSanctions();
+	}
 }
