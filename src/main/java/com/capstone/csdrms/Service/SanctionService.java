@@ -25,6 +25,10 @@ public class SanctionService {
         return srepo.findAllPendingSanctions();
     }
 	
+	public List<SanctionEntity> getAllSanctionsBySid(String sid){
+        return srepo.findBySid(sid);
+    }
+	
 	 @Transactional
 	    public boolean approveSanction(int sanctionId) {
 	        Optional<SanctionEntity> optionalSanction = srepo.findById(sanctionId);

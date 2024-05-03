@@ -17,4 +17,6 @@ public interface SanctionRepository extends JpaRepository<SanctionEntity, Intege
     List<SanctionEntity> findAllPendingSanctions();
 
     List<SanctionEntity> findByIsApprovedIn(List<Integer> isApprovedValues);
+    
+    List<SanctionEntity> findBySid(String sid);
 }
