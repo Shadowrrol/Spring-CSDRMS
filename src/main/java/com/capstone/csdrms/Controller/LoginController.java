@@ -10,15 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.capstone.csdrms.Methods.LoginRequest;
 import com.capstone.csdrms.Service.LoginService;
-import com.capstone.csdrms.Service.SSOService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class LoginController {
 	
-	@Autowired
-	SSOService userv;
 	
 	@Autowired
 	LoginService sserv;

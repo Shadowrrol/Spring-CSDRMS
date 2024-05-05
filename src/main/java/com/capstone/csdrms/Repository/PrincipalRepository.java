@@ -7,6 +7,7 @@ import com.capstone.csdrms.Entity.PrincipalEntity;
 
 
 @Repository
-public interface PrincipalRepository extends JpaRepository<PrincipalEntity, Integer> {
+public interface PrincipalRepository extends JpaRepository<PrincipalEntity, Long> {
     PrincipalEntity findByUsername(String username);
 }
+ 

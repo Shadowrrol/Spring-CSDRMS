@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.capstone.csdrms.Entity.AdviserEntity;
 
 @Repository
-public interface AdviserRepository extends JpaRepository<AdviserEntity, Integer> {
+public interface AdviserRepository extends JpaRepository<AdviserEntity, Long> {
     AdviserEntity findByUsername(String username);
 }

@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.capstone.csdrms.Entity.SSOEntity;
 
-//Mao ni ang UserRepository sauna
 @Repository
-public interface SSORepository extends JpaRepository<SSOEntity, Integer> {
+public interface SSORepository extends JpaRepository<SSOEntity, Long> {
 
 	SSOEntity findByUsername(String username);
 }
