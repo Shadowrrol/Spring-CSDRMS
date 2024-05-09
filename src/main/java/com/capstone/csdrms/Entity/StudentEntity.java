@@ -20,6 +20,7 @@ public class StudentEntity {
 	private String lastname;
 	private int grade;
 	private String section;
+	private String schoolYear;
 	
 	@Column(name = "contact_number")
 	private String con_num;
@@ -29,7 +30,7 @@ public class StudentEntity {
 	}
 
 	public StudentEntity(String sid, String firstname, String middlename, String lastname, int grade, String section,
-			String con_num) {
+			String schoolYear,String con_num) {
 		super();
 		this.sid = sid;
 		this.firstname = firstname;
@@ -37,6 +38,7 @@ public class StudentEntity {
 		this.lastname = lastname;
 		this.grade = grade;
 		this.section = section;
+		this.schoolYear = schoolYear;
 		this.con_num = con_num;
 	}
 
@@ -86,6 +88,15 @@ public class StudentEntity {
 
 	public void setSection(String section) {
 		this.section = section;
+	}
+	
+
+	public String getSchoolYear() {
+		return schoolYear;
+	}
+
+	public void setSchoolYear(String schoolYear) {
+		this.schoolYear = schoolYear;
 	}
 
 	public String getCon_num() {

@@ -23,7 +23,7 @@ import com.capstone.csdrms.Service.StudentReportService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/student-report")
 public class StudenReportController {
-
+ 
 	 @Autowired
 	StudentReportService sserv;
 	
@@ -42,7 +42,7 @@ public class StudenReportController {
 		return sserv.getStudentReportsById(sid);
 	}
 	
-	@PutMapping("/updateStudentReport")
+	@PutMapping("/updateStudentReport") 
 	public StudentReportEntity updateStudentReport(@RequestParam int rid,@RequestBody StudentReportEntity newStudentReportDetails) {
 		return sserv.updateStudentReport(rid, newStudentReportDetails);
 	}
@@ -57,4 +57,34 @@ public class StudenReportController {
         return sserv.getAllStudentReportsByYear(year);
     }
 	
+	@GetMapping("/getStudentReportsBySectionAndSchoolYear")
+	public List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(@RequestParam String section,@RequestParam String schoolYear ) {
+	    return sserv.getAllStudentReportsBySectionAndSchoolYear(section, schoolYear);
+	}
+	
+	@GetMapping("/getStudentReportsBySchoolYear")
+	public List<StudentReportEntity> getStudentReportsBySchoolYear(@RequestParam String schoolYear) {
+		return sserv.getStudentReportsBySchoolYear(schoolYear);
+	}
+	
+	@GetMapping("/getStudentReportsByGrade")
+	public List<StudentReportEntity> getStudentReportsByGrade(@RequestParam int grade) {
+	    return sserv.getAllStudentReportsByGrade(grade);
+	}
+	
+	 @GetMapping("/getAllStudentReportsByYearAndGrade")
+	    public List<StudentReportEntity> getAllStudentReportsByYearAndGrade(@RequestParam(required = false) String year,@RequestParam(required = false) Integer  grade) {
+		 if (year != null && grade != null) {
+			 System.out.println("year " + year + " and grade " + grade);
+		        return sserv.getAllStudentReportsByYearAndGrade(year, grade);
+		    }
+		 else if(year == null && grade != null){
+			 System.out.print("it is right year == null && grade != null");
+		    	return sserv.getAllStudentReportsByGrade(grade);
+		    }
+		 else {
+			 System.out.print("it is right is is else");
+			 return sserv.getAllStudentReportsByYear(year);
+		 }
+	    }	
 }

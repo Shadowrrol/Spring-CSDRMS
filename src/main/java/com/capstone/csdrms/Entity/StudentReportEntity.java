@@ -18,8 +18,10 @@ public class StudentReportEntity {
 	 
 	     
 	private String sid;
+	private String section;
+	private String schoolYear;
+	private int grade;
 	private String date;
-	private String time;
 	private String name;
 	private String monitored_record;
 	private String remarks;
@@ -29,18 +31,20 @@ public class StudentReportEntity {
 		super();
 	}
 
-	public StudentReportEntity(int rid, String sid, String date, String time, String name, String monitored_record,
-			String remarks, String sanction) {
+	public StudentReportEntity(int rid, String sid, String section, String schoolYear, int grade, String date,
+			String name, String monitored_record, String remarks, String sanction) {
 		super();
 		this.rid = rid;
 		this.sid = sid;
+		this.section = section;
+		this.schoolYear = schoolYear;
+		this.grade = grade;
 		this.date = date;
-		this.time = time;
 		this.name = name;
 		this.monitored_record = monitored_record;
 		this.remarks = remarks;
 		this.sanction = sanction;
-	}
+	} 
 
 	public int getRid() {
 		return rid;
@@ -58,20 +62,36 @@ public class StudentReportEntity {
 		this.sid = sid;
 	}
 
+	public String getSection() {
+		return section;
+	}
+
+	public void setSection(String section) {
+		this.section = section;
+	}
+
+	public String getSchoolYear() {
+		return schoolYear;
+	}
+
+	public void setSchoolYear(String schoolYear) {
+		this.schoolYear = schoolYear;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
 	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
 	}
 
 	public String getName() {
@@ -105,8 +125,6 @@ public class StudentReportEntity {
 	public void setSanction(String sanction) {
 		this.sanction = sanction;
 	}
-	
-	
-	
+
 	
 }

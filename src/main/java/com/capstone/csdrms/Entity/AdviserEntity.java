@@ -11,15 +11,25 @@ import jakarta.persistence.Table;
 @Table(name="tbladviser")
 public class AdviserEntity extends User{
 
+	private String schoolYear;
 	private String section;
 
 	public AdviserEntity() {
 		super();
 	}
 
-	public AdviserEntity(String section) {
+	public AdviserEntity(String schoolYear, String section) {
 		super();
+		this.schoolYear = schoolYear;
 		this.section = section;
+	}
+
+	public String getSchoolYear() {
+		return schoolYear;
+	}
+
+	public void setSchoolYear(String schoolYear) {
+		this.schoolYear = schoolYear;
 	}
 
 	public String getSection() {
@@ -29,10 +39,6 @@ public class AdviserEntity extends User{
 	public void setSection(String section) {
 		this.section = section;
 	}
-	
-	
-	
-	
 	
 	
 }

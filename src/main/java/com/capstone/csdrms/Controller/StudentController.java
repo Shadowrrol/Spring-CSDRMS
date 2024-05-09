@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.capstone.csdrms.Entity.StudentEntity;
+import com.capstone.csdrms.Entity.StudentReportEntity;
 import com.capstone.csdrms.Service.StudentService;
 
 
@@ -53,9 +54,9 @@ public class StudentController {
 			public StudentEntity getStudentById(@PathVariable String sid) {
 				return sserv.getStudentById(sid);
 			}
-		 @GetMapping("/getStudentsBySection/{section}")
-		    public List<StudentEntity> getStudentsBySection(@PathVariable String section) {
-		        return sserv.getStudentsBySection(section);
-		    }
+		 @GetMapping("/getAllStudents/{schoolYear}/{section}")
+		 public List<StudentEntity> getStudentsBySectionAndSchoolYear(@PathVariable String section,@PathVariable String schoolYear) {
+				return sserv.getStudentsBySectionAndSchoolYear(section, schoolYear);
+			}
 	
 }

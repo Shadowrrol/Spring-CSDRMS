@@ -2,6 +2,7 @@ package com.capstone.csdrms.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import com.capstone.csdrms.Entity.StudentEntity;
 import com.capstone.csdrms.Entity.StudentReportEntity;
 import com.capstone.csdrms.Repository.StudentReportRepository;
 
-@Service
+@Service 
 public class StudentReportService {
 
 	@Autowired
@@ -36,6 +37,36 @@ public class StudentReportService {
         }
     }
 	
+	public  List<StudentReportEntity> getAllStudentReportsByGrade(int grade) {
+		return srepo.findAllByGrade(grade);
+	} 
+	
+	public List<StudentReportEntity> getAllStudentReportsByYearAndGrade(String year, int grade) {
+        // Assuming your StudentReport entity has fields like 'date' and 'grade'
+        List<StudentReportEntity> allReports = srepo.findAll();
+        return filterReportsByYearAndGrade(allReports, year, grade);
+    }
+    
+    private List<StudentReportEntity> filterReportsByYearAndGrade(List<StudentReportEntity> reports, String year, int grade) {
+        // Filter reports by year and grade
+        return reports.stream()
+                      .filter(report -> getYearFromDate(report.getDate()).equals(year) && report.getGrade() == grade)
+                      .collect(Collectors.toList());
+    }
+
+    private String getYearFromDate(String date) {
+        // Assuming the date string format is 'YYYY-MM-DD'
+        return date.split("-")[0];
+    }
+	
+	public 	List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(String section, String school_year){
+		return srepo.findAllBySectionAndSchoolYear(section, school_year);
+	}
+	
+	public List<StudentReportEntity> getStudentReportsBySchoolYear(String schoolYear) {
+		return srepo.findAllBySchoolYear(schoolYear);
+	}
+	
 	public List<StudentReportEntity> getStudentReportsById(String sid) {
 		return srepo.findAllBySid(sid);
 	}
@@ -49,7 +80,6 @@ public class StudentReportService {
 
 	    	student.setSid(newStudentReportDetails.getSid());
 	    	student.setDate(newStudentReportDetails.getDate());
-	    	student.setTime(newStudentReportDetails.getTime());
 	    	student.setMonitored_record(newStudentReportDetails.getMonitored_record());;
 	    	student.setRemarks(newStudentReportDetails.getRemarks());
 	    	student.setSanction(newStudentReportDetails.getSanction());

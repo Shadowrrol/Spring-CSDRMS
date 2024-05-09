@@ -32,8 +32,8 @@ public class StudentService {
 		return srepo.findAll();
 	}
 	
-	public List<StudentEntity> getStudentsBySection(String section) {
-        return srepo.findAllBySection(section);
+	public List<StudentEntity> getStudentsBySectionAndSchoolYear(String section, String schoolYear) {
+        return srepo.findAllBySectionAndSchoolYear(section, schoolYear);
     }
 
 	@SuppressWarnings("finally")
