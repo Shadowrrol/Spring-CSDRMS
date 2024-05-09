@@ -59,4 +59,9 @@ public class CaseController {
     public void deleteCase(@PathVariable int id) {
         caseService.deleteCase(id);
     }
+    
+    @GetMapping("/student/{sid}")
+    public List<CaseEntity> getAllCaseBySid(@PathVariable String sid){
+    	return caseService.getAllCaseBySid(sid);
+    }
 }

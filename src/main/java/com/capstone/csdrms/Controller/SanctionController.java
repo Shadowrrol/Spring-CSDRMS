@@ -54,4 +54,9 @@ public class SanctionController {
 	public List<SanctionEntity> getApprovedAndDeclinedSanctions() {
 	    return sserv.getApprovedAndDeclinedSanctions();
 	}
+	
+	@GetMapping("/getSanctionsBySectionAndSchoolYear")
+	public List<SanctionEntity> getSanctionsBySectionAndSchoolYear(@RequestParam String section,@RequestParam String schoolYear) {
+		return sserv.getSanctionsBySectionAndSchoolYear(section, schoolYear);
+	}
 }

@@ -33,4 +33,8 @@ public class CaseService {
     public void deleteCase(int id) {
         caseRepository.deleteById(id);
     }
+    
+    public List<CaseEntity> getAllCaseBySid(String sid){
+    	return caseRepository.findAllCasesBySid(sid);
+    }
 }

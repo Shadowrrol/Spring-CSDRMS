@@ -56,4 +56,8 @@ public class SanctionService {
 	 public List<SanctionEntity> getApprovedAndDeclinedSanctions() {
 		 return srepo.findByIsApprovedIn(List.of(1, 2));
 	    }
+	 
+	 public List<SanctionEntity> getSanctionsBySectionAndSchoolYear(String section, String schoolYear) {
+		    return srepo.findBySectionAndSchoolYear(section, schoolYear);
+		}
 }

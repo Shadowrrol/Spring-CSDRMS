@@ -19,4 +19,7 @@ public interface SanctionRepository extends JpaRepository<SanctionEntity, Intege
     List<SanctionEntity> findByIsApprovedIn(List<Integer> isApprovedValues);
     
     List<SanctionEntity> findBySid(String sid);
+    
+    @Query("SELECT s FROM SanctionEntity s INNER JOIN StudentEntity st ON s.sid = st.sid WHERE st.section = ?1 AND st.schoolYear = ?2")
+    List<SanctionEntity> findBySectionAndSchoolYear(String section, String schoolYear);
 }
