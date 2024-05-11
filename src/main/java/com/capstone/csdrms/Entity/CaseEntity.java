@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,19 +18,25 @@ public class CaseEntity {
 	@Column(name = "caseID")
 	private int cid;
 	
+	@Column(name = "studentID")
 	private String sid;
+	 
 	private String case_name;
 	private String investigator;
 	private String violation;
 	private String description;
 	private String status;
 	
+	@ManyToOne
+	@JoinColumn(name = "studentID", referencedColumnName = "studentID", insertable = false, updatable = false)
+	private StudentEntity student;
+	
 	public CaseEntity() {
 		super();
 	}
 
 	public CaseEntity(int cid, String sid, String case_name, String investigator, String violation, String description,
-			String status) {
+			String status, StudentEntity student) {
 		super();
 		this.cid = cid;
 		this.sid = sid;
@@ -37,6 +45,7 @@ public class CaseEntity {
 		this.violation = violation;
 		this.description = description;
 		this.status = status;
+		this.student = student;
 	}
 
 	public int getCid() {
@@ -94,6 +103,14 @@ public class CaseEntity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	public StudentEntity getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentEntity student) {
+		this.student = student;
+	}
+
 	
 }

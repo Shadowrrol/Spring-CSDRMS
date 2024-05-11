@@ -16,7 +16,7 @@ public class CaseService {
 
     // Get all cases
     public List<CaseEntity> getAllCases() {
-        return caseRepository.findAll();
+        return caseRepository.findAllCaseWithStudentDetails();
     }
 
     // Get case by ID

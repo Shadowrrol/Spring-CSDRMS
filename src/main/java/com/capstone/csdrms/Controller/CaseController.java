@@ -29,7 +29,7 @@ public class CaseController {
         return caseService.getCaseById(id);
     }
 
-    // Insert or update a case
+    // Insert or update a case 
     @PostMapping
     public CaseEntity saveCase(@RequestBody CaseEntity caseEntity) {
         return caseService.saveCase(caseEntity);
