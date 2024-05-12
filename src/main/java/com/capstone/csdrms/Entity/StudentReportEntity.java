@@ -5,46 +5,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="tblstudentReport")
 public class StudentReportEntity {
-
+ 
 	@Id
 	@Column(name = "reportID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rid;
 	 
-	     
+	@Column(name = "studentID")     
 	private String sid;
-	private String section;
-	private String schoolYear;
-	private int grade;
+	
 	private String date;
-	private String name;
 	private String monitored_record;
 	private String remarks;
-	private String sanction;
-	 
+	private String sanction; 
+	
+	@ManyToOne
+	@JoinColumn(name = "studentID", referencedColumnName = "studentID", insertable = false, updatable = false)
+	private StudentEntity student;
+	  
 	public StudentReportEntity() {
 		super();
 	}
 
-	public StudentReportEntity(int rid, String sid, String section, String schoolYear, int grade, String date,
-			String name, String monitored_record, String remarks, String sanction) {
+	public StudentReportEntity(int rid, String sid, String date, String monitored_record, String remarks,
+			String sanction, StudentEntity student) {
 		super();
 		this.rid = rid;
 		this.sid = sid;
-		this.section = section;
-		this.schoolYear = schoolYear;
-		this.grade = grade;
 		this.date = date;
-		this.name = name;
 		this.monitored_record = monitored_record;
 		this.remarks = remarks;
 		this.sanction = sanction;
-	} 
+		this.student = student;
+	}
 
 	public int getRid() {
 		return rid;
@@ -62,44 +62,12 @@ public class StudentReportEntity {
 		this.sid = sid;
 	}
 
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
-	}
-
-	public String getSchoolYear() {
-		return schoolYear;
-	}
-
-	public void setSchoolYear(String schoolYear) {
-		this.schoolYear = schoolYear;
-	}
-
-	public int getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
-
 	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getMonitored_record() {
@@ -125,6 +93,16 @@ public class StudentReportEntity {
 	public void setSanction(String sanction) {
 		this.sanction = sanction;
 	}
+
+	public StudentEntity getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentEntity student) {
+		this.student = student;
+	}
+
+	
 
 	
 }

@@ -3,6 +3,7 @@ package com.capstone.csdrms.Repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.capstone.csdrms.Entity.StudentReportEntity;
 
@@ -13,7 +14,7 @@ public interface StudentReportRepository extends JpaRepository<StudentReportEnti
 	
 	List<StudentReportEntity> findAllBySid(String sid);
 	
-	List<StudentReportEntity> findAllBySectionAndSchoolYear(String section, String schoolYear);
+	List<StudentReportEntity> findAllByStudent_SectionAndStudent_SchoolYear(String section, String schoolYear);
 	
 }
  

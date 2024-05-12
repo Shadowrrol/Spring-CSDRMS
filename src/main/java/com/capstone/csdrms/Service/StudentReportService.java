@@ -26,7 +26,7 @@ public class StudentReportService {
 	}
 	
 	public 	List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(String section, String school_year){
-		return srepo.findAllBySectionAndSchoolYear(section, school_year);
+		return srepo.findAllByStudent_SectionAndStudent_SchoolYear(section, school_year);
 	}
 	
 	public List<StudentReportEntity> getStudentReportsById(String sid) {
