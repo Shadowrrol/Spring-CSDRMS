@@ -26,25 +26,22 @@ public class StudentController {
 	@Autowired
 	StudentService sserv;
 	
-	//C - Create a user record
+	
 		@PostMapping("/insertStudent")
 		public StudentEntity insertStudent(@RequestBody StudentEntity student) {
 			return sserv.insertStudent(student);
 		}
 		
-		//R - Read all user records in tblUser
 		@GetMapping("/getAllStudents")
 		public List<StudentEntity> getStudents(){
 			return sserv.getStudents();
 		}
 		  
-		//U - Update a user record
 		@PutMapping("/updateStudent")
 		public StudentEntity updateStudent(@RequestParam String sid,@RequestBody StudentEntity newStudentDetails){
 			return sserv.updateStudent(sid, newStudentDetails);
 		}
 		
-		//D - Delete a user record
 		@DeleteMapping("/deleteStudent/{sid}")
 		public String deleteStudent(@PathVariable String sid) {
 			return sserv.deleteStudent(sid);
@@ -54,6 +51,7 @@ public class StudentController {
 			public StudentEntity getStudentById(@PathVariable String sid) {
 				return sserv.getStudentById(sid);
 			}
+		 
 		 @GetMapping("/getAllStudents/{schoolYear}/{section}")
 		 public List<StudentEntity> getStudentsBySectionAndSchoolYear(@PathVariable String section,@PathVariable String schoolYear) {
 				return sserv.getStudentsBySectionAndSchoolYear(section, schoolYear);

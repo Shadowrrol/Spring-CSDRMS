@@ -36,7 +36,7 @@ public class StudenReportController {
 	public List<StudentReportEntity> getAllStudentReports(){
 		return sserv.getAllStudentReports();
 	}
-	
+
 	@GetMapping("/getStudentReports/{sid}")
 	public List<StudentReportEntity> getStudentReportsById(@PathVariable String sid){
 		return sserv.getStudentReportsById(sid);
@@ -49,42 +49,12 @@ public class StudenReportController {
 	
 	@DeleteMapping("/deleteStudentReport/{rid}")
 	public String deleteStudentReport(@PathVariable int rid) {
-		return sserv.deleteStudent(rid);
+		return sserv.deleteStudentReport(rid);
 	}
-	
-	@GetMapping("/getAllStudentReportsByYear")
-    public List<StudentReportEntity> getAllStudentReportsByYear(@RequestParam(required = false) String year) {
-        return sserv.getAllStudentReportsByYear(year);
-    }
 	
 	@GetMapping("/getStudentReportsBySectionAndSchoolYear")
 	public List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(@RequestParam String section,@RequestParam String schoolYear ) {
 	    return sserv.getAllStudentReportsBySectionAndSchoolYear(section, schoolYear);
 	}
 	
-	@GetMapping("/getStudentReportsBySchoolYear")
-	public List<StudentReportEntity> getStudentReportsBySchoolYear(@RequestParam String schoolYear) {
-		return sserv.getStudentReportsBySchoolYear(schoolYear);
-	}
-	
-	@GetMapping("/getStudentReportsByGrade")
-	public List<StudentReportEntity> getStudentReportsByGrade(@RequestParam int grade) {
-	    return sserv.getAllStudentReportsByGrade(grade);
-	}
-	
-	 @GetMapping("/getAllStudentReportsByYearAndGrade")
-	    public List<StudentReportEntity> getAllStudentReportsByYearAndGrade(@RequestParam(required = false) String year,@RequestParam(required = false) Integer  grade) {
-		 if (year != null && grade != null) {
-			 System.out.println("year " + year + " and grade " + grade);
-		        return sserv.getAllStudentReportsByYearAndGrade(year, grade);
-		    }
-		 else if(year == null && grade != null){
-			 System.out.print("it is right year == null && grade != null");
-		    	return sserv.getAllStudentReportsByGrade(grade);
-		    }
-		 else {
-			 System.out.print("it is right is is else");
-			 return sserv.getAllStudentReportsByYear(year);
-		 }
-	    }	
 }
