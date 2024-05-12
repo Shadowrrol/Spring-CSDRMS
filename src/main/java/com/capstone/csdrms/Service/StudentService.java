@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.csdrms.Entity.StudentEntity;
+import com.capstone.csdrms.Entity.StudentReportEntity;
+import com.capstone.csdrms.Repository.StudentReportRepository;
 import com.capstone.csdrms.Repository.StudentRepository;
 
 
@@ -17,6 +19,9 @@ public class StudentService {
 
 	@Autowired
 	StudentRepository srepo;
+	
+	@Autowired
+	StudentReportRepository studentrepo;
 	
 	
 	public StudentEntity insertStudent(StudentEntity student) {
@@ -60,12 +65,18 @@ public class StudentService {
 	
 	public String deleteStudent(String sid) {
 		StudentEntity existingStudent = srepo.findBySid(sid);
-	    if (existingStudent != null) {
-	        srepo.delete(existingStudent);
-	        return "Student " + sid + " is successfully deleted!";
-	    } else {
-	        return "Student " + sid + " does not exist";
-	    }
+		
+		List<StudentReportEntity> existingReport = studentrepo.findAllBySid(sid);
+		studentrepo.deleteAll(existingReport);
+		 srepo.delete(existingStudent);
+		 
+		return "Student " + sid + " is successfully deleted!";
+//	    if (existingStudent != null) {
+//	        srepo.delete(existingStudent);
+//	        return "Student " + sid + " is successfully deleted!";
+//	    } else {
+//	        return "Student " + sid + " does not exist";
+//	    }
 	}
 	
 	public StudentEntity getStudentById(String sid) {

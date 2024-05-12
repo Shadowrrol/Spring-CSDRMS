@@ -1,5 +1,7 @@
 package com.capstone.csdrms.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,14 @@ public class FollowupService {
 
     public FollowupEntity saveFollowup(FollowupEntity followup) {
         return followupRepository.save(followup);
+    }
+    
+    public List<FollowupEntity> getAllFollowUps() {
+        return followupRepository.findAll();
+    }
+    
+    public List<FollowupEntity> getAllFollowUpsByAdviser(Long adviserId) {
+        return followupRepository.findAllByAdviserId(adviserId);
     }
 }
 
