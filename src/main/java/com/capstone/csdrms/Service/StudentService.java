@@ -7,8 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capstone.csdrms.Entity.CaseEntity;
+import com.capstone.csdrms.Entity.FeedbackEntity;
+import com.capstone.csdrms.Entity.FollowupEntity;
+import com.capstone.csdrms.Entity.SanctionEntity;
 import com.capstone.csdrms.Entity.StudentEntity;
 import com.capstone.csdrms.Entity.StudentReportEntity;
+import com.capstone.csdrms.Repository.CaseRepository;
+import com.capstone.csdrms.Repository.FeedbackRepository;
+import com.capstone.csdrms.Repository.FollowupRepository;
+import com.capstone.csdrms.Repository.SanctionRepository;
 import com.capstone.csdrms.Repository.StudentReportRepository;
 import com.capstone.csdrms.Repository.StudentRepository;
 
@@ -22,6 +30,18 @@ public class StudentService {
 	
 	@Autowired
 	StudentReportRepository studentrepo;
+	
+	@Autowired
+	FeedbackRepository feedbackrepo;
+	
+	@Autowired
+	CaseRepository caserepo;
+	
+	@Autowired
+	SanctionRepository sanctionrepo;
+	
+	@Autowired
+	FollowupRepository followuprepo;
 	
 	
 	public StudentEntity insertStudent(StudentEntity student) {
@@ -66,8 +86,18 @@ public class StudentService {
 	public String deleteStudent(String sid) {
 		StudentEntity existingStudent = srepo.findBySid(sid);
 		
-		List<StudentReportEntity> existingReport = studentrepo.findAllBySid(sid);
-		studentrepo.deleteAll(existingReport);
+		List<FeedbackEntity> existingFeedbacksByStudent = feedbackrepo.findALLByCaseEntity_Sid(sid);
+		List<StudentReportEntity> existingReportsByStudent = studentrepo.findAllBySid(sid);
+		List<CaseEntity> existingCasesByStudent = caserepo.findAllBySid(sid);
+		
+		List<FollowupEntity> existingFollowupsByStudent = followuprepo.findAllByCaseEntity_Sid(sid);
+		List<SanctionEntity> existingSanctionsByStudent = sanctionrepo.findBySid(sid);
+		
+		studentrepo.deleteAll(existingReportsByStudent);
+		sanctionrepo.deleteAll(existingSanctionsByStudent);
+		feedbackrepo.deleteAll(existingFeedbacksByStudent);
+		followuprepo.deleteAll(existingFollowupsByStudent);
+		caserepo.deleteAll(existingCasesByStudent);
 		 srepo.delete(existingStudent);
 		 
 		return "Student " + sid + " is successfully deleted!";

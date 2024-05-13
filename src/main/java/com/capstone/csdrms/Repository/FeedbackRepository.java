@@ -15,4 +15,9 @@ public interface FeedbackRepository extends JpaRepository<FeedbackEntity, Intege
     List<FeedbackEntity> findAllByAidWithAdviserAndCase(Long uid);
     
     List<FeedbackEntity> findAllByUidAndIsAcknowledged(Long uid, int isAcknowledged);
+    
+    List<FeedbackEntity> findALLByCaseEntity_Sid(String sid);
+    
+    
+
 }

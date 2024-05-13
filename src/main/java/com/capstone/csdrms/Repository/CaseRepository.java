@@ -13,4 +13,6 @@ public interface CaseRepository extends JpaRepository<CaseEntity, Integer> {
 	
 	@Query("SELECT c FROM CaseEntity c JOIN FETCH c.student")
 	List<CaseEntity> findAllCaseWithStudentDetails();
+	
+	List<CaseEntity> findAllBySid(String sid);
 }

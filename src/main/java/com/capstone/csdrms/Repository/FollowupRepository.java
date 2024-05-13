@@ -15,6 +15,8 @@ public interface FollowupRepository extends JpaRepository<FollowupEntity, Long> 
 	           "JOIN c.student s " +
 	           "WHERE s.adviser_id = :adviserId")
 	    List<FollowupEntity> findAllByAdviserId(@Param("adviserId") Long adviserId);
+	 
+	  List<FollowupEntity> findAllByCaseEntity_Sid(String sid);
 	
 }
 
