@@ -34,6 +34,14 @@ public class CaseService {
         caseRepository.deleteById(id);
     }
     
+    public Optional<CaseEntity> completeCase(int caseId) {
+        return caseRepository.findById(caseId)
+                .map(caseEntity -> {
+                    caseEntity.setStatus("Completed");
+                    return caseRepository.save(caseEntity);
+                });
+    }
+    
     public List<CaseEntity> getAllCaseBySid(String sid){
     	return caseRepository.findAllCasesBySid(sid);
     }

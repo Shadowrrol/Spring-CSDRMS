@@ -1,6 +1,7 @@
 package com.capstone.csdrms.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.capstone.csdrms.Entity.CaseEntity;
@@ -63,5 +64,12 @@ public class CaseController {
     @GetMapping("/student/{sid}")
     public List<CaseEntity> getAllCaseBySid(@PathVariable String sid){
     	return caseService.getAllCaseBySid(sid);
+    }
+    
+    @PutMapping("/complete/{id}")
+    public ResponseEntity<CaseEntity> completeCase(@PathVariable int id) {
+        return caseService.completeCase(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
