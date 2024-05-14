@@ -26,7 +26,8 @@ public class CaseEntity {
 	private String violation;
 	private String description;
 	private String status;
-	
+	private int handledBySSO;
+	 
 	@ManyToOne
 	@JoinColumn(name = "studentID", referencedColumnName = "studentID", insertable = false, updatable = false)
 	private StudentEntity student;
@@ -36,7 +37,7 @@ public class CaseEntity {
 	}
 
 	public CaseEntity(int cid, String sid, String case_name, String investigator, String violation, String description,
-			String status, StudentEntity student) {
+			String status, int handledBySSO, StudentEntity student) {
 		super();
 		this.cid = cid;
 		this.sid = sid;
@@ -45,6 +46,7 @@ public class CaseEntity {
 		this.violation = violation;
 		this.description = description;
 		this.status = status;
+		this.handledBySSO = handledBySSO;
 		this.student = student;
 	}
 
@@ -102,6 +104,14 @@ public class CaseEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getHandledBySSO() {
+		return handledBySSO;
+	}
+
+	public void setHandledBySSO(int handledBySSO) {
+		this.handledBySSO = handledBySSO;
 	}
 
 	public StudentEntity getStudent() {

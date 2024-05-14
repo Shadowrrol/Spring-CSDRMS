@@ -15,4 +15,6 @@ public interface CaseRepository extends JpaRepository<CaseEntity, Integer> {
 	List<CaseEntity> findAllCaseWithStudentDetails();
 	
 	List<CaseEntity> findAllBySid(String sid);
+	
+	List<CaseEntity> findAllByHandledBySSO(int handledBySSO);
 }

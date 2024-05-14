@@ -44,5 +44,15 @@ public class CaseService {
     
     public List<CaseEntity> getAllCaseBySid(String sid){
     	return caseRepository.findAllCasesBySid(sid);
+    } 
+    
+    public List<CaseEntity> getAllCaseHandledBySSO(){
+    	return caseRepository.findAllByHandledBySSO(1);
     }
+    
+    public List<CaseEntity> getAllCaseHandledByAdviser(){
+    	return caseRepository.findAllByHandledBySSO(0);
+    }
+    
+    
 }
