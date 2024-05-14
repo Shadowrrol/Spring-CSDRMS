@@ -66,13 +66,13 @@ public class CaseController {
     	return caseService.getAllCaseBySid(sid);
     }
     
-<<<<<<< Updated upstream
     @PutMapping("/complete/{id}")
     public ResponseEntity<CaseEntity> completeCase(@PathVariable int id) {
         return caseService.completeCase(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-=======
+    }
+
     @GetMapping("/handledBySSO")
     public List<CaseEntity> getAllCaseHandledBySSO(){
     	return caseService.getAllCaseHandledBySSO();
@@ -91,6 +91,5 @@ public class CaseController {
                     return caseService.saveCase(existingCase);
                 })
                 .orElse(null); // Or handle the case where the ID does not exist
->>>>>>> Stashed changes
     }
 }
