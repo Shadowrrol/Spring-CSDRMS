@@ -83,4 +83,41 @@ public class UserService {
         return allUsers;
     }
 	
+	public void update(User user) {
+	    User existingUser = null;
+	    
+	    if (user instanceof SSOEntity) {
+	        existingUser = ssoRepository.findByUsername(user.getUsername());
+	    } else if (user instanceof PrincipalEntity) {
+	        existingUser = principalRepository.findByUsername(user.getUsername());
+	    } else if (user instanceof AdviserEntity) {
+	        existingUser = adviserRepository.findByUsername(user.getUsername());
+	    }
+	    
+	    if (existingUser == null) {
+	        throw new IllegalArgumentException("User with username " + user.getUsername() + " doesn't exist");
+	    }
+	    
+	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		String encryptedPassword = bcrypt.encode(user.getPassword());
+	    existingUser.setPassword(encryptedPassword);
+	    
+	    existingUser.setFirstname(user.getFirstname());
+	    existingUser.setLastname(user.getLastname());
+	    existingUser.setEmail(user.getEmail());
+	    
+	    // Save the updated user based on its type
+	    if (existingUser instanceof SSOEntity) {
+	        ssoRepository.save((SSOEntity) existingUser);
+	    } else if (existingUser instanceof PrincipalEntity) {
+	        principalRepository.save((PrincipalEntity) existingUser);
+	    } else if (existingUser instanceof AdviserEntity) {
+	        AdviserEntity existingAdviser = (AdviserEntity) existingUser;
+	        existingAdviser.setSection(((AdviserEntity) user).getSection());
+	        existingAdviser.setGrade(((AdviserEntity) user).getGrade());
+	        existingAdviser.setSchoolYear(((AdviserEntity) user).getSchoolYear());
+	        adviserRepository.save(existingAdviser);
+	    }
+	}
+	
 }
