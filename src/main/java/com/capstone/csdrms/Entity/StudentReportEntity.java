@@ -22,6 +22,7 @@ public class StudentReportEntity {
 	private String sid;
 	
 	private String date;
+	private String time;
 	private String monitored_record;
 	private String remarks;
 	private String sanction; 
@@ -34,12 +35,13 @@ public class StudentReportEntity {
 		super();
 	}
 
-	public StudentReportEntity(int rid, String sid, String date, String monitored_record, String remarks,
+	public StudentReportEntity(int rid, String sid, String date, String time, String monitored_record, String remarks,
 			String sanction, StudentEntity student) {
 		super();
 		this.rid = rid;
 		this.sid = sid;
 		this.date = date;
+		this.time = time;
 		this.monitored_record = monitored_record;
 		this.remarks = remarks;
 		this.sanction = sanction;
@@ -70,6 +72,14 @@ public class StudentReportEntity {
 		this.date = date;
 	}
 
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	public String getMonitored_record() {
 		return monitored_record;
 	}
@@ -91,7 +101,7 @@ public class StudentReportEntity {
 	}
 
 	public void setSanction(String sanction) {
-		this.sanction = sanction;
+		this.sanction = sanction;	
 	}
 
 	public StudentEntity getStudent() {
@@ -103,6 +113,5 @@ public class StudentReportEntity {
 	}
 
 	
-
 	
 }
