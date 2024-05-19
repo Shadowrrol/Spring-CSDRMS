@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.capstone.csdrms.Entity.AdminEntity;
 import com.capstone.csdrms.Entity.AdviserEntity;
 import com.capstone.csdrms.Entity.PrincipalEntity;
 import com.capstone.csdrms.Entity.SSOEntity;
 import com.capstone.csdrms.Entity.User;
+import com.capstone.csdrms.Repository.AdminRepository;
 import com.capstone.csdrms.Repository.AdviserRepository;
 import com.capstone.csdrms.Repository.PrincipalRepository;
 import com.capstone.csdrms.Repository.SSORepository;
@@ -36,6 +38,9 @@ public class UserService {
 	@Autowired
 	AdviserRepository adviserRepository;
 	
+	@Autowired
+	AdminRepository adminRepository;
+	
 	 @PersistenceContext
 	 private EntityManager entityManager;
 	
@@ -44,8 +49,9 @@ public class UserService {
 		SSOEntity existingUser1 = ssoRepository.findByUsername(user.getUsername());
 		PrincipalEntity existingUser2 = principalRepository.findByUsername(user.getUsername());
 		AdviserEntity existingUser3 = adviserRepository.findByUsername(user.getUsername());
+		AdminEntity existingUser4 = adminRepository.findByUsername(user.getUsername());
 		
-		 if (existingUser1 != null || existingUser2 != null || existingUser3 != null ) {
+		 if (existingUser1 != null || existingUser2 != null || existingUser3 != null || existingUser4 != null) {
 		        throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
 		    }
 		 else {
@@ -59,6 +65,8 @@ public class UserService {
 		        	principalRepository.save((PrincipalEntity) user);
 		        } else if(user instanceof AdviserEntity) {
 		        	adviserRepository.save((AdviserEntity) user);
+		        } else if(user instanceof AdminEntity) {
+		        	adminRepository.save((AdminEntity) user);
 		        } else {
 		        	userRepository.save(user);
 		        }
@@ -80,6 +88,9 @@ public class UserService {
         TypedQuery<AdviserEntity> adviserQuery = entityManager.createQuery("SELECT a FROM AdviserEntity a", AdviserEntity.class);
         allUsers.addAll(adviserQuery.getResultList());
         
+        TypedQuery<AdminEntity> adminQuery = entityManager.createQuery("SELECT admin FROM AdminEntity admin", AdminEntity.class);
+        allUsers.addAll(adminQuery.getResultList());
+        
         return allUsers;
     }
 	
@@ -92,6 +103,8 @@ public class UserService {
 	        existingUser = principalRepository.findByUsername(user.getUsername());
 	    } else if (user instanceof AdviserEntity) {
 	        existingUser = adviserRepository.findByUsername(user.getUsername());
+	    } else if (user instanceof AdminEntity) {
+	        existingUser = adminRepository.findByUsername(user.getUsername());
 	    }
 	    
 	    if (existingUser == null) {
@@ -117,7 +130,30 @@ public class UserService {
 	        existingAdviser.setGrade(((AdviserEntity) user).getGrade());
 	        existingAdviser.setSchoolYear(((AdviserEntity) user).getSchoolYear());
 	        adviserRepository.save(existingAdviser);
+	    } else if (existingUser instanceof AdminEntity) {
+	        adminRepository.save((AdminEntity) existingUser);
 	    }
 	}
+	
+	 public void deleteUser(String username) {
+	        SSOEntity ssoUser = ssoRepository.findByUsername(username);
+	        PrincipalEntity principalUser = principalRepository.findByUsername(username);
+	        AdviserEntity adviserUser = adviserRepository.findByUsername(username);
+	        AdminEntity adminUser = adminRepository.findByUsername(username);
+
+	        if (ssoUser != null) {
+	            ssoRepository.delete(ssoUser);
+	        } else if (principalUser != null) {
+	            principalRepository.delete(principalUser);
+	        } else if (adviserUser != null) {
+	            adviserRepository.delete(adviserUser);
+	        } else if (adminUser != null) {
+	            adminRepository.delete(adminUser);
+	        } else {
+	            throw new IllegalArgumentException("User with username " + username + " does not exist");
+	        }
+	    }
+	
+	
 	
 }

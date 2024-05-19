@@ -15,4 +15,4 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Integer>
 	List<StudentEntity> findAllBySectionAndSchoolYear(String section, String schoolYear);
 	
 	
-}
+} 

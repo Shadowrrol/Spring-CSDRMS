@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capstone.csdrms.Entity.AdminEntity;
 import com.capstone.csdrms.Entity.AdviserEntity;
 import com.capstone.csdrms.Entity.PrincipalEntity;
 import com.capstone.csdrms.Entity.SSOEntity;
@@ -32,7 +34,7 @@ public class UserController {
         return "sso created successfully";
     }
 
-    @PostMapping("/registerPrincipal")
+   ;
     public String registerPrincipal(@RequestBody PrincipalEntity principal) {
     	userService.register(principal);
         return "Principal created successfully";
@@ -43,6 +45,13 @@ public class UserController {
     	userService.register(adviser);
         return "Adviser created successfully";
     }
+    
+    @PostMapping("/registerAdmin")
+    public String registerAdmin(@RequestBody AdminEntity admin) {
+    	userService.register(admin);
+        return "Admin created successfully";
+    }
+    
     @GetMapping("/allUsers")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
@@ -64,5 +73,17 @@ public class UserController {
     public String updateAdviser(@RequestBody AdviserEntity updatedUser) {
         userService.update(updatedUser);
         return "Adviser updated successfully";
+    }
+    
+    @PutMapping("/updateAdmin")
+    public String updateAdmin(@RequestBody AdminEntity updatedUser) {
+        userService.update(updatedUser);
+        return "Admin updated successfully";
+    }
+    
+    @DeleteMapping("/deleteUser/{username}")
+    public String deleteUser(@PathVariable String username) {
+        userService.deleteUser(username);
+        return "User with username " + username + " successfully deleted!";
     }
 }
