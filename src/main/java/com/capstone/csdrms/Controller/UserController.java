@@ -34,7 +34,7 @@ public class UserController {
         return "sso created successfully";
     }
 
-   ;
+	@PostMapping("/registerPrincipal")
     public String registerPrincipal(@RequestBody PrincipalEntity principal) {
     	userService.register(principal);
         return "Principal created successfully";
