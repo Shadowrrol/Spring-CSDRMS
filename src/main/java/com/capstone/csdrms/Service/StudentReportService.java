@@ -2,12 +2,10 @@ package com.capstone.csdrms.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capstone.csdrms.Entity.StudentEntity;
 import com.capstone.csdrms.Entity.StudentReportEntity;
 import com.capstone.csdrms.Repository.StudentReportRepository;
 
