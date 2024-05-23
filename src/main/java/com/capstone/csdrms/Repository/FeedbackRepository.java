@@ -18,6 +18,8 @@ public interface FeedbackRepository extends JpaRepository<FeedbackEntity, Intege
     
     List<FeedbackEntity> findALLByCaseEntity_Sid(String sid);
     
+    List<FeedbackEntity> findAllByAdviser_Username(String username);
+    
     
 
 }

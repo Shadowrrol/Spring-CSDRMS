@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.capstone.csdrms.Entity.AdminEntity;
 import com.capstone.csdrms.Entity.AdviserEntity;
+import com.capstone.csdrms.Entity.FeedbackEntity;
 import com.capstone.csdrms.Entity.PrincipalEntity;
 import com.capstone.csdrms.Entity.SSOEntity;
 import com.capstone.csdrms.Entity.User;
 import com.capstone.csdrms.Repository.AdminRepository;
 import com.capstone.csdrms.Repository.AdviserRepository;
+import com.capstone.csdrms.Repository.FeedbackRepository;
 import com.capstone.csdrms.Repository.PrincipalRepository;
 import com.capstone.csdrms.Repository.SSORepository;
 import com.capstone.csdrms.Repository.UserRepository;
@@ -40,6 +42,9 @@ public class UserService {
 	
 	@Autowired
 	AdminRepository adminRepository;
+	
+	@Autowired 
+	FeedbackRepository frepo;
 	
 	 @PersistenceContext
 	 private EntityManager entityManager;
@@ -146,6 +151,8 @@ public class UserService {
 	        } else if (principalUser != null) {
 	            principalRepository.delete(principalUser);
 	        } else if (adviserUser != null) {
+	        	List<FeedbackEntity> feedbacksForAdviser =  frepo.findAllByAdviser_Username(username);
+	        	frepo.deleteAll(feedbacksForAdviser);
 	            adviserRepository.delete(adviserUser);
 	        } else if (adminUser != null) {
 	            adminRepository.delete(adminUser);
