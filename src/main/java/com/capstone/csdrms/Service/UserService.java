@@ -49,34 +49,44 @@ public class UserService {
 	 @PersistenceContext
 	 private EntityManager entityManager;
 	
-	public void register(User user) {
-		
-		SSOEntity existingUser1 = ssoRepository.findByUsername(user.getUsername());
-		PrincipalEntity existingUser2 = principalRepository.findByUsername(user.getUsername());
-		AdviserEntity existingUser3 = adviserRepository.findByUsername(user.getUsername());
-		AdminEntity existingUser4 = adminRepository.findByUsername(user.getUsername());
-		
-		 if (existingUser1 != null || existingUser2 != null || existingUser3 != null || existingUser4 != null) {
-		        throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
-		    }
-		 else {
-			 BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-			 String encryptedPassword = bcrypt.encode(user.getPassword());
-			 user.setPassword(encryptedPassword);
-				 
-			 if (user instanceof SSOEntity) {
-					ssoRepository.save((SSOEntity) user);
-		        } else if (user instanceof PrincipalEntity) {
-		        	principalRepository.save((PrincipalEntity) user);
-		        } else if(user instanceof AdviserEntity) {
-		        	adviserRepository.save((AdviserEntity) user);
-		        } else if(user instanceof AdminEntity) {
-		        	adminRepository.save((AdminEntity) user);
-		        } else {
-		        	userRepository.save(user);
-		        }
-		 } 
-	}
+	 public void register(User user) {
+
+	        SSOEntity existingUser1 = ssoRepository.findByUsername(user.getUsername());
+	        PrincipalEntity existingUser2 = principalRepository.findByUsername(user.getUsername());
+	        AdviserEntity existingUser3 = adviserRepository.findByUsername(user.getUsername());
+	        AdminEntity existingUser4 = adminRepository.findByUsername(user.getUsername());
+
+	        if (existingUser1 != null || existingUser2 != null || existingUser3 != null || existingUser4 != null) {
+	            throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
+	        }
+
+	        if (user instanceof AdviserEntity) {
+	            AdviserEntity adviserUser = (AdviserEntity) user;
+	            boolean adviserExists = adviserRepository
+	                    .findByGradeAndSectionAndSchoolYear(adviserUser.getGrade(), adviserUser.getSection(), adviserUser.getSchoolYear())
+	                    .isPresent();
+
+	            if (adviserExists) {
+	                throw new IllegalArgumentException("Adviser with grade " + adviserUser.getGrade() + ", section " + adviserUser.getSection() + ", and school year " + adviserUser.getSchoolYear() + " already exists");
+	            }
+	        }
+
+	        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+	        String encryptedPassword = bcrypt.encode(user.getPassword());
+	        user.setPassword(encryptedPassword);
+
+	        if (user instanceof SSOEntity) {
+	            ssoRepository.save((SSOEntity) user);
+	        } else if (user instanceof PrincipalEntity) {
+	            principalRepository.save((PrincipalEntity) user);
+	        } else if (user instanceof AdviserEntity) {
+	            adviserRepository.save((AdviserEntity) user);
+	        } else if (user instanceof AdminEntity) {
+	            adminRepository.save((AdminEntity) user);
+	        } else {
+	            userRepository.save(user);
+	        }
+	    }
 	
 	public List<User> getAllUsers() {
         List<User> allUsers = new ArrayList<>();
