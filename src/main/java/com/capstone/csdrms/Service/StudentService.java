@@ -2,6 +2,7 @@ package com.capstone.csdrms.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,13 @@ public class StudentService {
 	FollowupRepository followuprepo;
 	
 	
+	public boolean studentExists(String sid, String schoolYear) {
+	    return srepo.existsBySidAndSchoolYear(sid, schoolYear);
+	}
+
 	public StudentEntity insertStudent(StudentEntity student) {
-		StudentEntity existingStudent = srepo.findBySid(student.getSid());
-	    if (existingStudent != null) {
-	        throw new IllegalArgumentException("Student with id " + student.getSid() + " already exists");
+	    if (studentExists(student.getSid(), student.getSchoolYear())) {
+	        throw new IllegalStateException("Student with this ID and school year already exists.");
 	    }
 	    return srepo.save(student);
 	}
@@ -108,8 +112,8 @@ public class StudentService {
 //	    }
 	}
 	
-	public StudentEntity getStudentById(String sid) {
-		StudentEntity student = srepo.findBySid(sid);
+	public Optional<StudentEntity> getStudentById(Long id) {
+		Optional<StudentEntity> student = srepo.findById(id);
 		return student;
 	}
 	

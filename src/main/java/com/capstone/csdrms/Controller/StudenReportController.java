@@ -42,11 +42,11 @@ public class StudenReportController {
 		return sserv.getStudentReportsById(sid);
 	}
 	
-	@PutMapping("/updateStudentReport") 
-	public StudentReportEntity updateStudentReport(@RequestParam int rid,@RequestBody StudentReportEntity newStudentReportDetails) {
-		return sserv.updateStudentReport(rid, newStudentReportDetails);
-	}
-	
+//	@PutMapping("/updateStudentReport") 
+//	public StudentReportEntity updateStudentReport(@RequestParam int rid,@RequestBody StudentReportEntity newStudentReportDetails) {
+//		return sserv.updateStudentReport(rid, newStudentReportDetails);
+//	}
+//	
 	@DeleteMapping("/deleteStudentReport/{rid}")
 	public String deleteStudentReport(@PathVariable int rid) {
 		return sserv.deleteStudentReport(rid);

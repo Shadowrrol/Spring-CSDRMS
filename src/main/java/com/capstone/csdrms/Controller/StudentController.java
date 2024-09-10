@@ -1,6 +1,7 @@
 package com.capstone.csdrms.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,9 +47,9 @@ public class StudentController {
 			return sserv.deleteStudent(sid);
 		}
 		
-		 @GetMapping("/getStudent/{sid}")
-			public StudentEntity getStudentById(@PathVariable String sid) {
-				return sserv.getStudentById(sid);
+		 @GetMapping("/getStudent/{id}")
+			public Optional<StudentEntity> getStudentById(@PathVariable Long id) {
+				return sserv.getStudentById(id);
 			}
 		 
 		 @GetMapping("/getAllStudents/{schoolYear}/{section}")

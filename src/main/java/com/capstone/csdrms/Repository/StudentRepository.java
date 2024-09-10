@@ -9,10 +9,10 @@ import com.capstone.csdrms.Entity.StudentEntity;
 
 
 @Repository
-public interface StudentRepository extends JpaRepository<StudentEntity, Integer> {
+public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
 	StudentEntity findBySid(String sid);
 	List<StudentEntity> findAllBySectionAndSchoolYear(String section, String schoolYear);
 	
-	
+	boolean existsBySidAndSchoolYear(String sid, String schoolYear); 
 } 

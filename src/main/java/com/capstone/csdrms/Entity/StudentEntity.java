@@ -2,15 +2,21 @@ package com.capstone.csdrms.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="tblstudent")
+@Table(name="tblstudent", uniqueConstraints = {@UniqueConstraint(columnNames = {"studentID", "schoolYear"})})
 public class StudentEntity {
 	
 	@Id
-	@Column(name = "studentID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "studentID", nullable = false)
 	private String sid;
 	
 	private String firstname;
@@ -18,8 +24,11 @@ public class StudentEntity {
 	private String lastname;
 	private int grade;
 	private String section;
+	
+	@Column(nullable = false)
 	private String schoolYear;
-	private Long adviser_id;
+	
+	private Long adviser_id;  
 	
 	@Column(name = "contact_number")
 	private String con_num;
@@ -28,9 +37,10 @@ public class StudentEntity {
 		super();
 	}
 
-	public StudentEntity(String sid, String firstname, String middlename, String lastname, int grade, String section,
-			String schoolYear, Long adviser_id, String con_num) {
+	public StudentEntity(Long id, String sid, String firstname, String middlename, String lastname, int grade,
+			String section, String schoolYear, Long adviser_id, String con_num) {
 		super();
+		this.id = id;
 		this.sid = sid;
 		this.firstname = firstname;
 		this.middlename = middlename;
@@ -40,6 +50,14 @@ public class StudentEntity {
 		this.schoolYear = schoolYear;
 		this.adviser_id = adviser_id;
 		this.con_num = con_num;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getSid() {
