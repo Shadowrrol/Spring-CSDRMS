@@ -20,37 +20,35 @@ public class StudentReportEntity {
 	 
 	@Column(name = "studentID")     
 	private String sid;
-	private String name;
-	private String section;
-	private int grade;
-	private String schoolYear;
+	
+	private Long id;
 	private String record_date;
 	private String incident_date;
 	private String time;
 	private String monitored_record;
 	private String remarks;
-	private String sanction;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+	private StudentEntity student;
 	
 	public StudentReportEntity() {
 		super();
 	}
 
-	public StudentReportEntity(int rid, String sid, String name, String section, int grade, String schoolYear,
-			String record_date, String incident_date, String time, String monitored_record, String remarks,
-			String sanction) {
+	public StudentReportEntity(int rid, String sid, Long id, String record_date, String incident_date, String time,
+			String monitored_record, String remarks, StudentEntity student) {
 		super();
 		this.rid = rid;
 		this.sid = sid;
-		this.name = name;
-		this.section = section;
-		this.grade = grade;
-		this.schoolYear = schoolYear;
+		this.id = id;
 		this.record_date = record_date;
 		this.incident_date = incident_date;
 		this.time = time;
 		this.monitored_record = monitored_record;
 		this.remarks = remarks;
-		this.sanction = sanction;
+		this.student = student;
 	}
 
 	public int getRid() {
@@ -69,36 +67,12 @@ public class StudentReportEntity {
 		this.sid = sid;
 	}
 
-	public String getName() {
-		return name;
+	public Long getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
-	}
-
-	public int getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
-
-	public String getSchoolYear() {
-		return schoolYear;
-	}
-
-	public void setSchoolYear(String schoolYear) {
-		this.schoolYear = schoolYear;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getRecord_date() {
@@ -141,14 +115,15 @@ public class StudentReportEntity {
 		this.remarks = remarks;
 	}
 
-	public String getSanction() {
-		return sanction;
+	public StudentEntity getStudent() {
+		return student;
 	}
 
-	public void setSanction(String sanction) {
-		this.sanction = sanction;
+	public void setStudent(StudentEntity student) {
+		this.student = student;
 	}
 
+	
 	
 	
 }

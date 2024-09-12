@@ -42,16 +42,16 @@ public class CaseService {
                 });
     }
     
-    public List<CaseEntity> getAllCaseBySid(String sid){
-    	return caseRepository.findAllCasesBySid(sid);
+    public List<CaseEntity> getAllCaseById(Long id){
+    	return caseRepository.findAllById(id);
     } 
     
     public List<CaseEntity> getAllCaseHandledBySSO(){
     	return caseRepository.findAllByHandledBySSO(1);
     }
     
-    public List<CaseEntity> getAllCaseHandledByAdviser(){
-    	return caseRepository.findAllByHandledBySSO(0);
+    public List<CaseEntity> getAllCasesHandledByAdviser(Long adviserId) {
+        return caseRepository.findAllByAdviserIdAndHandledBySSO(adviserId);
     }
     
     

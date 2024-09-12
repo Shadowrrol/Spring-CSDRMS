@@ -32,29 +32,34 @@ public class StudentController {
 			return sserv.insertStudent(student);
 		}
 		
-		@GetMapping("/getAllStudents")
-		public List<StudentEntity> getStudents(){
-			return sserv.getStudents();
+		@GetMapping("/getAllCurrentStudents")
+		public List<StudentEntity> getCurrentStudents(){
+			return sserv.getCurrentStudents();
 		}
 		  
-		@PutMapping("/updateStudent")
-		public StudentEntity updateStudent(@RequestParam String sid,@RequestBody StudentEntity newStudentDetails){
-			return sserv.updateStudent(sid, newStudentDetails);
-		}
+//		@PutMapping("/updateStudent")
+//		public StudentEntity updateStudent(@RequestParam String sid,@RequestBody StudentEntity newStudentDetails){
+//			return sserv.updateStudent(sid, newStudentDetails);
+//		}
 		
-		@DeleteMapping("/deleteStudent/{sid}")
-		public String deleteStudent(@PathVariable String sid) {
-			return sserv.deleteStudent(sid);
-		}
+//		@DeleteMapping("/deleteStudent/{sid}")
+//		public String deleteStudent(@PathVariable String sid) {
+//			return sserv.deleteStudent(sid);
+//		}
 		
-		 @GetMapping("/getStudent/{id}")
-			public Optional<StudentEntity> getStudentById(@PathVariable Long id) {
-				return sserv.getStudentById(id);
-			}
+		@GetMapping("/getCurrentStudent/{id}")
+		public Optional<StudentEntity> getCurrentStudentById(@PathVariable Long id) {
+			return sserv.getCurrentStudentById(id);
+		}
+		  
+		 @GetMapping("/getAllStudentsByAdviser/{adviserId}")
+		 public List<StudentEntity> getStudentsByAdviser(@PathVariable Long adviserId) {
+			return sserv.getStudentsByAdviser(adviserId); 
+		}
 		 
-		 @GetMapping("/getAllStudents/{schoolYear}/{section}")
-		 public List<StudentEntity> getStudentsBySectionAndSchoolYear(@PathVariable String section,@PathVariable String schoolYear) {
-				return sserv.getStudentsBySectionAndSchoolYear(section, schoolYear);
-			}
+		 @GetMapping("/getStudentById/{id}")
+		 public Optional<StudentEntity> getStudentById(@PathVariable Long id){
+			 return sserv.getStudentById(id);
+		 }
 	
 }

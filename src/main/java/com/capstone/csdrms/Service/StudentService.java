@@ -52,69 +52,81 @@ public class StudentService {
 	    if (studentExists(student.getSid(), student.getSchoolYear())) {
 	        throw new IllegalStateException("Student with this ID and school year already exists.");
 	    }
+
+	    List<StudentEntity> existingStudents = srepo.findAllBySid(student.getSid());
+	    
+	    if (!existingStudents.isEmpty()) {
+	        for (StudentEntity existingStudent : existingStudents) {
+	            existingStudent.setCurrent(0); 
+	            srepo.save(existingStudent);   
+	        }
+	    }
 	    return srepo.save(student);
 	}
-
-	
-	public List<StudentEntity> getStudents(){
-		return srepo.findAll();
+ 
+	 
+	public List<StudentEntity> getCurrentStudents(){
+		return srepo.findAllByCurrent(1);
 	}
 	
-	public List<StudentEntity> getStudentsBySectionAndSchoolYear(String section, String schoolYear) {
-        return srepo.findAllBySectionAndSchoolYear(section, schoolYear);
+	public List<StudentEntity> getStudentsByAdviser(Long adviserId) {
+        return srepo.findAllByAdviserId(adviserId);
     }
 
-	@SuppressWarnings("finally")
-	public StudentEntity updateStudent(String sid, StudentEntity newStudentDetails) {
-		StudentEntity student = new StudentEntity();
-	    try {
-	    	student = srepo.findBySid(sid);
-
-	    	student.setFirstname(newStudentDetails.getFirstname());
-	    	student.setMiddlename(newStudentDetails.getMiddlename());
-	    	student.setLastname(newStudentDetails.getLastname());
-	    	student.setGrade(newStudentDetails.getGrade());
-	    	student.setSection(newStudentDetails.getSection());
-	    	student.setCon_num(newStudentDetails.getCon_num());
-	    	
-	       
-	    } catch (NoSuchElementException ex) {
-	        throw ex;
-	    } finally {
-	    	 return srepo.save(student);
-		}
+//	@SuppressWarnings("finally")
+//	public StudentEntity updateStudent(String sid, StudentEntity newStudentDetails) {
+//		StudentEntity student = new StudentEntity();
+//	    try {
+//	    	student = srepo.findBySid(sid);
+//
+//	    	student.setFirstname(newStudentDetails.getFirstname());
+//	    	student.setMiddlename(newStudentDetails.getMiddlename());
+//	    	student.setLastname(newStudentDetails.getLastname());
+//	    	student.setGrade(newStudentDetails.getGrade());
+//	    	student.setSection(newStudentDetails.getSection());
+//	    	student.setCon_num(newStudentDetails.getCon_num());
+//	    	
+//	       
+//	    } catch (NoSuchElementException ex) {
+//	        throw ex;
+//	    } finally {
+//	    	 return srepo.save(student);
+//		}
+//	}
+//	
+	
+//	public String deleteStudent(String sid) {
+//		Optional<StudentEntity> existingStudent = srepo.findBySid(sid);
+//		
+//		List<FeedbackEntity> existingFeedbacksByStudent = feedbackrepo.findALLByCaseEntity_Sid(sid);
+//		List<StudentReportEntity> existingReportsByStudent = studentrepo.findAllBySid(sid);
+//		List<CaseEntity> existingCasesByStudent = caserepo.findAllBySid(sid);
+//		
+//		List<FollowupEntity> existingFollowupsByStudent = followuprepo.findAllByCaseEntity_Sid(sid);
+//		List<SanctionEntity> existingSanctionsByStudent = sanctionrepo.findBySid(sid);
+//		
+//		studentrepo.deleteAll(existingReportsByStudent);
+//		sanctionrepo.deleteAll(existingSanctionsByStudent);
+//		feedbackrepo.deleteAll(existingFeedbacksByStudent);
+//		followuprepo.deleteAll(existingFollowupsByStudent);
+//		caserepo.deleteAll(existingCasesByStudent);
+//		 srepo.delete(existingStudent);
+//		 
+//		return "Student " + sid + " is successfully deleted!";
+////	    if (existingStudent != null) {
+////	        srepo.delete(existingStudent);
+////	        return "Student " + sid + " is successfully deleted!";
+////	    } else {
+////	        return "Student " + sid + " does not exist";
+////	    }
+//	}
+	
+	public Optional<StudentEntity> getCurrentStudentById(Long id) {
+		return srepo.findByIdAndCurrent(id, 1);
 	}
 	
-	
-	public String deleteStudent(String sid) {
-		StudentEntity existingStudent = srepo.findBySid(sid);
-		
-		List<FeedbackEntity> existingFeedbacksByStudent = feedbackrepo.findALLByCaseEntity_Sid(sid);
-		List<StudentReportEntity> existingReportsByStudent = studentrepo.findAllBySid(sid);
-		List<CaseEntity> existingCasesByStudent = caserepo.findAllBySid(sid);
-		
-		List<FollowupEntity> existingFollowupsByStudent = followuprepo.findAllByCaseEntity_Sid(sid);
-		List<SanctionEntity> existingSanctionsByStudent = sanctionrepo.findBySid(sid);
-		
-		studentrepo.deleteAll(existingReportsByStudent);
-		sanctionrepo.deleteAll(existingSanctionsByStudent);
-		feedbackrepo.deleteAll(existingFeedbacksByStudent);
-		followuprepo.deleteAll(existingFollowupsByStudent);
-		caserepo.deleteAll(existingCasesByStudent);
-		 srepo.delete(existingStudent);
-		 
-		return "Student " + sid + " is successfully deleted!";
-//	    if (existingStudent != null) {
-//	        srepo.delete(existingStudent);
-//	        return "Student " + sid + " is successfully deleted!";
-//	    } else {
-//	        return "Student " + sid + " does not exist";
-//	    }
-	}
-	
-	public Optional<StudentEntity> getStudentById(Long id) {
-		Optional<StudentEntity> student = srepo.findById(id);
-		return student;
+	public Optional<StudentEntity> getStudentById(Long id){
+		return srepo.findById(id);
 	}
 	
 	

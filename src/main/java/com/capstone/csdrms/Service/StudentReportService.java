@@ -23,8 +23,8 @@ public class StudentReportService {
 		return srepo.findAll();
 	}
 	
-	public 	List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(String section, String school_year){
-		return srepo.findBySectionAndSchoolYear(section, school_year);
+	public 	List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(String section, String schoolYear){
+		return srepo.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
 	}
 	
 	public List<StudentReportEntity> getStudentReportsById(String sid) {

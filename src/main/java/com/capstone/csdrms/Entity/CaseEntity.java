@@ -18,8 +18,7 @@ public class CaseEntity {
 	@Column(name = "caseID")
 	private int cid;
 	
-	@Column(name = "studentID")
-	private String sid;
+	private Long id;
 	 
 	private String case_name;
 	private String investigator;
@@ -29,18 +28,18 @@ public class CaseEntity {
 	private int handledBySSO;
 	 
 	@ManyToOne
-	@JoinColumn(name = "studentID", referencedColumnName = "studentID", insertable = false, updatable = false)
+	@JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
 	private StudentEntity student;
 	
 	public CaseEntity() {
 		super();
 	}
 
-	public CaseEntity(int cid, String sid, String case_name, String investigator, String violation, String description,
+	public CaseEntity(int cid, Long id, String case_name, String investigator, String violation, String description,
 			String status, int handledBySSO, StudentEntity student) {
 		super();
 		this.cid = cid;
-		this.sid = sid;
+		this.id = id;
 		this.case_name = case_name;
 		this.investigator = investigator;
 		this.violation = violation;
@@ -58,12 +57,12 @@ public class CaseEntity {
 		this.cid = cid;
 	}
 
-	public String getSid() {
-		return sid;
+	public Long getId() {
+		return id;
 	}
 
-	public void setSid(String sid) {
-		this.sid = sid;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCase_name() {

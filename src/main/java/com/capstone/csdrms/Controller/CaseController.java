@@ -37,23 +37,23 @@ public class CaseController {
     }
 
     // Update a case by ID
-    @PutMapping("/{id}")
-    public CaseEntity updateCase(@PathVariable int id, @RequestBody CaseEntity updatedCase) {
-        return caseService.getCaseById(id)
-                .map(existingCase -> {
-                    existingCase.setSid(updatedCase.getSid());
-                    existingCase.setCase_name(updatedCase.getCase_name());
-                    existingCase.setInvestigator(updatedCase.getInvestigator());
-                    existingCase.setViolation(updatedCase.getViolation());
-                    existingCase.setDescription(updatedCase.getDescription());
-                    existingCase.setStatus(updatedCase.getStatus());
-                    return caseService.saveCase(existingCase);
-                })
-                .orElseGet(() -> {
-                    updatedCase.setCid(id);
-                    return caseService.saveCase(updatedCase);
-                });
-    }
+//    @PutMapping("/{id}")
+//    public CaseEntity updateCase(@PathVariable int id, @RequestBody CaseEntity updatedCase) {
+//        return caseService.getCaseById(id)
+//                .map(existingCase -> {
+//                    existingCase.setSid(updatedCase.getSid());
+//                    existingCase.setCase_name(updatedCase.getCase_name());
+//                    existingCase.setInvestigator(updatedCase.getInvestigator());
+//                    existingCase.setViolation(updatedCase.getViolation());
+//                    existingCase.setDescription(updatedCase.getDescription());
+//                    existingCase.setStatus(updatedCase.getStatus());
+//                    return caseService.saveCase(existingCase);
+//                })
+//                .orElseGet(() -> {
+//                    updatedCase.setCid(id);
+//                    return caseService.saveCase(updatedCase);
+//                });
+//    }
 
     // Delete a case by ID
     @DeleteMapping("/{id}")
@@ -62,8 +62,8 @@ public class CaseController {
     }
     
     @GetMapping("/student/{sid}")
-    public List<CaseEntity> getAllCaseBySid(@PathVariable String sid){
-    	return caseService.getAllCaseBySid(sid);
+    public List<CaseEntity> getAllCaseById(@PathVariable Long id){
+    	return caseService.getAllCaseById(id);
     }
     
     @PutMapping("/complete/{id}")
@@ -78,9 +78,9 @@ public class CaseController {
     	return caseService.getAllCaseHandledBySSO();
     }
     
-    @GetMapping("/handledByAdviser")
-    public List<CaseEntity> getAllCaseHandledByAdviser(){
-    	return caseService.getAllCaseHandledByAdviser();
+    @GetMapping("/handledByAdviser/{adviserId}")
+    public List<CaseEntity> getAllCasesHandledByAdviser(@PathVariable Long adviserId){
+    	return caseService.getAllCasesHandledByAdviser(adviserId);
     }
     
     @PutMapping("/{id}/sso")

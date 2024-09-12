@@ -16,10 +16,10 @@ public interface FeedbackRepository extends JpaRepository<FeedbackEntity, Intege
     
     List<FeedbackEntity> findAllByUidAndIsAcknowledged(Long uid, int isAcknowledged);
     
-    List<FeedbackEntity> findALLByCaseEntity_Sid(String sid);
+    List<FeedbackEntity> findALLByCaseEntity_Id(Long id);
     
     List<FeedbackEntity> findAllByAdviser_Username(String username);
     
-    
+     
 
 }

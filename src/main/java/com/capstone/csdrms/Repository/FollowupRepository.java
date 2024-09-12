@@ -13,10 +13,10 @@ public interface FollowupRepository extends JpaRepository<FollowupEntity, Long> 
 	 @Query("SELECT f FROM FollowupEntity f " +
 	           "JOIN f.caseEntity c " +
 	           "JOIN c.student s " +
-	           "WHERE s.adviser_id = :adviserId")
+	           "WHERE s.adviserId = :adviserId")
 	    List<FollowupEntity> findAllByAdviserId(@Param("adviserId") Long adviserId);
 	 
-	  List<FollowupEntity> findAllByCaseEntity_Sid(String sid);
+	  List<FollowupEntity> findAllByCaseEntity_Id(Long id);
 	
 }
 

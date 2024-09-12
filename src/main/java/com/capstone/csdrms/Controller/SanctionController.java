@@ -35,9 +35,9 @@ public class SanctionController {
     }
 	
 
-	@GetMapping("/getSanctionsBySid/{sid}")
-	public List<SanctionEntity> getAllSanctionsBySid(@PathVariable String sid){
-		return sserv.getAllSanctionsBySid(sid);
+	@GetMapping("/getSanctionsById/{id}")
+	public List<SanctionEntity> getAllSanctionsBySid(@PathVariable Long id){
+		return sserv.getAllSanctionsBySid(id);
 	}
 	
 	@PostMapping("/approveSanction")

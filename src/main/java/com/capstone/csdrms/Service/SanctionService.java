@@ -1,5 +1,8 @@
 package com.capstone.csdrms.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.csdrms.Entity.SanctionEntity;
+import com.capstone.csdrms.Entity.StudentEntity;
+import com.capstone.csdrms.Entity.StudentReportEntity;
 import com.capstone.csdrms.Repository.SanctionRepository;
+import com.capstone.csdrms.Repository.StudentReportRepository;
+import com.capstone.csdrms.Repository.StudentRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -16,17 +23,66 @@ public class SanctionService {
 	
 	@Autowired
 	SanctionRepository srepo;
+	
+	@Autowired
+	StudentReportRepository studentReportRepository;
+	
+	@Autowired
+	StudentRepository studentRepository;
+	
+	
 
-	public SanctionEntity insertSanction(SanctionEntity sanction) {
-		return srepo.save(sanction);
-	}
+	 @Transactional
+	    public SanctionEntity insertSanction(SanctionEntity sanction) {
+	        SanctionEntity savedSanction = srepo.save(sanction);
+	        
+	        // Automatically insert a student report after the sanction is added
+	        insertStudentReportFromSanction(savedSanction);
+	        
+	        return savedSanction;
+	    }
+	    
+	    private void insertStudentReportFromSanction(SanctionEntity sanction) {
+	        // Find the student by SID from the sanction
+	    	Optional<StudentEntity> studentOptional = studentRepository.findById(sanction.getId());
+	        
+	        if (studentOptional.isPresent()) {
+	            StudentEntity student = studentOptional.get();
+	            
+	            // Prepare the student report entity
+	            StudentReportEntity studentReport = new StudentReportEntity();
+	            Long temp_id = student.getId();
+	            System.out.println("Student ID is: "+ temp_id);
+	            studentReport.setId(student.getId());
+	            studentReport.setSid(student.getSid());
+	             
+	            // Automatically set the current date and time
+	            LocalDate today = LocalDate.now();
+	            LocalTime currentTime = LocalTime.now();
+	            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	            
+	            studentReport.setMonitored_record("Sanction");
+	            studentReport.setRecord_date(today.toString());
+	            studentReport.setIncident_date(today.toString());  // Assuming the incident happened today
+	            studentReport.setTime(currentTime.format(timeFormatter)); // Set the current time
+	            
+	            // Set the remarks from the sanction recommendation
+	            studentReport.setRemarks(sanction.getSanctionRecommendation());
+	            
+	            // Save the student report
+	            studentReportRepository.save(studentReport);
+	        } else {
+	            // Handle case where student doesn't exist
+	            throw new IllegalArgumentException("Student with id " + sanction.getId() + " not found.");
+	        }
+	    }
 	 
 	public List<SanctionEntity> getPendingSanctions(){
         return srepo.findAllPendingSanctions();
     }
 	
-	public List<SanctionEntity> getAllSanctionsBySid(String sid){
-        return srepo.findBySid(sid);
+	public List<SanctionEntity> getAllSanctionsBySid(Long id){
+        return srepo.findAllById(id);
     }
 	
 	 @Transactional
