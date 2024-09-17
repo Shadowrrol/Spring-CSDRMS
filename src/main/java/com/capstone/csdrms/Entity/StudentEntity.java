@@ -28,7 +28,6 @@ public class StudentEntity {
 	@Column(nullable = false)
 	private String schoolYear;
 	
-	private Long adviserId;  
 	
 	@Column(name = "contact_number")
 	private String con_num;
@@ -40,7 +39,7 @@ public class StudentEntity {
 	}
 
 	public StudentEntity(Long id, String sid, String firstname, String middlename, String lastname, int grade,
-			String section, String schoolYear, Long adviserId, String con_num, int current) {
+			String section, String schoolYear, String con_num, int current) {
 		super();
 		this.id = id;
 		this.sid = sid;
@@ -50,7 +49,6 @@ public class StudentEntity {
 		this.grade = grade;
 		this.section = section;
 		this.schoolYear = schoolYear;
-		this.adviserId = adviserId;
 		this.con_num = con_num;
 		this.current = current;
 	}
@@ -117,14 +115,6 @@ public class StudentEntity {
 
 	public void setSchoolYear(String schoolYear) {
 		this.schoolYear = schoolYear;
-	}
-
-	public Long getAdviserId() {
-		return adviserId;
-	}
-
-	public void setAdviserId(Long adviserId) {
-		this.adviserId = adviserId;
 	}
 
 	public String getCon_num() {

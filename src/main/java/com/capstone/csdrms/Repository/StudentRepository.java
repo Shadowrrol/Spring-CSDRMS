@@ -14,7 +14,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
 	Optional<StudentEntity> findBySid(String sid);
 	Optional<StudentEntity> findByIdAndCurrent(Long id, int current);
-	List<StudentEntity> findAllByAdviserId(Long adviserId);
+	List<StudentEntity> findAllBySectionAndSchoolYear(String section, String schoolYear);
 	List<StudentEntity> findAllBySid(String sid);
 	
 	boolean existsBySidAndSchoolYear(String sid, String schoolYear); 

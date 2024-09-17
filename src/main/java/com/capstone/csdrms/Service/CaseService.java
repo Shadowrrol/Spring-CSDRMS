@@ -50,9 +50,10 @@ public class CaseService {
     	return caseRepository.findAllByHandledBySSO(1);
     }
     
-    public List<CaseEntity> getAllCasesHandledByAdviser(Long adviserId) {
-        return caseRepository.findAllByAdviserIdAndHandledBySSO(adviserId);
-    }
+    //Temporary disabled
+//    public List<CaseEntity> getAllCasesHandledByAdviser(Long adviserId) {
+//        return caseRepository.findAllByAdviserIdAndHandledBySSO(adviserId);
+//    }
     
     
 }

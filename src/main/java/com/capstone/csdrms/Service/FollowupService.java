@@ -21,8 +21,10 @@ public class FollowupService {
         return followupRepository.findAll();
     }
     
-    public List<FollowupEntity> getAllFollowUpsByAdviser(Long adviserId) {
-        return followupRepository.findAllByAdviserId(adviserId);
-    }
+    //Temporary Disabled
+
+//    public List<FollowupEntity> getAllFollowUpsByAdviser(Long adviserId) {
+//        return followupRepository.findAllByAdviserId(adviserId);
+//    }
 }
 

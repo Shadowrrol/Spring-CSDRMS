@@ -78,10 +78,12 @@ public class CaseController {
     	return caseService.getAllCaseHandledBySSO();
     }
     
-    @GetMapping("/handledByAdviser/{adviserId}")
-    public List<CaseEntity> getAllCasesHandledByAdviser(@PathVariable Long adviserId){
-    	return caseService.getAllCasesHandledByAdviser(adviserId);
-    }
+    //Temporary Disabled
+    
+//    @GetMapping("/handledByAdviser/{adviserId}")
+//    public List<CaseEntity> getAllCasesHandledByAdviser(@PathVariable Long adviserId){
+//    	return caseService.getAllCasesHandledByAdviser(adviserId);
+//    }
     
     @PutMapping("/{id}/sso")
     public CaseEntity updateCaseHandledBySSO(@PathVariable int id) {

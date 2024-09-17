@@ -1,11 +1,20 @@
 package com.capstone.csdrms.Service;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;  // Correct Sheet import
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.capstone.csdrms.Entity.CaseEntity;
 import com.capstone.csdrms.Entity.FeedbackEntity;
@@ -69,8 +78,8 @@ public class StudentService {
 		return srepo.findAllByCurrent(1);
 	}
 	
-	public List<StudentEntity> getStudentsByAdviser(Long adviserId) {
-        return srepo.findAllByAdviserId(adviserId);
+	public List<StudentEntity> getStudentsByAdviser(String section, String schoolYear) {
+        return srepo.findAllBySectionAndSchoolYear(section, schoolYear);
     }
 
 //	@SuppressWarnings("finally")
@@ -128,6 +137,61 @@ public class StudentService {
 	public Optional<StudentEntity> getStudentById(Long id){
 		return srepo.findById(id);
 	}
+	
+	public void importStudentData(MultipartFile file) throws Exception {
+	    List<StudentEntity> students = new ArrayList<>();
+
+	    try (InputStream is = file.getInputStream(); Workbook workbook = new XSSFWorkbook(is)) {
+	        Sheet sheet = workbook.getSheetAt(0);  // Assuming data is in the first sheet
+
+	        for (Row row : sheet) {
+	            if (row.getRowNum() == 0) continue;  // Skip header row
+
+	            StudentEntity student = new StudentEntity();
+	            
+	            // Handle SID (which could be numeric in Excel)
+	            if (row.getCell(0).getCellType() == CellType.NUMERIC) {
+	                student.setSid(String.valueOf((long) row.getCell(0).getNumericCellValue()));
+	            } else {
+	                student.setSid(row.getCell(0).getStringCellValue());
+	            }
+
+	            // Handle First Name
+	            student.setFirstname(row.getCell(1).getStringCellValue());
+
+	            // Handle Middle Name (might be empty or string)
+	            student.setMiddlename(row.getCell(2) != null ? row.getCell(2).getStringCellValue() : "");
+
+	            // Handle Last Name
+	            student.setLastname(row.getCell(3).getStringCellValue());
+
+	            // Handle Grade (numeric)
+	            student.setGrade((int) row.getCell(4).getNumericCellValue());
+
+	            // Handle Section
+	            student.setSection(row.getCell(5).getStringCellValue());
+
+	            // Handle School Year
+	            student.setSchoolYear(row.getCell(6).getStringCellValue());
+
+	            // Handle Contact Number (could be numeric or string)
+	            if (row.getCell(7).getCellType() == CellType.NUMERIC) {
+	                student.setCon_num(String.valueOf((long) row.getCell(7).getNumericCellValue()));
+	            } else {
+	                student.setCon_num(row.getCell(7).getStringCellValue());
+	            }
+
+	            // Handle Current status (numeric)
+	            student.setCurrent((int) row.getCell(8).getNumericCellValue());
+
+	            students.add(student);
+	        }
+	    }
+
+	    srepo.saveAll(students);
+	}
+
+
 	
 	
 }
