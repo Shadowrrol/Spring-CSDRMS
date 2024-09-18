@@ -31,7 +31,7 @@ public class FollowupEntity {
     private LocalTime time;
 
     @Column(nullable = false)
-    private String violation;
+    private String action;
 
     @Column
     private String reasoning;
@@ -45,14 +45,14 @@ public class FollowupEntity {
 		super();
 	}
 
-	public FollowupEntity(Long id, int cid, LocalDate date, LocalTime time, String violation, String reasoning,
+	public FollowupEntity(Long id, int cid, LocalDate date, LocalTime time, String action, String reasoning,
 			CaseEntity caseEntity) {
 		super();
 		this.id = id;
 		this.cid = cid;
 		this.date = date;
 		this.time = time;
-		this.violation = violation;
+		this.action = action;
 		this.reasoning = reasoning;
 		this.caseEntity = caseEntity;
 	}
@@ -89,12 +89,12 @@ public class FollowupEntity {
 		this.time = time;
 	}
 
-	public String getViolation() {
-		return violation;
+	public String getAction() {
+		return action;
 	}
 
-	public void setViolation(String violation) {
-		this.violation = violation;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	public String getReasoning() {

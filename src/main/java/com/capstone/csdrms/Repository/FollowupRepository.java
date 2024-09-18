@@ -10,12 +10,9 @@ import com.capstone.csdrms.Entity.FollowupEntity;
 
 public interface FollowupRepository extends JpaRepository<FollowupEntity, Long> {
 	
-	//Temporary Disabled
-//	 @Query("SELECT f FROM FollowupEntity f " +
-//	           "JOIN f.caseEntity c " +
-//	           "JOIN c.student s " +
-//	           "WHERE s.adviserId = :adviserId")
-//	    List<FollowupEntity> findAllByAdviserId(@Param("adviserId") Long adviserId);
+	
+
+	  List<FollowupEntity> findAllByCaseEntity_Student_SectionAndCaseEntity_Student_SchoolYear(String section, String schoolYear);
 	 
 	  List<FollowupEntity> findAllByCaseEntity_Id(Long id);
 	

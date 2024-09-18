@@ -24,9 +24,6 @@ public class FeedbackEntity {
     @Column(name = "caseID")
     private int cid;
 
-    @Column(name = "isAcknowledged")
-    private int isAcknowledged;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private AdviserEntity adviser;
@@ -41,13 +38,12 @@ public class FeedbackEntity {
         super();
     }
 
-	public FeedbackEntity(int fid, Long uid, int cid, int isAcknowledged, AdviserEntity adviser, CaseEntity caseEntity,
+	public FeedbackEntity(int fid, Long uid, int cid, AdviserEntity adviser, CaseEntity caseEntity,
 			String result) {
 		super();
 		this.fid = fid;
 		this.uid = uid;
 		this.cid = cid;
-		this.isAcknowledged = isAcknowledged;
 		this.adviser = adviser;
 		this.caseEntity = caseEntity;
 		this.result = result;
@@ -75,14 +71,6 @@ public class FeedbackEntity {
 
 	public void setCid(int cid) {
 		this.cid = cid;
-	}
-
-	public int getIsAcknowledged() {
-		return isAcknowledged;
-	}
-
-	public void setIsAcknowledged(int isAcknowledged) {
-		this.isAcknowledged = isAcknowledged;
 	}
 
 	public AdviserEntity getAdviser() {

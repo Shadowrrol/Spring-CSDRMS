@@ -21,9 +21,9 @@ public interface CaseRepository extends JpaRepository<CaseEntity, Integer> {
 
 	List<CaseEntity> findAllById(Long id);
 	
-	
-	//This part is temporary disabled
-//	@Query("SELECT c FROM CaseEntity c WHERE c.student.adviserId = :adviserId AND c.handledBySSO = 0")
-//    List<CaseEntity> findAllByAdviserIdAndHandledBySSO(@Param("adviserId") Long adviserId);
+   
+    List<CaseEntity> findAllByStudent_SectionAndStudent_SchoolYear(String section, String schoolYear);
+   
+   
 
 }

@@ -35,12 +35,11 @@ public class FollowupController {
     	return followupService.getAllFollowUps();
     }
     
-    //Temporary Disabled
     
-//    @GetMapping("/getAllFollowUpsByAdviser/{adviserId}")
-//    public List<FollowupEntity> getAllFollowUpsByAdviser(@PathVariable Long adviserId) {
-//    	return followupService.getAllFollowUpsByAdviser(adviserId);
-//    }
+    @GetMapping("/getAllFollowUpsByAdviser/{section}/{schoolYear}")
+    public List<FollowupEntity> getAllFollowUpsByAdviser(@PathVariable String section, @PathVariable String schoolYear) {
+    	return followupService.getAllFollowUpsByAdviser(section, schoolYear);
+    }
 }
 
  

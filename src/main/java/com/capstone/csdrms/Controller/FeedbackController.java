@@ -29,9 +29,9 @@ public class FeedbackController {
         return fserv.insertFeedback(feedback);
     }  
 	
-	@GetMapping("/getFeedbackWithDetails")
-    public List<FeedbackEntity> getFeedbackWithDetails(Long uid) {
-        return fserv.getAllFeedbackByAidWithDetails(uid);
+	@GetMapping("/getFeedbacksForAdviser")
+    public List<FeedbackEntity> getAllFeedbacksForAdviser(@RequestParam String username) {
+        return fserv.getAllFeedbacksForAdviser(username);
     }
 	
 	@GetMapping("/getFeedbacks")
@@ -39,15 +39,6 @@ public class FeedbackController {
 		 return fserv.getAllFeedbackBacks();
 	 }
 	
-	@GetMapping("/getFeedbacksForAdviser")
-	public List<FeedbackEntity> getAllFeedbackBacksByUidAndIsAcknowledged(@RequestParam Long uid){
-		return fserv.getAllFeedbackBacksByUidAndIsAcknowledged(uid);
-	}
 	
-	 @PutMapping("/acknowledge/{feedbackId}")
-	    public FeedbackEntity acknowledgeFeedback(@PathVariable int feedbackId) {
-	        return fserv.acknowledgeFeedback(feedbackId);
-	    }
-
 	
 }

@@ -50,10 +50,10 @@ public class CaseService {
     	return caseRepository.findAllByHandledBySSO(1);
     }
     
-    //Temporary disabled
-//    public List<CaseEntity> getAllCasesHandledByAdviser(Long adviserId) {
-//        return caseRepository.findAllByAdviserIdAndHandledBySSO(adviserId);
-//    }
+    
+    public List<CaseEntity> getAllCasesHandledByAdviser(String section, String schoolYear){
+    	return caseRepository.findAllByStudent_SectionAndStudent_SchoolYear(section,schoolYear);
+    }
     
     
 }
