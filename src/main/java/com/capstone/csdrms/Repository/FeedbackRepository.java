@@ -14,7 +14,7 @@ public interface FeedbackRepository extends JpaRepository<FeedbackEntity, Intege
      
     List<FeedbackEntity> findALLByCaseEntity_Id(Long id);
     
-    List<FeedbackEntity> findAllByAdviser_Username(String username);
+    List<FeedbackEntity> findAllByCaseEntity_Student_SectionAndCaseEntity_Student_SchoolYear(String Section, String schoolYear);
     
      
 

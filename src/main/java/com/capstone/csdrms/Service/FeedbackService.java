@@ -18,8 +18,8 @@ public class FeedbackService {
 		return frepo.save(feedback);
 	}
 	
-	 public List<FeedbackEntity> getAllFeedbacksForAdviser(String username) {
-	    return frepo.findAllByAdviser_Username(username);
+	 public List<FeedbackEntity> getAllFeedbacksForAdviser(String section, String schoolYear) {
+	    return frepo.findAllByCaseEntity_Student_SectionAndCaseEntity_Student_SchoolYear(section,schoolYear);
 	    }
 	 
 	 public List<FeedbackEntity> getAllFeedbackBacks(){

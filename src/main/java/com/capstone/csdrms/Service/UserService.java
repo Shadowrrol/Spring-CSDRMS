@@ -161,8 +161,6 @@ public class UserService {
 	        } else if (principalUser != null) {
 	            principalRepository.delete(principalUser);
 	        } else if (adviserUser != null) {
-	        	List<FeedbackEntity> feedbacksForAdviser =  frepo.findAllByAdviser_Username(username);
-	        	frepo.deleteAll(feedbacksForAdviser);
 	            adviserRepository.delete(adviserUser);
 	        } else if (adminUser != null) {
 	            adminRepository.delete(adminUser);

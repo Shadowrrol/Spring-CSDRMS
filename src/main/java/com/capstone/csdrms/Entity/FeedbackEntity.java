@@ -18,15 +18,8 @@ public class FeedbackEntity {
     @Column(name = "feedbackID")
     private int fid;
 
-    @Column(name = "user_id")
-    private Long uid;
-
     @Column(name = "caseID")
     private int cid;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private AdviserEntity adviser;
 
     @ManyToOne
     @JoinColumn(name = "caseID", insertable = false, updatable = false)
@@ -42,9 +35,7 @@ public class FeedbackEntity {
 			String result) {
 		super();
 		this.fid = fid;
-		this.uid = uid;
 		this.cid = cid;
-		this.adviser = adviser;
 		this.caseEntity = caseEntity;
 		this.result = result;
 	}
@@ -57,28 +48,12 @@ public class FeedbackEntity {
 		this.fid = fid;
 	}
 
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
 	public int getCid() {
 		return cid;
 	}
 
 	public void setCid(int cid) {
 		this.cid = cid;
-	}
-
-	public AdviserEntity getAdviser() {
-		return adviser;
-	}
-
-	public void setAdviser(AdviserEntity adviser) {
-		this.adviser = adviser;
 	}
 
 	public CaseEntity getCaseEntity() {

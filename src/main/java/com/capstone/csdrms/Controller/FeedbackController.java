@@ -29,9 +29,9 @@ public class FeedbackController {
         return fserv.insertFeedback(feedback);
     }  
 	
-	@GetMapping("/getFeedbacksForAdviser")
-    public List<FeedbackEntity> getAllFeedbacksForAdviser(@RequestParam String username) {
-        return fserv.getAllFeedbacksForAdviser(username);
+	@GetMapping("/getFeedbacksForAdviser/{section}/{schoolYear}")
+    public List<FeedbackEntity> getAllFeedbacksForAdviser(@PathVariable String section,@PathVariable  String schoolYear) {
+        return fserv.getAllFeedbacksForAdviser(section,schoolYear);
     }
 	
 	@GetMapping("/getFeedbacks")
