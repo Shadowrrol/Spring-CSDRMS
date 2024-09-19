@@ -18,34 +18,31 @@ public class SanctionEntity {
 	@Column(name = "sanctionID")
 	private int sanction_id;
 	
-	private Long id;
-	private String behaviorDetails;
+	@Column(name = "caseID")
+    private int cid;
+
+    @ManyToOne
+    @JoinColumn(name = "caseID", insertable = false, updatable = false)
+    private CaseEntity caseEntity;
+	
 	private String sanctionRecommendation;
 	private int isApproved;
 	 
-	@ManyToOne
-	@JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-	private StudentEntity student;
-	
-	 
-
+    
 	public SanctionEntity() {
 		super();
 	}
 
-
-
-	public SanctionEntity(int sanction_id, Long id, String behaviorDetails, String sanctionRecommendation,
-			int isApproved, StudentEntity student) {
+	
+	public SanctionEntity(int sanction_id, int cid, CaseEntity caseEntity, String sanctionRecommendation,
+			int isApproved) {
 		super();
 		this.sanction_id = sanction_id;
-		this.id = id;
-		this.behaviorDetails = behaviorDetails;
+		this.cid = cid;
+		this.caseEntity = caseEntity;
 		this.sanctionRecommendation = sanctionRecommendation;
 		this.isApproved = isApproved;
-		this.student = student;
 	}
-
 
 
 	public int getSanction_id() {
@@ -53,35 +50,29 @@ public class SanctionEntity {
 	}
 
 
-
 	public void setSanction_id(int sanction_id) {
 		this.sanction_id = sanction_id;
 	}
 
 
-
-	public Long getId() {
-		return id;
+	public int getCid() {
+		return cid;
 	}
 
 
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setCid(int cid) {
+		this.cid = cid;
 	}
 
 
-
-	public String getBehaviorDetails() {
-		return behaviorDetails;
+	public CaseEntity getCaseEntity() {
+		return caseEntity;
 	}
 
 
-
-	public void setBehaviorDetails(String behaviorDetails) {
-		this.behaviorDetails = behaviorDetails;
+	public void setCaseEntity(CaseEntity caseEntity) {
+		this.caseEntity = caseEntity;
 	}
-
 
 
 	public String getSanctionRecommendation() {
@@ -89,11 +80,9 @@ public class SanctionEntity {
 	}
 
 
-
 	public void setSanctionRecommendation(String sanctionRecommendation) {
 		this.sanctionRecommendation = sanctionRecommendation;
 	}
-
 
 
 	public int getIsApproved() {
@@ -101,23 +90,8 @@ public class SanctionEntity {
 	}
 
 
-
 	public void setIsApproved(int isApproved) {
 		this.isApproved = isApproved;
 	}
-
-
-
-	public StudentEntity getStudent() {
-		return student;
-	}
-
-
-
-	public void setStudent(StudentEntity student) {
-		this.student = student;
-	}
-	
-	
-	
+ 
 }

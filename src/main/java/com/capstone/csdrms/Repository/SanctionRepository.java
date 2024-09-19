@@ -1,6 +1,7 @@
 package com.capstone.csdrms.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,15 +14,13 @@ public interface SanctionRepository extends JpaRepository<SanctionEntity, Intege
 
     List<SanctionEntity> findByIsApproved(int isApproved);
 
-    @Query("SELECT s FROM SanctionEntity s JOIN FETCH s.student WHERE s.isApproved = 0")
-    List<SanctionEntity> findAllPendingSanctions();
-
+    Optional<SanctionEntity> findByCaseEntity_Id(Long id);
     List<SanctionEntity> findByIsApprovedIn(List<Integer> isApprovedValues);
     
 //    List<SanctionEntity> findBySid(String sid);
     
-    @Query("SELECT s FROM SanctionEntity s INNER JOIN StudentEntity st ON s.id = st.id WHERE st.section = ?1 AND st.schoolYear = ?2")
-    List<SanctionEntity> findBySectionAndSchoolYear(String section, String schoolYear);
+    
+    List<SanctionEntity> findByCaseEntity_Student_SectionAndCaseEntity_Student_SchoolYear(String section, String schoolYear);
 
-	List<SanctionEntity> findAllById(Long id);
+	List<SanctionEntity> findAllByCaseEntity_Id(Long id);
 }

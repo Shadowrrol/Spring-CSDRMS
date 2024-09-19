@@ -24,20 +24,19 @@ public class SanctionController {
 	@Autowired
 	SanctionService sserv;
 	
+	@GetMapping("/getAllSanctions")
+	public List<SanctionEntity> getAllSanctions(){
+		return sserv.getAllSanctions();
+	}
+	
 	@PostMapping("/insertSanction")
 	public SanctionEntity insertSanction(@RequestBody SanctionEntity sanction) {
 		return sserv.insertSanction(sanction);
 	}
-	
-	@GetMapping("/getAllPendingSanctions")
-	public List<SanctionEntity> getPendingSanctions(){
-        return sserv.getPendingSanctions();
-    }
-	
 
 	@GetMapping("/getSanctionsById/{id}")
-	public List<SanctionEntity> getAllSanctionsBySid(@PathVariable Long id){
-		return sserv.getAllSanctionsBySid(id);
+	public List<SanctionEntity> getAllSanctionsById(@PathVariable Long id){
+		return sserv.getAllSanctionsById(id);
 	}
 	
 	@PostMapping("/approveSanction")

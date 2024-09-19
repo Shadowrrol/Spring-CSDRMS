@@ -24,7 +24,7 @@ public class CaseEntity {
 	private String investigator;
 	private String violation;
 	private String description;
-	private String status;
+	private String status; 
 	private int handledBySSO;
 	 
 	@ManyToOne
