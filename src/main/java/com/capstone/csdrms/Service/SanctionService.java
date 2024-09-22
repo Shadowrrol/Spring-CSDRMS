@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import com.capstone.csdrms.Entity.CaseEntity;
 import com.capstone.csdrms.Entity.SanctionEntity;
 import com.capstone.csdrms.Entity.StudentEntity;
-import com.capstone.csdrms.Entity.StudentReportEntity;
+import com.capstone.csdrms.Entity.StudentRecordEntity;
 import com.capstone.csdrms.Repository.CaseRepository;
 import com.capstone.csdrms.Repository.SanctionRepository;
-import com.capstone.csdrms.Repository.StudentReportRepository;
+import com.capstone.csdrms.Repository.StudentRecordRepository;
 import com.capstone.csdrms.Repository.StudentRepository;
 
 import jakarta.transaction.Transactional;
@@ -27,7 +27,7 @@ public class SanctionService {
 	SanctionRepository srepo;
 	
 	@Autowired
-	StudentReportRepository studentReportRepository;
+	StudentRecordRepository studentRecordRepository;
 	
 	@Autowired
 	StudentRepository studentRepository;
@@ -64,7 +64,7 @@ public class SanctionService {
 
 		    if (student != null) {
 		        // Prepare and set the fields of StudentReportEntity
-		        StudentReportEntity studentReport = new StudentReportEntity();
+		        StudentRecordEntity studentReport = new StudentRecordEntity();
 		        studentReport.setId(student.getId());
 		        studentReport.setSid(student.getSid());
 		        
@@ -81,7 +81,7 @@ public class SanctionService {
 		        studentReport.setRemarks(sanction.getSanctionRecommendation());
 
 		        // Save the student report
-		        studentReportRepository.save(studentReport);
+		        studentRecordRepository.save(studentReport);
 		    } else {
 		        throw new IllegalArgumentException("Student not found for the given sanction.");
 		    }

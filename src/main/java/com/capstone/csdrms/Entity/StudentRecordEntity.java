@@ -10,8 +10,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tblstudentReport")
-public class StudentReportEntity {
+@Table(name="tblstudentRecord")
+public class StudentRecordEntity {
  
 	@Id
 	@Column(name = "reportID")
@@ -33,11 +33,11 @@ public class StudentReportEntity {
 	@JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
 	private StudentEntity student;
 	
-	public StudentReportEntity() {
+	public StudentRecordEntity() {
 		super();
 	}
 
-	public StudentReportEntity(int rid, String sid, Long id, String record_date, String incident_date, String time,
+	public StudentRecordEntity(int rid, String sid, Long id, String record_date, String incident_date, String time,
 			String monitored_record, String remarks, StudentEntity student) {
 		super();
 		this.rid = rid;

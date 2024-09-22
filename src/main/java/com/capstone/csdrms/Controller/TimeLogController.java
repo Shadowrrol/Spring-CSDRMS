@@ -46,15 +46,15 @@ public class TimeLogController {
 	        timeLogService.updateLogoutTime(timelogId, logoutTime);
 	        return ResponseEntity.ok("Logout time logged for TimeLog ID: " + timelogId);
 	    }
-
+  
     @GetMapping("/getAll")
     public List<TimeLogEntity> getAllTimeLogs() {
-        return timeLogService.getAllTimeLogs();
+        return timeLogService.getAllTimeLogs(); 
     }     
     
     @GetMapping("/getLatestLog/{userId}")
     public ResponseEntity<TimeLogEntity> getLatestLog(@PathVariable Long userId) {
         TimeLogEntity timeLog = timeLogService.getLatestLogByUser(userId);
-        return ResponseEntity.ok(timeLog);
+        return ResponseEntity.ok(timeLog); 
     }
 }

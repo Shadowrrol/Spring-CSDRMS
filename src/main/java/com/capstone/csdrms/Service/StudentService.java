@@ -21,12 +21,12 @@ import com.capstone.csdrms.Entity.FeedbackEntity;
 import com.capstone.csdrms.Entity.FollowupEntity;
 import com.capstone.csdrms.Entity.SanctionEntity;
 import com.capstone.csdrms.Entity.StudentEntity;
-import com.capstone.csdrms.Entity.StudentReportEntity;
+import com.capstone.csdrms.Entity.StudentRecordEntity;
 import com.capstone.csdrms.Repository.CaseRepository;
 import com.capstone.csdrms.Repository.FeedbackRepository;
 import com.capstone.csdrms.Repository.FollowupRepository;
 import com.capstone.csdrms.Repository.SanctionRepository;
-import com.capstone.csdrms.Repository.StudentReportRepository;
+import com.capstone.csdrms.Repository.StudentRecordRepository;
 import com.capstone.csdrms.Repository.StudentRepository;
 
 
@@ -38,7 +38,7 @@ public class StudentService {
 	StudentRepository srepo;
 	
 	@Autowired
-	StudentReportRepository studentrepo;
+	StudentRecordRepository studentrepo;
 	
 	@Autowired
 	FeedbackRepository feedbackrepo;

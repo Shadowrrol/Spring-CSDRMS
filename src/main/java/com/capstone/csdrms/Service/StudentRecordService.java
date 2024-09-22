@@ -6,28 +6,28 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capstone.csdrms.Entity.StudentReportEntity;
-import com.capstone.csdrms.Repository.StudentReportRepository;
+import com.capstone.csdrms.Entity.StudentRecordEntity;
+import com.capstone.csdrms.Repository.StudentRecordRepository;
 
 @Service 
-public class StudentReportService {
+public class StudentRecordService {
 
 	@Autowired
-	StudentReportRepository srepo;
+	StudentRecordRepository srepo;
 	
-	public StudentReportEntity insertStudentReport(StudentReportEntity studentReport) {
-	    return srepo.save(studentReport);
+	public StudentRecordEntity insertStudentRecord(StudentRecordEntity studentRecord) {
+	    return srepo.save(studentRecord);
 	}
 
-	public List<StudentReportEntity> getAllStudentReports(){
+	public List<StudentRecordEntity> getAllStudentRecords(){
 		return srepo.findAll();
 	}
 	
-	public 	List<StudentReportEntity> getAllStudentReportsBySectionAndSchoolYear(String section, String schoolYear){
+	public 	List<StudentRecordEntity> getAllStudentRecordsBySectionAndSchoolYear(String section, String schoolYear){
 		return srepo.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
 	}
 	
-	public List<StudentReportEntity> getStudentReportsById(String sid) {
+	public List<StudentRecordEntity> getStudentRecordsById(String sid) {
 		return srepo.findAllBySid(sid);
 	}
 	
@@ -50,8 +50,8 @@ public class StudentReportService {
 //		}
 //	}
 	
-	public String deleteStudentReport(int rid) {
-		StudentReportEntity existingStudentReport = srepo.findById(rid).get();
+	public String deleteStudentRecord(int rid) {
+		StudentRecordEntity existingStudentReport = srepo.findById(rid).get();
 	    if (existingStudentReport != null) {
 	        srepo.delete(existingStudentReport);
 	        return "Student Report " + rid + " is successfully deleted!";
