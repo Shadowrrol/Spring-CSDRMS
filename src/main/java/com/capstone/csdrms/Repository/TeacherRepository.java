@@ -8,5 +8,5 @@ import com.capstone.csdrms.Entity.TeacherEntity;
 @Repository
 public interface TeacherRepository extends JpaRepository<TeacherEntity, Long> {
 
-	TeacherEntity findByUsername(String username);
+	TeacherEntity findByUsername(String username); 
 }
