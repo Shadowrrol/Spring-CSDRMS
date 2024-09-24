@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.csdrms.Entity.AdminEntity;
 import com.capstone.csdrms.Entity.AdviserEntity;
+import com.capstone.csdrms.Entity.GuidanceEntity;
 import com.capstone.csdrms.Entity.PrincipalEntity;
 import com.capstone.csdrms.Entity.SSOEntity;
+import com.capstone.csdrms.Entity.TeacherEntity;
 import com.capstone.csdrms.Entity.User;
 import com.capstone.csdrms.Service.UserService;
 
@@ -52,6 +54,19 @@ public class UserController {
         return "Admin created successfully";
     }
     
+    @PostMapping("/registerTeacher")
+    public String registerTeacher(@RequestBody TeacherEntity teacher) {
+    	userService.register(teacher);
+        return "Teacher created successfully";
+    }
+    
+    @PostMapping("/registerGuidance")
+    public String registerGuidance(@RequestBody GuidanceEntity guidance) {
+    	userService.register(guidance);
+        return "Guidance created successfully";
+    }
+     
+    
     @GetMapping("/allUsers")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
@@ -80,6 +95,18 @@ public class UserController {
         userService.update(updatedUser);
         return "Admin updated successfully";
     }
+    
+    @PutMapping("/updateTeacher")
+    public String updateTeacher(@RequestBody TeacherEntity updatedUser) {
+        userService.update(updatedUser);
+        return "Teacher updated successfully";
+    }
+    
+    @PutMapping("/updateGuidance")
+    public String updateGuidance(@RequestBody GuidanceEntity updatedUser) {
+        userService.update(updatedUser);
+        return "Guidance updated successfully";
+    }     
     
     @DeleteMapping("/deleteUser/{username}")
     public String deleteUser(@PathVariable String username) {
