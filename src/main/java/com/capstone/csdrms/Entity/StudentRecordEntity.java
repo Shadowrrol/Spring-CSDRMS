@@ -14,9 +14,8 @@ import jakarta.persistence.Table;
 public class StudentRecordEntity {
  
 	@Id
-	@Column(name = "reportID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int rid;
+	private int recordId;
 	 
 	@Column(name = "studentID")     
 	private String sid;
@@ -37,10 +36,10 @@ public class StudentRecordEntity {
 		super();
 	}
 
-	public StudentRecordEntity(int rid, String sid, Long id, String record_date, String incident_date, String time,
+	public StudentRecordEntity(int recordId, String sid, Long id, String record_date, String incident_date, String time,
 			String monitored_record, String remarks, StudentEntity student) {
 		super();
-		this.rid = rid;
+		this.recordId = recordId;
 		this.sid = sid;
 		this.id = id;
 		this.record_date = record_date;
@@ -51,12 +50,12 @@ public class StudentRecordEntity {
 		this.student = student;
 	}
 
-	public int getRid() {
-		return rid;
+	public int getRecordId() {
+		return recordId;
 	}
 
-	public void setRid(int rid) {
-		this.rid = rid;
+	public void setRecordId(int recordId) {
+		this.recordId = recordId;
 	}
 
 	public String getSid() {
@@ -85,7 +84,7 @@ public class StudentRecordEntity {
 
 	public String getIncident_date() {
 		return incident_date;
-	}
+	} 
 
 	public void setIncident_date(String incident_date) {
 		this.incident_date = incident_date;
@@ -123,7 +122,6 @@ public class StudentRecordEntity {
 		this.student = student;
 	}
 
-	
 	
 	
 }
