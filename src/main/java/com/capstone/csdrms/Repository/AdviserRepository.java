@@ -10,5 +10,7 @@ import com.capstone.csdrms.Entity.AdviserEntity;
 @Repository
 public interface AdviserRepository extends JpaRepository<AdviserEntity, Long> {
     AdviserEntity findByUsername(String username);
-    Optional<AdviserEntity> findByGradeAndSectionAndSchoolYear(int grade, String section, String schoolYear); 
+    Optional<AdviserEntity> findByGradeAndSectionAndSchoolYear(int grade, String section, String schoolYear);
+    
+    Optional<AdviserEntity> findBySectionAndSchoolYear(String section, String schooYear);
 }

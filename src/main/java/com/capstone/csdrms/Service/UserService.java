@@ -2,6 +2,7 @@ package com.capstone.csdrms.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -204,6 +205,10 @@ public class UserService {
 	            throw new IllegalArgumentException("User with username " + username + " does not exist");
 	        }
 	    }
+	 
+	 public Optional<AdviserEntity> getAdviserBySectionAndSchoolYear(String section, String schoolYear) {
+		 return adviserRepository.findBySectionAndSchoolYear(section, schoolYear);
+	 }
 	
 	
 	

@@ -27,8 +27,9 @@ public class ReportController {
 	ReportService reportService;
 	
 	@PostMapping("/insertReport")
-	public ReportEntity insertReport(@RequestBody ReportEntity report) {
-		return reportService.insertReport(report);
+	public ResponseEntity<ReportEntity> insertReport(@RequestBody ReportEntity report) throws Exception {
+		  ReportEntity savedReport = reportService.insertReport(report);
+		   return ResponseEntity.ok(savedReport);
 	}
 	
 	@GetMapping("/getAllReports")
