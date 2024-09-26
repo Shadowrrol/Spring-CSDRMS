@@ -7,11 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="tbltimelog")
-public class TimeLogEntity {
+public class TimeLogEntity { 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,19 +23,24 @@ public class TimeLogEntity {
 	 private OffsetDateTime loginTime;
 	 private OffsetDateTime logoutTime;
 	 private long duration;
+	 
+	 @ManyToOne
+	 @JoinColumn(name = "userId", referencedColumnName = "user_id", insertable = false, updatable = false)
+	 private AdviserEntity adviser;
     
 	public TimeLogEntity() {
 		super(); 
 	}
 
 	public TimeLogEntity(Long timelog_id, Long userId, OffsetDateTime loginTime, OffsetDateTime logoutTime,
-			long duration) {
+			long duration, AdviserEntity adviser) {
 		super();
 		this.timelog_id = timelog_id;
 		this.userId = userId;
 		this.loginTime = loginTime;
 		this.logoutTime = logoutTime;
 		this.duration = duration;
+		this.adviser = adviser;
 	}
 
 	public Long getTimelog_id() {
@@ -76,6 +83,15 @@ public class TimeLogEntity {
 		this.duration = duration;
 	}
 
+	public AdviserEntity getAdviser() {
+		return adviser;
+	}
+
+	public void setAdviser(AdviserEntity adviser) {
+		this.adviser = adviser;
+	}
+
+	
 	
     
 }

@@ -57,4 +57,9 @@ public class TimeLogController {
         TimeLogEntity timeLog = timeLogService.getLatestLogByUser(userId);
         return ResponseEntity.ok(timeLog); 
     }
+    
+    @GetMapping("/getAllTimelogsByAdviser/{userId}")
+    public List<TimeLogEntity> getAllTimelogsByAdviser(@PathVariable Long userId){
+    	return timeLogService.getAllTimelogsByAdviser(userId);
+    }
 }

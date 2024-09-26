@@ -42,4 +42,8 @@ public class TimeLogService {
         // Implement a method to fetch the latest time log for the given user
         return timeLogRepository.findFirstByUserIdOrderByLoginTimeDesc(userId);
     }
+    
+    public List<TimeLogEntity> getAllTimelogsByAdviser(Long userId){
+    	return timeLogRepository.findAllByUserId(userId);
+    }
 }
