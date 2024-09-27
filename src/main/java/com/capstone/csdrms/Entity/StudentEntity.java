@@ -19,37 +19,30 @@ public class StudentEntity {
 	@Column(name = "studentID", nullable = false)
 	private String sid;
 	
-	private String firstname;
-	private String middlename;
-	private String lastname;
-	private int grade;
+	private String name;
+	private String grade;
 	private String section;
+	private String gender;
 	
 	@Column(nullable = false)
 	private String schoolYear;
 	
-	
-	@Column(name = "contact_number")
-	private String con_num;
-	
 	private int current;
 
 	public StudentEntity() {
-		super();
+		super(); 
 	}
 
-	public StudentEntity(Long id, String sid, String firstname, String middlename, String lastname, int grade,
-			String section, String schoolYear, String con_num, int current) {
+	public StudentEntity(Long id, String sid, String name, String grade, String section, String gender,
+			String schoolYear, int current) {
 		super();
 		this.id = id;
 		this.sid = sid;
-		this.firstname = firstname;
-		this.middlename = middlename;
-		this.lastname = lastname;
+		this.name = name;
 		this.grade = grade;
 		this.section = section;
+		this.gender = gender;
 		this.schoolYear = schoolYear;
-		this.con_num = con_num;
 		this.current = current;
 	}
 
@@ -69,35 +62,19 @@ public class StudentEntity {
 		this.sid = sid;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getMiddlename() {
-		return middlename;
-	}
-
-	public void setMiddlename(String middlename) {
-		this.middlename = middlename;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
 	}
 
@@ -109,20 +86,20 @@ public class StudentEntity {
 		this.section = section;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String getSchoolYear() {
 		return schoolYear;
 	}
 
 	public void setSchoolYear(String schoolYear) {
 		this.schoolYear = schoolYear;
-	}
-
-	public String getCon_num() {
-		return con_num;
-	}
-
-	public void setCon_num(String con_num) {
-		this.con_num = con_num;
 	}
 
 	public int getCurrent() {
@@ -133,7 +110,6 @@ public class StudentEntity {
 		this.current = current;
 	}
 
-	
 	
 	
 }

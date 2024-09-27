@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.csdrms.Entity.ReportEntity;
@@ -46,11 +47,16 @@ public class ReportController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-	
+	 
 	@PutMapping("/updateReceived/{reportId}")
     public ResponseEntity<ReportEntity> updateReceived(@PathVariable Long reportId, @RequestBody Map<String, String> data) {
         Optional<ReportEntity> updatedReport = reportService.updateReceived(reportId, data.get("received"));
         return updatedReport.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+	
+	@GetMapping("/getAllReportsForAdviser")
+	public List<ReportEntity> getAllReportsForAdviser(@RequestParam String section,@RequestParam String schoolYear){
+		return reportService.getAllReportsForAdviser(section, schoolYear);
+	}
 	
 }

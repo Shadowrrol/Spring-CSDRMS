@@ -70,5 +70,9 @@ public class ReportService {
         return Optional.empty();
     }
 	
+	public List<ReportEntity> getAllReportsForAdviser(String section, String schoolYear){
+		return reportRepository.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
+	}
+	
 
 }

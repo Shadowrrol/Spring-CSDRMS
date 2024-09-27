@@ -138,7 +138,7 @@ public class StudentService {
 		return srepo.findById(id);
 	}
 	
-	public void importStudentData(MultipartFile file) throws Exception {
+	public void importStudentData(MultipartFile file, String schoolYear) throws Exception {
 	    List<StudentEntity> students = new ArrayList<>();
 
 	    try (InputStream is = file.getInputStream(); Workbook workbook = new XSSFWorkbook(is)) {
@@ -149,40 +149,25 @@ public class StudentService {
 
 	            StudentEntity student = new StudentEntity();
 	            
+	            student.setName(row.getCell(0).getStringCellValue());
+	            
+	            student.setGrade(row.getCell(1).getStringCellValue());
+	            
+	            student.setSection(row.getCell(2).getStringCellValue());
+	            
 	            // Handle SID (which could be numeric in Excel)
-	            if (row.getCell(0).getCellType() == CellType.NUMERIC) {
+	            if (row.getCell(3).getCellType() == CellType.NUMERIC) {
 	                student.setSid(String.valueOf((long) row.getCell(0).getNumericCellValue()));
 	            } else {
-	                student.setSid(row.getCell(0).getStringCellValue());
+	                student.setSid(row.getCell(3).getStringCellValue());
 	            }
-
-	            // Handle First Name
-	            student.setFirstname(row.getCell(1).getStringCellValue());
-
-	            // Handle Middle Name (might be empty or string)
-	            student.setMiddlename(row.getCell(2) != null ? row.getCell(2).getStringCellValue() : "");
-
-	            // Handle Last Name
-	            student.setLastname(row.getCell(3).getStringCellValue());
-
-	            // Handle Grade (numeric)
-	            student.setGrade((int) row.getCell(4).getNumericCellValue());
-
-	            // Handle Section
-	            student.setSection(row.getCell(5).getStringCellValue());
-
+	            
+	            student.setGender(row.getCell(4).getStringCellValue());
+	            
 	            // Handle School Year
-	            student.setSchoolYear(row.getCell(6).getStringCellValue());
+	            student.setSchoolYear(schoolYear);
 
-	            // Handle Contact Number (could be numeric or string)
-	            if (row.getCell(7).getCellType() == CellType.NUMERIC) {
-	                student.setCon_num(String.valueOf((long) row.getCell(7).getNumericCellValue()));
-	            } else {
-	                student.setCon_num(row.getCell(7).getStringCellValue());
-	            }
-
-	            // Handle Current status (numeric)
-	            student.setCurrent((int) row.getCell(8).getNumericCellValue());
+	            student.setCurrent(1);
 
 	            students.add(student);
 	        }

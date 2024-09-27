@@ -67,9 +67,9 @@ public class StudentController {
 		 }
 		 
 		 @PostMapping("/import")
-		    public ResponseEntity<?> importStudentData(@RequestParam("file") MultipartFile file) {
+		    public ResponseEntity<?> importStudentData(@RequestParam("file") MultipartFile file, @RequestParam String schoolYear) {
 		        try {
-		        	sserv.importStudentData(file);  // Call service to process the Excel file
+		        	sserv.importStudentData(file,schoolYear);  // Call service to process the Excel file
 		            return ResponseEntity.ok("File uploaded and students imported successfully");
 		        } catch (Exception e) {
 		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
