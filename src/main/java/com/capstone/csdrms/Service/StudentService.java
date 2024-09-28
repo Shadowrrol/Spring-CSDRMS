@@ -72,6 +72,10 @@ public class StudentService {
 	    }
 	    return srepo.save(student);
 	}
+	
+	public List<StudentEntity> getAllStudents(){
+		return srepo.findAll();
+	}
  
 	 
 	public List<StudentEntity> getCurrentStudents(){

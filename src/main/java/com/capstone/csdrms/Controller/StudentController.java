@@ -36,6 +36,11 @@ public class StudentController {
 			return sserv.insertStudent(student);
 		}
 		
+		@GetMapping("/getAllStudents")
+		public List<StudentEntity> getAllStudents(){
+			return sserv.getAllStudents();
+		}
+		
 		@GetMapping("/getAllCurrentStudents")
 		public List<StudentEntity> getCurrentStudents(){
 			return sserv.getCurrentStudents();
