@@ -20,11 +20,11 @@ public class ClassService {
 		return classRepository.findAll();
 	}
 	
-	 public List<String> getAllSectionsByGrade(int grade) {
+	 public List<String> getAllSectionsByGrade(String grade) {
 	        return classRepository.findAllSectionsByGrade(grade);
 	    }
-	 public List<Integer> getAllUniqueGrades(){
-		 return classRepository.findAllUniqueGrades();
+	 public List<String> getAllUniqueGrades(){
+		 return classRepository.findAllUniqueGrades(); 
 	 }
 	
 	public ClassEntity insertClass(ClassEntity classEntity) {

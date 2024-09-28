@@ -14,14 +14,14 @@ public class ClassEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long class_id;
 	
-	private int grade;
+	private String grade;
 	private String section;
 	
 	public ClassEntity() {
 		super();
 	}
 
-	public ClassEntity(Long class_id, int grade, String section) {
+	public ClassEntity(Long class_id, String grade, String section) {
 		super();
 		this.class_id = class_id;
 		this.grade = grade;
@@ -36,11 +36,11 @@ public class ClassEntity {
 		this.class_id = class_id;
 	}
 
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
 	}
 
@@ -51,7 +51,7 @@ public class ClassEntity {
 	public void setSection(String section) {
 		this.section = section;
 	}
-	
+
 	
 	
 }

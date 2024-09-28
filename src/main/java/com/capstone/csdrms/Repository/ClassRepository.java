@@ -10,8 +10,8 @@ import com.capstone.csdrms.Entity.ClassEntity;
 public interface ClassRepository extends JpaRepository<ClassEntity, Long>{
 
 	@Query("SELECT c.section FROM ClassEntity c WHERE c.grade = ?1")
-    List<String> findAllSectionsByGrade(int grade);
+    List<String> findAllSectionsByGrade(String grade);
 	
 	 @Query("SELECT DISTINCT c.grade FROM ClassEntity c")
-	 List<Integer> findAllUniqueGrades();
+	 List<String> findAllUniqueGrades();
 }

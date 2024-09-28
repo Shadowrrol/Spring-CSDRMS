@@ -31,12 +31,12 @@ public class ClassController {
 	}
 	
 	@GetMapping("/sections/{grade}")
-	public List<String> getAllSectionsByGrade(@PathVariable int grade) {
+	public List<String> getAllSectionsByGrade(@PathVariable String grade) {
 		return classService.getAllSectionsByGrade(grade);
 	}
 	
 	@GetMapping("/allUniqueGrades")
-	 public List<Integer> getAllUniqueGrades(){
+	 public List<String> getAllUniqueGrades(){
 		 return classService.getAllUniqueGrades();
 	 }
 	
