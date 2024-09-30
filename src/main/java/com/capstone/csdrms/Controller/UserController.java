@@ -68,6 +68,10 @@ public class UserController {
         return "Guidance created successfully";
     }
      
+    @GetMapping("/getAllAdvisers")
+    public List<AdviserEntity> getAllAdvisers() {
+        return userService.getAllAdvisers();
+    }
     
     @GetMapping("/allUsers")
     public List<User> getAllUsers() {

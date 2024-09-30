@@ -132,6 +132,10 @@ public class UserService {
         return allUsers;
     }
 	
+	public List<AdviserEntity> getAllAdvisers(){
+		return adviserRepository.findAll();
+	}
+	
 	public void update(User user) {
 	    User existingUser = null;
 	    
