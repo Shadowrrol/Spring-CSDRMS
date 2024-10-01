@@ -59,4 +59,9 @@ public class ReportController {
 		return reportService.getAllReportsForAdviser(section, schoolYear);
 	}
 	
+	@GetMapping("/getAllReportsByComplainant")
+	public List<ReportEntity> getAllReportsByComplainant(@RequestParam String complainant){
+		return reportService.getAllReportsByComplainant(complainant);
+	}
+	
 }

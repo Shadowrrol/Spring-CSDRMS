@@ -14,5 +14,7 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecordEnti
 	List<StudentRecordEntity> findAllBySid(String sid);
 	List<StudentRecordEntity> findAllByStudent_SectionAndStudent_SchoolYear(String section, String schoolYear);
 	
+	List<StudentRecordEntity> findAllBySidAndStudent_SectionAndStudent_SchoolYear(String sid, String section, String schoolYear);
+	
 }
  

@@ -27,8 +27,12 @@ public class StudentRecordService {
 		return srepo.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
 	}
 	
-	public List<StudentRecordEntity> getStudentRecordsById(String sid) {
+	public List<StudentRecordEntity> getStudentRecordsBySid(String sid) {
 		return srepo.findAllBySid(sid);
+	}
+	
+	public List<StudentRecordEntity> getStudentRecordsByAdviser(String sid, String section, String schoolYear){
+		return srepo.findAllBySidAndStudent_SectionAndStudent_SchoolYear(sid, section, schoolYear);
 	}
 	
 //	@SuppressWarnings("finally")

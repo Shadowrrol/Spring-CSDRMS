@@ -11,5 +11,7 @@ import com.capstone.csdrms.Entity.ReportEntity;
 public interface ReportRepository  extends JpaRepository<ReportEntity, Long> {
 	
 	List<ReportEntity> findAllByStudent_SectionAndStudent_SchoolYear(String section, String schoolYear);
+	
+	List<ReportEntity> findAllByComplainant(String complainant);
 
 }

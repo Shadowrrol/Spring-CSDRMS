@@ -74,5 +74,8 @@ public class ReportService {
 		return reportRepository.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
 	}
 	
+	public List<ReportEntity> getAllReportsByComplainant(String complainant){
+		return reportRepository.findAllByComplainant(complainant);
+	}
 
 }

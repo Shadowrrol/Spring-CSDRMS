@@ -22,7 +22,7 @@ import com.capstone.csdrms.Service.StudentRecordService;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/student-record")
-public class StudenRecordController {
+public class StudentRecordController {
  
 	 @Autowired
 	StudentRecordService sserv;
@@ -38,8 +38,13 @@ public class StudenRecordController {
 	}
 
 	@GetMapping("/getStudentRecords/{sid}")
-	public List<StudentRecordEntity> getStudentRecordsById(@PathVariable String sid){
-		return sserv.getStudentRecordsById(sid);
+	public List<StudentRecordEntity> getStudentRecordsBySid(@PathVariable String sid){
+		return sserv.getStudentRecordsBySid(sid);
+	}
+	
+	@GetMapping("/getStudentRecordsByAdviser")
+	public List<StudentRecordEntity> getStudentRecordsByAdviser(@RequestParam  String sid,@RequestParam  String section,@RequestParam  String schoolYear){
+		return sserv.getStudentRecordsByAdviser(sid,section,schoolYear);
 	}
 	
 //	@PutMapping("/updateStudentReport") 
