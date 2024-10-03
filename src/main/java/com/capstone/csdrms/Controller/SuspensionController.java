@@ -39,6 +39,11 @@ public class SuspensionController {
 		return sserv.getAllSuspensionsByStudentId(id);
 	}
 	
+	@GetMapping("/getAllSuspensionsBySectionAndSchoolYear")
+	public List<SuspensionEntity> getAllSuspensionsBySectionAndSchoolYear(@RequestParam String section,@RequestParam String schoolYear){
+		return sserv.getAllSuspensionsBySectionAndSchoolYear(section, schoolYear);
+	}
+	
 	
 	
 
