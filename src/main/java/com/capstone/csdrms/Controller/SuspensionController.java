@@ -33,6 +33,14 @@ public class SuspensionController {
 	public SuspensionEntity insertSuspension(@RequestBody SuspensionEntity suspension) {
 		return sserv.insertSuspension(suspension);
 	}
+	
+	@GetMapping("/getSuspensionsByStudentId/{id}")
+	public List<SuspensionEntity> getAllSuspensionsByStudentId(@PathVariable Long id){
+		return sserv.getAllSuspensionsByStudentId(id);
+	}
+	
+	
+	
 
 //	@GetMapping("/getSanctionsById/{id}")
 //	public List<SuspensionEntity> getAllSanctionsById(@PathVariable Long id){

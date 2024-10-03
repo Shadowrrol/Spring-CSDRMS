@@ -83,8 +83,9 @@ public class StudentService {
 	}
 	
 	public List<StudentEntity> getStudentsByAdviser(String section, String schoolYear) {
-        return srepo.findAllBySectionAndSchoolYear(section, schoolYear);
+        return srepo.findByCurrentAndSectionAndSchoolYear(1, section, schoolYear);
     }
+	
 
 //	@SuppressWarnings("finally")
 //	public StudentEntity updateStudent(String sid, StudentEntity newStudentDetails) {

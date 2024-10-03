@@ -11,7 +11,11 @@ import com.capstone.csdrms.Entity.SuspensionEntity;
 
 @Repository
 public interface SuspensionRepository extends JpaRepository<SuspensionEntity, Long> {
-
+	
+	List<SuspensionEntity> findByReportEntity_Student_Id(Long id);
+	
+	List<SuspensionEntity> findByReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(String section, String schooYear);
+	
 //    List<SuspensionEntity> findByIsApproved(int isApproved);
 //
 //    Optional<SuspensionEntity> findByCaseEntity_Id(Long id);

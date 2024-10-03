@@ -21,4 +21,6 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 	
 	List<StudentEntity> findAllByCurrent(int current);
 	
+	List<StudentEntity> findByCurrentAndSectionAndSchoolYear(int current, String section, String schoolYear);
+	
 }  

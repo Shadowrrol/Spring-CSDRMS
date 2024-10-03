@@ -61,10 +61,11 @@ public class StudentController {
 			return sserv.getCurrentStudentById(id);
 		}
 		  
-		 @GetMapping("/getAllStudentsByAdviser/{section}/{schoolYear}")
-		 public List<StudentEntity> getStudentsByAdviser(@PathVariable String section,@PathVariable String schoolYear) {
+		 @GetMapping("/getAllStudentsByAdviser")
+		 public List<StudentEntity> getStudentsByAdviser(@RequestParam String section,@RequestParam String schoolYear) {
 			return sserv.getStudentsByAdviser(section, schoolYear); 
 		}
+		
 		 
 		 @GetMapping("/getStudentById/{id}")
 		 public Optional<StudentEntity> getStudentById(@PathVariable Long id){

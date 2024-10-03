@@ -94,6 +94,10 @@ public class SuspensionService {
 		return srepo.findAll();
 	}
 	
+	public List<SuspensionEntity> getAllSuspensionsByStudentId(Long id){
+		return srepo.findByReportEntity_Student_Id(id);
+	}
+	
 //	public List<SuspensionEntity> getAllSanctionsById(Long id){
 //        return srepo.findAllByCaseEntity_Id(id);
 //    }
