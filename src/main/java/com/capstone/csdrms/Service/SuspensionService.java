@@ -101,6 +101,41 @@ public class SuspensionService {
 	public List<SuspensionEntity> getAllSuspensionsBySectionAndSchoolYear(String section, String schoolYear){
 		return srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(section, schoolYear);
 	}
+	
+	public List<SuspensionEntity> getAllUnviewedSuspensionsForSso(){
+		return srepo.findAllByViewedBySsoFalse();
+	}
+	
+	public List<SuspensionEntity> getAllUnviewedSuspensionsForPrincipal(){
+		return srepo.findAllByViewedByPrincipalFalse();
+	}
+	
+	public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(String section, String schoolYear){
+		return srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	}
+	
+	 public void markSuspensionsAsViewedForSso() {
+	        List<SuspensionEntity> suspensions = srepo.findAllByViewedBySsoFalse();
+	        suspensions.forEach(suspension -> suspension.setViewedBySso(true));
+	        srepo.saveAll(suspensions);
+	 }
+	 
+	 public void markSuspensionsAsViewedForPrincipal() {
+	        List<SuspensionEntity> suspensions = srepo.findAllByViewedByPrincipalFalse();
+	        suspensions.forEach(suspension -> suspension.setViewedByPrincipal(true));
+	        srepo.saveAll(suspensions);
+	 }
+	 
+	 public void markSuspensionsAsViewedForAdviser(String section, String schoolYear) {
+	        List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	        suspensions.forEach(suspension -> suspension.setViewedByAdviser(true));
+	        srepo.saveAll(suspensions);
+	 }
+	 
+	 public Optional<SuspensionEntity> getSuspensionByReportId(Long reportId) {
+	        return srepo.findByReportId(reportId);
+	    }
+	 
 //	public List<SuspensionEntity> getAllSanctionsById(Long id){
 //        return srepo.findAllByCaseEntity_Id(id);
 //    }

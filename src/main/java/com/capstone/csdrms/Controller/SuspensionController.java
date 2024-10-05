@@ -3,6 +3,7 @@ package com.capstone.csdrms.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,44 @@ public class SuspensionController {
 		return sserv.getAllSuspensionsBySectionAndSchoolYear(section, schoolYear);
 	}
 	
+	@GetMapping("/unviewedForSso")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForSso() {
+        return sserv.getAllUnviewedSuspensionsForSso();
+    }
+
+    @GetMapping("/unviewedForPrincipal")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForPrincipal() {
+        return sserv.getAllUnviewedSuspensionsForPrincipal();
+    }
+
+    @GetMapping("/unviewedForAdviser")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(@RequestParam String section, @RequestParam String schoolYear) {
+        return sserv.getAllUnviewedSuspensionsForAdviser(section, schoolYear);
+    }
+
+    // New methods to mark suspensions as viewed
+
+    @PostMapping("/markAsViewedForSso")
+    public void markSuspensionsAsViewedForSso() {
+        sserv.markSuspensionsAsViewedForSso();
+    }
+
+    @PostMapping("/markAsViewedForPrincipal")
+    public void markSuspensionsAsViewedForPrincipal() {
+        sserv.markSuspensionsAsViewedForPrincipal();
+    }
+
+    @PostMapping("/markAsViewedForAdviser")
+    public void markSuspensionsAsViewedForAdviser(@RequestParam String section, @RequestParam String schoolYear) {
+        sserv.markSuspensionsAsViewedForAdviser(section, schoolYear);
+    }
+    
+    @GetMapping("/getSuspensionByReport/{reportId}")
+    public ResponseEntity<SuspensionEntity> getSuspensionByReportId(@PathVariable Long reportId) {
+        return sserv.getSuspensionByReportId(reportId)
+                   .map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 	
 	
 

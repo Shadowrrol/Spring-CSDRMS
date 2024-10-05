@@ -64,4 +64,25 @@ public class ReportController {
 		return reportService.getAllReportsByComplainant(complainant);
 	}
 	
+	@PutMapping("/updateReport/{reportId}")
+	public ResponseEntity<ReportEntity> updateReport(
+	    @PathVariable Long reportId, 
+	    @RequestBody ReportEntity updatedReport) {
+	    try {
+	        ReportEntity report = reportService.updateReport(reportId, updatedReport);
+	        return ResponseEntity.ok(report);
+	    } catch (Exception e) {
+	        return ResponseEntity.badRequest().body(null);
+	    }
+	}
+	
+	@GetMapping("/getReport/{reportId}")
+	public ResponseEntity<ReportEntity> getReportById(@PathVariable Long reportId) {
+	    Optional<ReportEntity> report = reportService.getReportById(reportId);  // Call service method
+	    return report.map(ResponseEntity::ok) // If found, return 200 OK
+	                 .orElseGet(() -> ResponseEntity.notFound().build()); // If not found, return 404
+	}
+
+
+	
 }

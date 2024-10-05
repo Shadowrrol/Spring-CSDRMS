@@ -23,6 +23,11 @@ public class SuspensionEntity {
 	private String startDate;
 	private String endDate;
 	private String returnDate;
+	private boolean viewedByPrincipal;
+	private boolean viewedByAdviser;
+	private boolean viewedBySso;
+	
+	
 	
 	@ManyToOne
     @JoinColumn(name = "reportId", insertable = false, updatable = false)
@@ -33,7 +38,8 @@ public class SuspensionEntity {
 	}
 
 	public SuspensionEntity(Long suspensionId, Long reportId, String dateSubmitted, int days, String startDate,
-			String endDate, String returnDate, ReportEntity reportEntity) {
+			String endDate, String returnDate, boolean viewedByPrincipal, boolean viewedByAdviser, boolean viewedBySso,
+			ReportEntity reportEntity) {
 		super();
 		this.suspensionId = suspensionId;
 		this.reportId = reportId;
@@ -42,6 +48,9 @@ public class SuspensionEntity {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.returnDate = returnDate;
+		this.viewedByPrincipal = viewedByPrincipal;
+		this.viewedByAdviser = viewedByAdviser;
+		this.viewedBySso = viewedBySso;
 		this.reportEntity = reportEntity;
 	}
 
@@ -101,6 +110,30 @@ public class SuspensionEntity {
 		this.returnDate = returnDate;
 	}
 
+	public boolean isViewedByPrincipal() {
+		return viewedByPrincipal;
+	}
+
+	public void setViewedByPrincipal(boolean viewedByPrincipal) {
+		this.viewedByPrincipal = viewedByPrincipal;
+	}
+
+	public boolean isViewedByAdviser() {
+		return viewedByAdviser;
+	}
+
+	public void setViewedByAdviser(boolean viewedByAdviser) {
+		this.viewedByAdviser = viewedByAdviser;
+	}
+
+	public boolean isViewedBySso() {
+		return viewedBySso;
+	}
+
+	public void setViewedBySso(boolean viewedBySso) {
+		this.viewedBySso = viewedBySso;
+	}
+
 	public ReportEntity getReportEntity() {
 		return reportEntity;
 	}
@@ -109,7 +142,7 @@ public class SuspensionEntity {
 		this.reportEntity = reportEntity;
 	}
 
-	 
+	
 	
  
 }

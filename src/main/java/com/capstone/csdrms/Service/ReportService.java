@@ -77,5 +77,52 @@ public class ReportService {
 	public List<ReportEntity> getAllReportsByComplainant(String complainant){
 		return reportRepository.findAllByComplainant(complainant);
 	}
+	
+	public ReportEntity updateReport(Long reportId, ReportEntity updatedReport) throws Exception {
+	    Optional<ReportEntity> existingReportOpt = reportRepository.findById(reportId);
+	    if (existingReportOpt.isPresent()) {
+	        ReportEntity existingReport = existingReportOpt.get();
+	        
+	        // Fetch the updated student using updatedReport's studentId
+	        Optional<StudentEntity> studentOptional = studentRepository.findById(updatedReport.getStudentId());
+	        if (studentOptional.isEmpty()) {
+	            throw new Exception("Student not found");
+	        }
+
+	        StudentEntity student = studentOptional.get();
+
+	        // Retrieve the adviser based on the student's section and school year
+	        Optional<AdviserEntity> adviserOptional = adviserRepository.findBySectionAndSchoolYear(student.getSection(), student.getSchoolYear());
+	        if (adviserOptional.isEmpty()) {
+	            throw new Exception("Adviser not found for the student's section and school year");
+	        }
+
+	        AdviserEntity adviser = adviserOptional.get();
+	        existingReport.setAdviserId(adviser.getUid());
+	        
+	        // Update the necessary fields
+	        existingReport.setStudentId(updatedReport.getStudentId());
+	        existingReport.setDate(updatedReport.getDate());
+	        existingReport.setTime(updatedReport.getTime());
+	        existingReport.setComplaint(updatedReport.getComplaint());
+	        existingReport.setComplainant(updatedReport.getComplainant());
+	        existingReport.setComplete(false);
+	        existingReport.setReceived(null);
+	        existingReport.setViewedByAdviser(false);
+	        existingReport.setViewedBySso(false);
+
+	        // Save and return the updated report
+	        return reportRepository.save(existingReport);
+	    } else {
+	        throw new Exception("Report not found with ID: " + reportId);
+	    }
+	}
+
+	
+	public Optional<ReportEntity> getReportById(Long reportId) {
+	    return reportRepository.findById(reportId);  // Fetch report by ID from the repository
+	}
+
+
 
 }
