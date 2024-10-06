@@ -19,7 +19,7 @@ import com.capstone.csdrms.Service.FeedbackService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://react-csdrms.vercel.app")
 @RequestMapping("/feedback")
 public class FeedbackController {
 	

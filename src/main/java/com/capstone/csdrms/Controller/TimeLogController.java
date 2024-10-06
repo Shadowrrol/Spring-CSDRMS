@@ -13,7 +13,7 @@ import com.capstone.csdrms.Methods.TimeLogRequest;
 import com.capstone.csdrms.Service.TimeLogService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://react-csdrms.vercel.app")
 @RequestMapping("/time-log")
 public class TimeLogController {
 

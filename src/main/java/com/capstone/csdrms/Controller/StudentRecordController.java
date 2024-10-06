@@ -20,7 +20,7 @@ import com.capstone.csdrms.Service.StudentRecordService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://react-csdrms.vercel.app")
 @RequestMapping("/student-record")
 public class StudentRecordController {
  

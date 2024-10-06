@@ -18,7 +18,7 @@ import com.capstone.csdrms.Service.FollowupService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://react-csdrms.vercel.app")
 @RequestMapping("/followup")
 public class FollowupController {
     
