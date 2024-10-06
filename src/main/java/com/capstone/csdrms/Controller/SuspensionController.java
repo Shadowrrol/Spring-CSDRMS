@@ -18,6 +18,7 @@ import com.capstone.csdrms.Service.SuspensionService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/suspension")
 public class SuspensionController {
 

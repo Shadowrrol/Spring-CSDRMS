@@ -20,6 +20,7 @@ import com.capstone.csdrms.Entity.ReportEntity;
 import com.capstone.csdrms.Service.ReportService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/report")
 public class ReportController {
 	

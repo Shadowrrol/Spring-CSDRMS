@@ -14,6 +14,7 @@ import com.capstone.csdrms.Service.LoginService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class LoginController {
 	

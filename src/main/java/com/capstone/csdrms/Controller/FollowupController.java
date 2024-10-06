@@ -18,6 +18,7 @@ import com.capstone.csdrms.Service.FollowupService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/followup")
 public class FollowupController {
     

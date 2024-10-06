@@ -19,6 +19,7 @@ import com.capstone.csdrms.Service.FeedbackService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/feedback")
 public class FeedbackController {
 	
