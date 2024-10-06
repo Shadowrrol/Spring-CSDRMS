@@ -122,6 +122,27 @@ public class ReportService {
 	public Optional<ReportEntity> getReportById(Long reportId) {
 	    return reportRepository.findById(reportId);  // Fetch report by ID from the repository
 	}
+	
+	public List<ReportEntity> getAllUnviewedReportsForSso(){
+		return reportRepository.findAllByViewedBySsoFalse();
+	}
+	
+	public List<ReportEntity> getAllUnviewedReportsForAdviser(String section, String schoolYear){
+		return reportRepository.findAllByStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	}
+	
+	public void markReportsAsViewedForSso() {
+		List<ReportEntity> reports = reportRepository.findAllByViewedBySsoFalse();
+		reports.forEach(report -> report.setViewedBySso(true));
+		reportRepository.saveAll(reports);
+	}
+	
+	public void markReportsAsViewedForAdviser(String section, String schoolYear) {
+		List<ReportEntity> reports = reportRepository.findAllByStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+		reports.forEach(report -> report.setViewedByAdviser(true));
+		reportRepository.saveAll(reports);
+	}
+	
 
 
 

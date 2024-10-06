@@ -102,6 +102,10 @@ public class SuspensionService {
 		return srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(section, schoolYear);
 	}
 	
+	public List<SuspensionEntity> getAllSuspensionByComplainant(String username){
+		return srepo.findAllByReportEntity_Complainant(username);
+	}
+	
 	public List<SuspensionEntity> getAllUnviewedSuspensionsForSso(){
 		return srepo.findAllByViewedBySsoFalse();
 	}
@@ -112,6 +116,10 @@ public class SuspensionService {
 	
 	public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(String section, String schoolYear){
 		return srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	}
+	
+	public List<SuspensionEntity> getAllUnviewedSuspensionsForComplainant(String username){
+		return srepo.findAllByReportEntity_ComplainantAndViewedByComplainantFalse(username);
 	}
 	
 	 public void markSuspensionsAsViewedForSso() {
@@ -129,6 +137,12 @@ public class SuspensionService {
 	 public void markSuspensionsAsViewedForAdviser(String section, String schoolYear) {
 	        List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
 	        suspensions.forEach(suspension -> suspension.setViewedByAdviser(true));
+	        srepo.saveAll(suspensions);
+	 }
+	 
+	 public void markSuspensionsAsViewedForComplainant(String username) {
+		 	List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_ComplainantAndViewedByComplainantFalse(username);
+	        suspensions.forEach(suspension -> suspension.setViewedByComplainant(true));
 	        srepo.saveAll(suspensions);
 	 }
 	 

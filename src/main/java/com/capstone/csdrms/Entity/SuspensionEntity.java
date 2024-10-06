@@ -26,7 +26,7 @@ public class SuspensionEntity {
 	private boolean viewedByPrincipal;
 	private boolean viewedByAdviser;
 	private boolean viewedBySso;
-	
+	private boolean viewedByComplainant;
 	
 	
 	@ManyToOne
@@ -39,7 +39,7 @@ public class SuspensionEntity {
 
 	public SuspensionEntity(Long suspensionId, Long reportId, String dateSubmitted, int days, String startDate,
 			String endDate, String returnDate, boolean viewedByPrincipal, boolean viewedByAdviser, boolean viewedBySso,
-			ReportEntity reportEntity) {
+			boolean viewedByComplainant, ReportEntity reportEntity) {
 		super();
 		this.suspensionId = suspensionId;
 		this.reportId = reportId;
@@ -51,6 +51,7 @@ public class SuspensionEntity {
 		this.viewedByPrincipal = viewedByPrincipal;
 		this.viewedByAdviser = viewedByAdviser;
 		this.viewedBySso = viewedBySso;
+		this.viewedByComplainant = viewedByComplainant;
 		this.reportEntity = reportEntity;
 	}
 
@@ -134,6 +135,14 @@ public class SuspensionEntity {
 		this.viewedBySso = viewedBySso;
 	}
 
+	public boolean isViewedByComplainant() {
+		return viewedByComplainant;
+	}
+
+	public void setViewedByComplainant(boolean viewedByComplainant) {
+		this.viewedByComplainant = viewedByComplainant;
+	}
+
 	public ReportEntity getReportEntity() {
 		return reportEntity;
 	}
@@ -142,7 +151,6 @@ public class SuspensionEntity {
 		this.reportEntity = reportEntity;
 	}
 
-	
 	
  
 }

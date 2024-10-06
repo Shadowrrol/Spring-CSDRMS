@@ -23,6 +23,10 @@ public interface SuspensionRepository extends JpaRepository<SuspensionEntity, Lo
 	List<SuspensionEntity> findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(String section, String schoolYear);
 	
 	Optional<SuspensionEntity> findByReportId(Long reportId);
+	
+	List<SuspensionEntity> findAllByReportEntity_Complainant(String username);
+	
+	List<SuspensionEntity> findAllByReportEntity_ComplainantAndViewedByComplainantFalse(String username);
 
 
 	

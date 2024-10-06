@@ -13,5 +13,10 @@ public interface ReportRepository  extends JpaRepository<ReportEntity, Long> {
 	List<ReportEntity> findAllByStudent_SectionAndStudent_SchoolYear(String section, String schoolYear);
 	
 	List<ReportEntity> findAllByComplainant(String complainant);
+	
+	List<ReportEntity> findAllByViewedBySsoFalse();
+	
+	List<ReportEntity> findAllByStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(String section, String schoolYear);
+	
 
 }

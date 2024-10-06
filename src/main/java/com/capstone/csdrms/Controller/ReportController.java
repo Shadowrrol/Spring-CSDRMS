@@ -83,6 +83,25 @@ public class ReportController {
 	                 .orElseGet(() -> ResponseEntity.notFound().build()); // If not found, return 404
 	}
 
+	@GetMapping("/unviewedForSso")
+	public List<ReportEntity> getAllUnviewedReportsForSso(){
+		return reportService.getAllUnviewedReportsForSso();
+	}
+	
+	@GetMapping("/unviewedForAdviser")
+	public List<ReportEntity> getAllUnviewedReportsForAdviser(@RequestParam String section,@RequestParam String schoolYear){
+		return reportService.getAllUnviewedReportsForAdviser(section, schoolYear);
+	}
+	
+	@PostMapping("/markAsViewedForSso")
+    public void markReportsAsViewedForSso() {
+		reportService.markReportsAsViewedForSso();
+    }
+
+	@PostMapping("/markAsViewedForAdviser")
+    public void markReportsAsViewedForAdviser(@RequestParam String section, @RequestParam String schoolYear) {
+		reportService.markReportsAsViewedForAdviser(section, schoolYear);
+    }
 
 	
 }
