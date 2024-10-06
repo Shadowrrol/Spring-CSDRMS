@@ -25,6 +25,7 @@ public class ReportEntity {
     private String complaint;
     private String complainant;
     private String received;
+    private String encoder;
     private boolean complete;
     private boolean viewedByAdviser;
 	private boolean viewedBySso;
@@ -41,8 +42,8 @@ public class ReportEntity {
     }
 
 	public ReportEntity(Long reportId, Long studentId, Long adviserId, String date, String time, String complaint,
-			String complainant, String received, boolean complete, boolean viewedByAdviser, boolean viewedBySso,
-			StudentEntity student, AdviserEntity adviser) {
+			String complainant, String received, String encoder, boolean complete, boolean viewedByAdviser,
+			boolean viewedBySso, StudentEntity student, AdviserEntity adviser) {
 		super();
 		this.reportId = reportId;
 		this.studentId = studentId;
@@ -52,6 +53,7 @@ public class ReportEntity {
 		this.complaint = complaint;
 		this.complainant = complainant;
 		this.received = received;
+		this.encoder = encoder;
 		this.complete = complete;
 		this.viewedByAdviser = viewedByAdviser;
 		this.viewedBySso = viewedBySso;
@@ -123,6 +125,14 @@ public class ReportEntity {
 		this.received = received;
 	}
 
+	public String getEncoder() {
+		return encoder;
+	}
+
+	public void setEncoder(String encoder) {
+		this.encoder = encoder;
+	}
+
 	public boolean isComplete() {
 		return complete;
 	}
@@ -163,5 +173,6 @@ public class ReportEntity {
 		this.adviser = adviser;
 	}
 
+	
     
 }
