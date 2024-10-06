@@ -20,7 +20,6 @@ import com.capstone.csdrms.Service.StudentRecordService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/student-record")
 public class StudentRecordController {
  

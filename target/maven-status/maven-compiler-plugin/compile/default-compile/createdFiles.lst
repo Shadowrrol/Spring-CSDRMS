@@ -22,6 +22,7 @@ com\capstone\csdrms\Repository\SchoolYearRepository.class
 com\capstone\csdrms\Entity\SuspensionEntity.class
 com\capstone\csdrms\Repository\CaseRepository.class
 com\capstone\csdrms\Entity\ReportEntity.class
+com\capstone\csdrms\config\WebConfig.class
 com\capstone\csdrms\Service\LoginService.class
 com\capstone\csdrms\Service\FollowupService.class
 com\capstone\csdrms\Entity\StudentRecordEntity.class
@@ -56,6 +57,7 @@ com\capstone\csdrms\Repository\SSORepository.class
 com\capstone\csdrms\Entity\CaseEntity.class
 com\capstone\csdrms\Repository\StudentRecordRepository.class
 com\capstone\csdrms\Entity\TimeLogEntity.class
+com\capstone\csdrms\config\WebConfig$1.class
 com\capstone\csdrms\Controller\SchoolYearController.class
 com\capstone\csdrms\Entity\AdviserEntity.class
 com\capstone\csdrms\Controller\FeedbackController.class

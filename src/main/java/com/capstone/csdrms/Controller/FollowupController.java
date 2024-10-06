@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capstone.csdrms.Entity.FollowupEntity;
 import com.capstone.csdrms.Service.FollowupService;
 
+
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/followup")
 public class FollowupController {
     
