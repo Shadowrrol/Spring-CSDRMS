@@ -29,13 +29,13 @@ public class SchoolYearService {
 	        return "School year: " + syEntity.getSchoolYear_ID() + " already exists!";
 	    }
 	
-	public String deleteSchoolYear(Long schoolYear_ID) {
-		Optional<SchoolYearEntity> schoolYearOptional = syRepository.findById(schoolYear_ID);
-		if(schoolYearOptional.isPresent()) {
-			syRepository.deleteById(schoolYear_ID);
-			return "School Year successfuly deleted!";
-		}
-		return "School Year " + schoolYear_ID+ "doesn't exist"; 
-	}
+	 public boolean deleteSchoolYear(Long schoolYear_ID) {
+	        Optional<SchoolYearEntity> schoolYearOptional = syRepository.findById(schoolYear_ID);
+	        if (schoolYearOptional.isPresent()) {
+	            syRepository.deleteById(schoolYear_ID);
+	            return true; // Deletion successful
+	        }
+	        return false; // School Year doesn't exist
+	    }
 	
 }

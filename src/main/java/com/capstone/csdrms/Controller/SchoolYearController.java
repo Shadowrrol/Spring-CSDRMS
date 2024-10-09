@@ -3,7 +3,9 @@ package com.capstone.csdrms.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +34,14 @@ public class SchoolYearController {
 		 return syService.addSchoolYear(syEntity);
 	 }
 	
-	 @PostMapping("/deleteSchoolYear/{schoolYear_ID}")
-	public String deleteSchoolYear(@PathVariable Long schoolYear_ID) {
-		return syService.deleteSchoolYear(schoolYear_ID);
-	}
+	@DeleteMapping("/deleteSchoolYear/{schoolYear_ID}")  // Use DELETE method
+    public ResponseEntity<String> deleteSchoolYear(@PathVariable Long schoolYear_ID) {
+        boolean isDeleted = syService.deleteSchoolYear(schoolYear_ID);
+        if (isDeleted) {
+            return ResponseEntity.ok("School year deleted successfully.");
+        } else {
+            return ResponseEntity.status(404).body("School year not found.");
+        }
+    }
 	
 }

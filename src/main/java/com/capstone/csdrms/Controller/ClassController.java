@@ -3,6 +3,7 @@ package com.capstone.csdrms.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +52,14 @@ public class ClassController {
 	}
 	
 	@DeleteMapping("/deleteClass/{classId}")
-	public void deleteClass(@PathVariable Long classId) {
-		classService.deleteClass(classId);
+	public ResponseEntity<String> deleteClass(@PathVariable Long classId) {
+	    boolean isDeleted = classService.deleteClass(classId);
+	    if (isDeleted) {
+	        return ResponseEntity.ok("Class deleted successfully.");
+	    } else {
+	        return ResponseEntity.status(404).body("Class with id " + classId + " not found.");
+	    }
 	}
+
 
 }

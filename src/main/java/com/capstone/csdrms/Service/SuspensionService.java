@@ -145,7 +145,7 @@ public class SuspensionService {
 	        suspensions.forEach(suspension -> suspension.setViewedByComplainant(true));
 	        srepo.saveAll(suspensions);
 	 }
-	 
+	  
 	 public Optional<SuspensionEntity> getSuspensionByReportId(Long reportId) {
 	        return srepo.findByReportId(reportId);
 	    }

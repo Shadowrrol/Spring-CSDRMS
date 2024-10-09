@@ -45,13 +45,15 @@ public class ClassService {
 		}
 	}
 	
-	public void deleteClass(Long classId) {
-		Optional<ClassEntity> classEntityOptional = classRepository.findById(classId);
-		
-		if (classEntityOptional.isPresent()) {
-			classRepository.deleteById(classId);
-		} else {
-			throw new NoSuchElementException("Class with id " + classId + " not found");
-		}
+	public boolean deleteClass(Long classId) {
+	    Optional<ClassEntity> classEntityOptional = classRepository.findById(classId);
+	    
+	    if (classEntityOptional.isPresent()) {
+	        classRepository.deleteById(classId);
+	        return true; // Deletion successful
+	    } else {
+	        return false; // Class not found
+	    }
 	}
+
 }

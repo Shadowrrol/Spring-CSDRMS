@@ -157,9 +157,13 @@ public class UserService {
 	        throw new IllegalArgumentException("User with username " + user.getUsername() + " doesn't exist");
 	    }
 	    
-	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		String encryptedPassword = bcrypt.encode(user.getPassword());
-	    existingUser.setPassword(encryptedPassword);
+	    	    
+	    if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+	        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+	        String encryptedPassword = bcrypt.encode(user.getPassword());
+	        existingUser.setPassword(encryptedPassword);
+	    }
+	    
 	    
 	    existingUser.setFirstname(user.getFirstname());
 	    existingUser.setLastname(user.getLastname());

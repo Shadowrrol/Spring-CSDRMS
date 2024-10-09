@@ -64,7 +64,7 @@ public class StudentController {
 		 @GetMapping("/getAllStudentsByAdviser")
 		 public List<StudentEntity> getStudentsByAdviser(@RequestParam String section,@RequestParam String schoolYear) {
 			return sserv.getStudentsByAdviser(section, schoolYear); 
-		}
+		} 
 		
 		 
 		 @GetMapping("/getStudentById/{id}")
@@ -79,7 +79,7 @@ public class StudentController {
 		            return ResponseEntity.ok("File uploaded and students imported successfully");
 		        } catch (Exception e) {
 		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
-		        }
+		        } 
 		    }
 	
 }
