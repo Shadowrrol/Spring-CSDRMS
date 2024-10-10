@@ -70,13 +70,17 @@ public class ReportService {
         return Optional.empty();
     }
 	
-	public List<ReportEntity> getAllReportsForAdviser(String section, String schoolYear){
-		return reportRepository.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
+	public List<ReportEntity> getAllReportsForAdviser(String section, String schoolYear, String complainant){
+		return reportRepository.findReportsBySectionAndSchoolYearOrComplainant(section, schoolYear, complainant);
 	}
 	
 	public List<ReportEntity> getAllReportsByComplainant(String complainant){
 		return reportRepository.findAllByComplainant(complainant);
 	}
+	
+	public List<ReportEntity> getReportsExcludingComplainant(String complainant) {
+        return reportRepository.findReportsExcludingComplainant(complainant);
+    }
 	
 	public ReportEntity updateReport(Long reportId, ReportEntity updatedReport) throws Exception {
 	    Optional<ReportEntity> existingReportOpt = reportRepository.findById(reportId);

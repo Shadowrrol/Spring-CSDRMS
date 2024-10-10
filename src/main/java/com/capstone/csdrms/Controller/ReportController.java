@@ -55,14 +55,19 @@ public class ReportController {
     }
 	
 	@GetMapping("/getAllReportsForAdviser")
-	public List<ReportEntity> getAllReportsForAdviser(@RequestParam String section,@RequestParam String schoolYear){
-		return reportService.getAllReportsForAdviser(section, schoolYear);
+	public List<ReportEntity> getAllReportsForAdviser(@RequestParam String section,@RequestParam String schoolYear, @RequestParam String complainant){
+		return reportService.getAllReportsForAdviser(section, schoolYear, complainant);
 	}
 	
 	@GetMapping("/getAllReportsByComplainant")
 	public List<ReportEntity> getAllReportsByComplainant(@RequestParam String complainant){
 		return reportService.getAllReportsByComplainant(complainant);
 	}
+	
+	@GetMapping("/notifications")
+    public List<ReportEntity> getReportsExcludingComplainant(@RequestParam String complainant) {
+        return reportService.getReportsExcludingComplainant(complainant);
+    }
 	
 	@PutMapping("/updateReport/{reportId}")
 	public ResponseEntity<ReportEntity> updateReport(
