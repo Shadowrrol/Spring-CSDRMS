@@ -40,9 +40,9 @@ public class SuspensionController {
 		return sserv.getAllSuspensionsByStudentId(id);
 	}
 	
-	@GetMapping("/getAllSuspensionsBySectionAndSchoolYear")
-	public List<SuspensionEntity> getAllSuspensionsBySectionAndSchoolYear(@RequestParam String section,@RequestParam String schoolYear){
-		return sserv.getAllSuspensionsBySectionAndSchoolYear(section, schoolYear);
+	@GetMapping("/getAllSuspensionsByGradeSectionAndSchoolYear")
+	public List<SuspensionEntity> getAllSuspensionsByGradeSectionAndSchoolYear(@RequestParam int grade, @RequestParam String section,@RequestParam String schoolYear){
+		return sserv.getAllSuspensionsByGradeSectionAndSchoolYear(grade, section, schoolYear);
 	}
 	
 	@GetMapping("/getAllSuspensionsByComplainant")
@@ -61,8 +61,8 @@ public class SuspensionController {
     }
 
     @GetMapping("/unviewedForAdviser")
-    public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(@RequestParam String section, @RequestParam String schoolYear) {
-        return sserv.getAllUnviewedSuspensionsForAdviser(section, schoolYear);
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(@RequestParam int grade, @RequestParam String section, @RequestParam String schoolYear) {
+        return sserv.getAllUnviewedSuspensionsForAdviser(grade, section, schoolYear);
     }
     
     @GetMapping("/unviewedForComplainant")
@@ -83,8 +83,8 @@ public class SuspensionController {
     }
 
     @PostMapping("/markAsViewedForAdviser")
-    public void markSuspensionsAsViewedForAdviser(@RequestParam String section, @RequestParam String schoolYear) {
-        sserv.markSuspensionsAsViewedForAdviser(section, schoolYear);
+    public void markSuspensionsAsViewedForAdviser(@RequestParam int grade, @RequestParam String section, @RequestParam String schoolYear) {
+        sserv.markSuspensionsAsViewedForAdviser(grade, section, schoolYear);
     }
     
     @PostMapping("/markAsViewedForComplainant")

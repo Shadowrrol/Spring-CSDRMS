@@ -14,13 +14,13 @@ public interface SuspensionRepository extends JpaRepository<SuspensionEntity, Lo
 	
 	List<SuspensionEntity> findByReportEntity_Student_Id(Long id);
 	
-	List<SuspensionEntity> findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(String section, String schoolYear);
+	List<SuspensionEntity> findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(int grade, String section, String schoolYear);
 	
 	List<SuspensionEntity> findAllByViewedBySsoFalse();
 	
 	List<SuspensionEntity> findAllByViewedByPrincipalFalse();
 	
-	List<SuspensionEntity> findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(String section, String schoolYear);
+	List<SuspensionEntity> findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(int grade, String section, String schoolYear);
 	
 	Optional<SuspensionEntity> findByReportId(Long reportId);
 	

@@ -2,6 +2,7 @@ package com.capstone.csdrms.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,17 +24,33 @@ public class StudentRecordService {
 		return srepo.findAll();
 	}
 	
-	public 	List<StudentRecordEntity> getAllStudentRecordsBySectionAndSchoolYear(String section, String schoolYear){
-		return srepo.findAllByStudent_SectionAndStudent_SchoolYear(section, schoolYear);
+	public 	List<StudentRecordEntity> getAllStudentRecordsByAdviser(int grade, String section, String schoolYear){
+		return srepo.findAllByStudent_GradeAndStudent_SectionAndStudent_SchoolYear(grade, section, schoolYear);
 	}
 	
 	public List<StudentRecordEntity> getStudentRecordsBySid(String sid) {
 		return srepo.findAllBySid(sid);
 	}
 	
-	public List<StudentRecordEntity> getStudentRecordsByAdviser(String sid, String section, String schoolYear){
-		return srepo.findAllBySidAndStudent_SectionAndStudent_SchoolYear(sid, section, schoolYear);
-	}
+	public StudentRecordEntity updateStudentRecord(int recordId, StudentRecordEntity updatedRecord) throws Exception {
+        // Fetch the existing record by its ID
+        Optional<StudentRecordEntity> existingRecordOpt = srepo.findById(recordId);
+        if (existingRecordOpt.isPresent()) {
+            StudentRecordEntity existingRecord = existingRecordOpt.get();
+            
+            existingRecord.setMonitored_record(updatedRecord.getMonitored_record());
+            existingRecord.setSanction(updatedRecord.getSanction());
+            
+            // Save the updated record
+            return srepo.save(existingRecord);
+        } else {
+            throw new Exception("Student record not found with ID: " + recordId);
+        }
+    }
+	
+//	public List<StudentRecordEntity> getStudentRecordsByAdviser(String sid, String section, String schoolYear){
+//		return srepo.findAllBySidAndStudent_SectionAndStudent_SchoolYear(sid, section, schoolYear);
+//	}
 	
 //	@SuppressWarnings("finally")
 //	public StudentReportEntity updateStudentReport(int rid, StudentReportEntity newStudentReportDetails) {

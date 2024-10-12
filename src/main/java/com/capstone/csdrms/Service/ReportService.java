@@ -9,8 +9,10 @@ import java.util.Optional;
 import com.capstone.csdrms.Entity.AdviserEntity;
 import com.capstone.csdrms.Entity.ReportEntity;
 import com.capstone.csdrms.Entity.StudentEntity;
+import com.capstone.csdrms.Entity.StudentRecordEntity;
 import com.capstone.csdrms.Repository.AdviserRepository;
 import com.capstone.csdrms.Repository.ReportRepository;
+import com.capstone.csdrms.Repository.StudentRecordRepository;
 import com.capstone.csdrms.Repository.StudentRepository;
 
 @Service 
@@ -24,6 +26,9 @@ public class ReportService {
 
     @Autowired
     AdviserRepository adviserRepository;
+    
+    @Autowired
+    StudentRecordRepository studentRecordRepository;
 	
     public ReportEntity insertReport(ReportEntity report) throws Exception {
         Optional<StudentEntity> studentOptional = studentRepository.findById(report.getStudentId());
@@ -41,7 +46,24 @@ public class ReportService {
         AdviserEntity adviser = adviserOptional.get();
         report.setAdviserId(adviser.getUid());
 
-        return reportRepository.save(report);
+        // Save the report
+        ReportEntity savedReport = reportRepository.save(report);
+
+        // Automatically create a StudentRecordEntity
+        StudentRecordEntity studentRecord = new StudentRecordEntity();
+        studentRecord.setSid(student.getSid());
+        studentRecord.setId(student.getId());
+        studentRecord.setRecord_date(savedReport.getDate());  // Assuming ReportEntity has a date field
+        studentRecord.setIncident_date(savedReport.getDate());
+        studentRecord.setTime(savedReport.getTime());
+        studentRecord.setMonitored_record("TBD");
+        studentRecord.setRemarks(savedReport.getComplaint());  // You can modify the remarks as needed
+        studentRecord.setSanction("");  // You can set this based on report or leave it empty
+
+        // Save the student record
+        studentRecordRepository.save(studentRecord);
+
+        return savedReport;
     }
 	
 	public List<ReportEntity> getAllReports(){
@@ -70,8 +92,8 @@ public class ReportService {
         return Optional.empty();
     }
 	
-	public List<ReportEntity> getAllReportsForAdviser(String section, String schoolYear, String complainant){
-		return reportRepository.findReportsBySectionAndSchoolYearOrComplainant(section, schoolYear, complainant);
+	public List<ReportEntity> getAllReportsForAdviser(int grade, String section, String schoolYear, String complainant){
+		return reportRepository.findReportsByGradeSectionAndSchoolYearOrComplainant(grade, section, schoolYear, complainant);
 	}
 	
 	public List<ReportEntity> getAllReportsByComplainant(String complainant){
@@ -131,8 +153,8 @@ public class ReportService {
 		return reportRepository.findAllByViewedBySsoFalse();
 	}
 	
-	public List<ReportEntity> getAllUnviewedReportsForAdviser(String section, String schoolYear){
-		return reportRepository.findAllByStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	public List<ReportEntity> getAllUnviewedReportsForAdviser(int grade, String section, String schoolYear){
+		return reportRepository.findAllByStudent_GradeAndStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 	}
 	
 	public void markReportsAsViewedForSso() {
@@ -141,8 +163,8 @@ public class ReportService {
 		reportRepository.saveAll(reports);
 	}
 	
-	public void markReportsAsViewedForAdviser(String section, String schoolYear) {
-		List<ReportEntity> reports = reportRepository.findAllByStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	public void markReportsAsViewedForAdviser(int grade, String section, String schoolYear) {
+		List<ReportEntity> reports = reportRepository.findAllByStudent_GradeAndStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 		reports.forEach(report -> report.setViewedByAdviser(true));
 		reportRepository.saveAll(reports);
 	}

@@ -62,8 +62,8 @@ public class StudentController {
 		}
 		  
 		 @GetMapping("/getAllStudentsByAdviser")
-		 public List<StudentEntity> getStudentsByAdviser(@RequestParam String section,@RequestParam String schoolYear) {
-			return sserv.getStudentsByAdviser(section, schoolYear); 
+		 public List<StudentEntity> getStudentsByAdviser(@RequestParam int grade, @RequestParam String section,@RequestParam String schoolYear) {
+			return sserv.getStudentsByAdviser(grade, section, schoolYear); 
 		} 
 		
 		 

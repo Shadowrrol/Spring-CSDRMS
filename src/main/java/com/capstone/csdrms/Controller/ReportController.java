@@ -55,8 +55,8 @@ public class ReportController {
     }
 	
 	@GetMapping("/getAllReportsForAdviser")
-	public List<ReportEntity> getAllReportsForAdviser(@RequestParam String section,@RequestParam String schoolYear, @RequestParam String complainant){
-		return reportService.getAllReportsForAdviser(section, schoolYear, complainant);
+	public List<ReportEntity> getAllReportsForAdviser(@RequestParam int grade, @RequestParam String section,@RequestParam String schoolYear, @RequestParam String complainant){
+		return reportService.getAllReportsForAdviser(grade, section, schoolYear, complainant);
 	}
 	
 	@GetMapping("/getAllReportsByComplainant")
@@ -94,8 +94,8 @@ public class ReportController {
 	}
 	
 	@GetMapping("/unviewedForAdviser")
-	public List<ReportEntity> getAllUnviewedReportsForAdviser(@RequestParam String section,@RequestParam String schoolYear){
-		return reportService.getAllUnviewedReportsForAdviser(section, schoolYear);
+	public List<ReportEntity> getAllUnviewedReportsForAdviser(@RequestParam int grade, @RequestParam String section,@RequestParam String schoolYear){
+		return reportService.getAllUnviewedReportsForAdviser(grade, section, schoolYear);
 	}
 	
 	@PostMapping("/markAsViewedForSso")
@@ -104,8 +104,8 @@ public class ReportController {
     }
 
 	@PostMapping("/markAsViewedForAdviser")
-    public void markReportsAsViewedForAdviser(@RequestParam String section, @RequestParam String schoolYear) {
-		reportService.markReportsAsViewedForAdviser(section, schoolYear);
+    public void markReportsAsViewedForAdviser(@RequestParam int grade, @RequestParam String section, @RequestParam String schoolYear) {
+		reportService.markReportsAsViewedForAdviser(grade, section, schoolYear);
     }
 
 	

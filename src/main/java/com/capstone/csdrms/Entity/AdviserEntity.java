@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 public class AdviserEntity extends User{
 
 	private String schoolYear;
-	private String grade;
+	private int grade;
 	private String section;
 	
 
@@ -17,7 +17,7 @@ public class AdviserEntity extends User{
 	}
 
 
-	public AdviserEntity(String schoolYear, String grade, String section) {
+	public AdviserEntity(String schoolYear, int grade, String section) {
 		super();
 		this.schoolYear = schoolYear;
 		this.grade = grade;
@@ -35,12 +35,12 @@ public class AdviserEntity extends User{
 	}
 
 
-	public String getGrade() {
+	public int getGrade() {
 		return grade;
 	}
 
 
-	public void setGrade(String grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 
@@ -54,7 +54,5 @@ public class AdviserEntity extends User{
 		this.section = section;
 	}
 
-	
-	
 	
 }

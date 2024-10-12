@@ -82,7 +82,7 @@ public class UserService {
 	            if (adviserExists) {
 	                throw new IllegalArgumentException("Adviser with grade " + adviserUser.getGrade() + ", section " + adviserUser.getSection() + ", and school year " + adviserUser.getSchoolYear() + " already exists");
 	            }
-	        }
+	        } 
 
 	        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 	        String encryptedPassword = bcrypt.encode(user.getPassword());

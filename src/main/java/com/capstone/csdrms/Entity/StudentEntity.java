@@ -20,7 +20,7 @@ public class StudentEntity {
 	private String sid;
 	
 	private String name;
-	private String grade;
+	private int grade;
 	private String section;
 	private String gender;
 	
@@ -30,11 +30,11 @@ public class StudentEntity {
 	private int current;
 
 	public StudentEntity() {
-		super(); 
+		super();
 	}
 
-	public StudentEntity(Long id, String sid, String name, String grade, String section, String gender,
-			String schoolYear, int current) {
+	public StudentEntity(Long id, String sid, String name, int grade, String section, String gender, String schoolYear,
+			int current) {
 		super();
 		this.id = id;
 		this.sid = sid;
@@ -70,11 +70,11 @@ public class StudentEntity {
 		this.name = name;
 	}
 
-	public String getGrade() {
+	public int getGrade() {
 		return grade;
 	}
 
-	public void setGrade(String grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 
@@ -109,6 +109,11 @@ public class StudentEntity {
 	public void setCurrent(int current) {
 		this.current = current;
 	}
+	
+	
+	
+	
+	
 
 	
 	

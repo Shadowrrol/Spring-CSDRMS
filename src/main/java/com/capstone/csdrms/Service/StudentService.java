@@ -82,8 +82,8 @@ public class StudentService {
 		return srepo.findAllByCurrent(1);
 	}
 	
-	public List<StudentEntity> getStudentsByAdviser(String section, String schoolYear) {
-        return srepo.findByCurrentAndSectionAndSchoolYear(1, section, schoolYear);
+	public List<StudentEntity> getStudentsByAdviser(int grade, String section, String schoolYear) {
+        return srepo.findByCurrentAndGradeAndSectionAndSchoolYear(1,grade, section, schoolYear);
     }
 	
 
@@ -156,7 +156,7 @@ public class StudentService {
 	            
 	            student.setName(row.getCell(0).getStringCellValue());
 	            
-	            student.setGrade(row.getCell(1).getStringCellValue());
+	            student.setGrade((int) row.getCell(1).getNumericCellValue());
 	            
 	            student.setSection(row.getCell(2).getStringCellValue());
 	            

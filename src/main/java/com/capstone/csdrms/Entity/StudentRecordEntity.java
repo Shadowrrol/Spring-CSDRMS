@@ -26,6 +26,7 @@ public class StudentRecordEntity {
 	private String time;
 	private String monitored_record;
 	private String remarks;
+	private String sanction;
 	
 	
 	@ManyToOne
@@ -37,7 +38,7 @@ public class StudentRecordEntity {
 	}
 
 	public StudentRecordEntity(int recordId, String sid, Long id, String record_date, String incident_date, String time,
-			String monitored_record, String remarks, StudentEntity student) {
+			String monitored_record, String remarks, String sanction, StudentEntity student) {
 		super();
 		this.recordId = recordId;
 		this.sid = sid;
@@ -47,6 +48,7 @@ public class StudentRecordEntity {
 		this.time = time;
 		this.monitored_record = monitored_record;
 		this.remarks = remarks;
+		this.sanction = sanction;
 		this.student = student;
 	}
 
@@ -84,7 +86,7 @@ public class StudentRecordEntity {
 
 	public String getIncident_date() {
 		return incident_date;
-	} 
+	}
 
 	public void setIncident_date(String incident_date) {
 		this.incident_date = incident_date;
@@ -112,6 +114,14 @@ public class StudentRecordEntity {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public String getSanction() {
+		return sanction;
+	}
+
+	public void setSanction(String sanction) {
+		this.sanction = sanction;
 	}
 
 	public StudentEntity getStudent() {

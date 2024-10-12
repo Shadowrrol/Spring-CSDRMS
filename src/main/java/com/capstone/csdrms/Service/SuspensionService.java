@@ -98,8 +98,8 @@ public class SuspensionService {
 		return srepo.findByReportEntity_Student_Id(id);
 	}
 	
-	public List<SuspensionEntity> getAllSuspensionsBySectionAndSchoolYear(String section, String schoolYear){
-		return srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(section, schoolYear);
+	public List<SuspensionEntity> getAllSuspensionsByGradeSectionAndSchoolYear(int grade, String section, String schoolYear){
+		return srepo.findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(grade, section, schoolYear);
 	}
 	
 	public List<SuspensionEntity> getAllSuspensionByComplainant(String username){
@@ -114,8 +114,8 @@ public class SuspensionService {
 		return srepo.findAllByViewedByPrincipalFalse();
 	}
 	
-	public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(String section, String schoolYear){
-		return srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(int grade, String section, String schoolYear){
+		return srepo.findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 	}
 	
 	public List<SuspensionEntity> getAllUnviewedSuspensionsForComplainant(String username){
@@ -134,8 +134,8 @@ public class SuspensionService {
 	        srepo.saveAll(suspensions);
 	 }
 	 
-	 public void markSuspensionsAsViewedForAdviser(String section, String schoolYear) {
-	        List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(section, schoolYear);
+	 public void markSuspensionsAsViewedForAdviser(int grade, String section, String schoolYear) {
+	        List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 	        suspensions.forEach(suspension -> suspension.setViewedByAdviser(true));
 	        srepo.saveAll(suspensions);
 	 }

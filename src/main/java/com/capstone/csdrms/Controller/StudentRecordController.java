@@ -3,6 +3,8 @@ package com.capstone.csdrms.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,10 +44,23 @@ public class StudentRecordController {
 		return sserv.getStudentRecordsBySid(sid);
 	}
 	
-	@GetMapping("/getStudentRecordsByAdviser")
-	public List<StudentRecordEntity> getStudentRecordsByAdviser(@RequestParam  String sid,@RequestParam  String section,@RequestParam  String schoolYear){
-		return sserv.getStudentRecordsByAdviser(sid,section,schoolYear);
-	}
+	@PutMapping("/update/{recordId}")
+    public ResponseEntity<StudentRecordEntity> updateStudentRecord(
+            @PathVariable int recordId, 
+            @RequestBody StudentRecordEntity updatedRecord) {
+        try {
+            // Call the service to update the student record
+            StudentRecordEntity updated = sserv.updateStudentRecord(recordId, updatedRecord);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);  // Handle not found or other exceptions
+        }
+    }
+	
+//	@GetMapping("/getStudentRecordsByAdviser")
+//	public List<StudentRecordEntity> getStudentRecordsByAdviser(@RequestParam  String sid,@RequestParam  String section,@RequestParam  String schoolYear){
+//		return sserv.getStudentRecordsByAdviser(sid,section,schoolYear);
+//	}
 	
 //	@PutMapping("/updateStudentReport") 
 //	public StudentReportEntity updateStudentReport(@RequestParam int rid,@RequestBody StudentReportEntity newStudentReportDetails) {
@@ -57,9 +72,9 @@ public class StudentRecordController {
 		return sserv.deleteStudentRecord(rid);
 	}
 	
-	@GetMapping("/getStudentRecordsBySectionAndSchoolYear")
-	public List<StudentRecordEntity> getAllStudentRecordsBySectionAndSchoolYear(@RequestParam String section,@RequestParam String schoolYear ) {
-	    return sserv.getAllStudentRecordsBySectionAndSchoolYear(section, schoolYear);
+	@GetMapping("/getStudentRecordsByAdviser")
+	public List<StudentRecordEntity> getAllStudentRecordsByAdviser(@RequestParam int grade, @RequestParam String section,@RequestParam String schoolYear ) {
+	    return sserv.getAllStudentRecordsByAdviser(grade, section, schoolYear);
 	}
 	
 }
