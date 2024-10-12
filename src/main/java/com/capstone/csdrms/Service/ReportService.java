@@ -38,7 +38,7 @@ public class ReportService {
 
         StudentEntity student = studentOptional.get();
 
-        Optional<AdviserEntity> adviserOptional = adviserRepository.findBySectionAndSchoolYear(student.getSection(), student.getSchoolYear());
+        Optional<AdviserEntity> adviserOptional = adviserRepository.findByGradeAndSectionAndSchoolYear(student.getGrade(),student.getSection(), student.getSchoolYear());
         if (adviserOptional.isEmpty()) {
             throw new Exception("Adviser not found for the student's section and school year");
         }

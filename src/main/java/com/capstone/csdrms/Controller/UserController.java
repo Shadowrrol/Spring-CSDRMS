@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.csdrms.Entity.AdminEntity;
@@ -121,8 +122,8 @@ public class UserController {
     }
     
     @GetMapping("/adviser")
-    public ResponseEntity<AdviserEntity> getAdviserBySectionAndSchoolYear(String section, String schoolYear) {
-    	 Optional<AdviserEntity> adviser = userService.getAdviserBySectionAndSchoolYear(section, schoolYear);
+    public ResponseEntity<AdviserEntity> getAdviser(@RequestParam int grade,@RequestParam String section,@RequestParam String schoolYear) {
+    	 Optional<AdviserEntity> adviser = userService.getAdviser(grade, section, schoolYear);
          
          if (adviser.isPresent()) {
              return ResponseEntity.ok(adviser.get());

@@ -214,8 +214,8 @@ public class UserService {
 	        }
 	    }
 	 
-	 public Optional<AdviserEntity> getAdviserBySectionAndSchoolYear(String section, String schoolYear) {
-		 return adviserRepository.findBySectionAndSchoolYear(section, schoolYear);
+	 public Optional<AdviserEntity> getAdviser(int grade, String section, String schoolYear) {
+		 return adviserRepository.findByGradeAndSectionAndSchoolYear(grade, section, schoolYear);
 	 }
 	
 	
