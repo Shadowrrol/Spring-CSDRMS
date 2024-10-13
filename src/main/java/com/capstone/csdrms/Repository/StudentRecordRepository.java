@@ -9,7 +9,7 @@ import com.capstone.csdrms.Entity.StudentRecordEntity;
 
 
 @Repository
-public interface StudentRecordRepository extends JpaRepository<StudentRecordEntity, Integer> {
+public interface StudentRecordRepository extends JpaRepository<StudentRecordEntity, Long> {
 	
 	List<StudentRecordEntity> findAllBySid(String sid);
 	List<StudentRecordEntity> findAllByStudent_GradeAndStudent_SectionAndStudent_SchoolYear(int grade, String section, String schoolYear);

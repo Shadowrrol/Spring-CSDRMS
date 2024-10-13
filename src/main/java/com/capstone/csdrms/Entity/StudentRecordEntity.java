@@ -15,7 +15,7 @@ public class StudentRecordEntity {
  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int recordId;
+	private Long recordId;
 	 
 	@Column(name = "studentID")     
 	private String sid;
@@ -37,8 +37,8 @@ public class StudentRecordEntity {
 		super();
 	}
 
-	public StudentRecordEntity(int recordId, String sid, Long id, String record_date, String incident_date, String time,
-			String monitored_record, String remarks, String sanction, StudentEntity student) {
+	public StudentRecordEntity(Long recordId, String sid, Long id, String record_date, String incident_date,
+			String time, String monitored_record, String remarks, String sanction, StudentEntity student) {
 		super();
 		this.recordId = recordId;
 		this.sid = sid;
@@ -52,11 +52,11 @@ public class StudentRecordEntity {
 		this.student = student;
 	}
 
-	public int getRecordId() {
+	public Long getRecordId() {
 		return recordId;
 	}
 
-	public void setRecordId(int recordId) {
+	public void setRecordId(Long recordId) {
 		this.recordId = recordId;
 	}
 
@@ -132,6 +132,5 @@ public class StudentRecordEntity {
 		this.student = student;
 	}
 
-	
 	
 }

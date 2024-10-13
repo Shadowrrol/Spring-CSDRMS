@@ -61,7 +61,11 @@ public class ReportService {
         studentRecord.setSanction("");  // You can set this based on report or leave it empty
 
         // Save the student record
-        studentRecordRepository.save(studentRecord);
+        StudentRecordEntity savedStudentRecord = studentRecordRepository.save(studentRecord);
+        
+        savedReport.setRecordId(savedStudentRecord.getRecordId());
+        
+        reportRepository.save(savedReport);
 
         return savedReport;
     }

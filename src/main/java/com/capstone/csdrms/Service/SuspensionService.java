@@ -37,6 +37,7 @@ public class SuspensionService {
 	@Autowired
 	ReportRepository reportRepository;
 	
+	
 	 
 
 	@Transactional
@@ -53,7 +54,7 @@ public class SuspensionService {
 	        SuspensionEntity savedSanction = srepo.save(suspension);
 	        
 	        // Automatically insert a student report after the sanction is added
-	        insertStudentReportFromSanction(savedSanction);
+	        insertStudentRecordFromSanction(savedSanction);
 	        
 	        return savedSanction;
 	    } else {
@@ -61,29 +62,20 @@ public class SuspensionService {
 	    }
 	}
 	    
-	 private void insertStudentReportFromSanction(SuspensionEntity suspension) {
+	 private void insertStudentRecordFromSanction(SuspensionEntity suspension) {
 		    StudentEntity student = suspension.getReportEntity().getStudent(); // Direct access to the student entity
 
 		    if (student != null) {
 		        // Prepare and set the fields of StudentReportEntity
-		        StudentRecordEntity studentReport = new StudentRecordEntity();
-		        studentReport.setId(student.getId());
-		        studentReport.setSid(student.getSid());
+		        Optional<StudentRecordEntity> studentRecordOptional = studentRecordRepository.findById(suspension.getReportEntity().getRecordId());
 		        
-		        // Automatically set the current date and time
-		        LocalDate today = LocalDate.now();
-		        LocalTime currentTime = LocalTime.now();
-		        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		        StudentRecordEntity studentRecord = studentRecordOptional.orElseGet(StudentRecordEntity::new);
+		        
+		        String sanction = "Suspended for " + suspension.getDays()+" days starting from "+ suspension.getStartDate() + " to " +suspension.getEndDate() + " and will be return at " +suspension.getReturnDate() ;      
 
-		        studentReport.setMonitored_record("Sanction");
-		        studentReport.setRecord_date(today.toString());
-		        studentReport.setIncident_date(today.toString());  // Assuming incident happened today
-		        studentReport.setTime(currentTime.format(timeFormatter));
-
-		        studentReport.setRemarks(suspension.getReportEntity().getComplaint());
-
-		        // Save the student report
-		        studentRecordRepository.save(studentReport);
+		        studentRecord.setSanction(sanction);
+		        // Save the student record
+		        studentRecordRepository.save(studentRecord);
 		    } else {
 		        throw new IllegalArgumentException("Student not found for the given sanction.");
 		    }

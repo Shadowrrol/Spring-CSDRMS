@@ -46,7 +46,7 @@ public class StudentRecordController {
 	
 	@PutMapping("/update/{recordId}")
     public ResponseEntity<StudentRecordEntity> updateStudentRecord(
-            @PathVariable int recordId, 
+            @PathVariable Long recordId, 
             @RequestBody StudentRecordEntity updatedRecord) {
         try {
             // Call the service to update the student record
@@ -68,7 +68,7 @@ public class StudentRecordController {
 //	}
 //	
 	@DeleteMapping("/deleteStudentRecord/{rid}")
-	public String deleteStudentRecord(@PathVariable int rid) {
+	public String deleteStudentRecord(@PathVariable Long rid) {
 		return sserv.deleteStudentRecord(rid);
 	}
 	

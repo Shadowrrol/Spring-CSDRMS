@@ -16,7 +16,9 @@ public class ReportEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
-    private Long studentId; 
+    private Long studentId;
+    
+    private Long recordId; 
 
     private Long adviserId; 
 
@@ -25,7 +27,7 @@ public class ReportEntity {
     private String complaint;
     private String complainant;
     private String received;
-    private String encoder;
+    private String encoder; 
     private boolean complete;
     private boolean viewedByAdviser;
 	private boolean viewedBySso;
@@ -63,14 +65,15 @@ public class ReportEntity {
     }
 
 
-	public ReportEntity(Long reportId, Long studentId, Long adviserId, String date, String time, String complaint,
-			String complainant, String received, String encoder, boolean complete, boolean viewedByAdviser,
-			boolean viewedBySso, StudentEntity student, AdviserEntity adviser, SSOEntity ssoComplainant,
-			AdviserEntity adviserComplainant, TeacherEntity teacherComplainant, GuidanceEntity guidanceComplainant,
-			PrincipalEntity principalComplainant) {
+	public ReportEntity(Long reportId, Long studentId, Long recordId, Long adviserId, String date, String time,
+			String complaint, String complainant, String received, String encoder, boolean complete,
+			boolean viewedByAdviser, boolean viewedBySso, StudentEntity student, AdviserEntity adviser,
+			SSOEntity ssoComplainant, AdviserEntity adviserComplainant, TeacherEntity teacherComplainant,
+			GuidanceEntity guidanceComplainant, PrincipalEntity principalComplainant) {
 		super();
 		this.reportId = reportId;
 		this.studentId = studentId;
+		this.recordId = recordId;
 		this.adviserId = adviserId;
 		this.date = date;
 		this.time = time;
@@ -108,6 +111,16 @@ public class ReportEntity {
 
 	public void setStudentId(Long studentId) {
 		this.studentId = studentId;
+	}
+
+
+	public Long getRecordId() {
+		return recordId;
+	}
+
+
+	public void setRecordId(Long recordId) {
+		this.recordId = recordId;
 	}
 
 
@@ -281,12 +294,4 @@ public class ReportEntity {
 	}
     
     
-    
-    
-
-
-
-
-
-	
 }

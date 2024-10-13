@@ -32,7 +32,7 @@ public class StudentRecordService {
 		return srepo.findAllBySid(sid);
 	}
 	
-	public StudentRecordEntity updateStudentRecord(int recordId, StudentRecordEntity updatedRecord) throws Exception {
+	public StudentRecordEntity updateStudentRecord(Long recordId, StudentRecordEntity updatedRecord) throws Exception {
         // Fetch the existing record by its ID
         Optional<StudentRecordEntity> existingRecordOpt = srepo.findById(recordId);
         if (existingRecordOpt.isPresent()) {
@@ -71,7 +71,7 @@ public class StudentRecordService {
 //		}
 //	}
 	
-	public String deleteStudentRecord(int rid) {
+	public String deleteStudentRecord(Long rid) {
 		StudentRecordEntity existingStudentReport = srepo.findById(rid).get();
 	    if (existingStudentReport != null) {
 	        srepo.delete(existingStudentReport);
