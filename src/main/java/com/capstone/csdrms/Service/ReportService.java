@@ -142,7 +142,7 @@ public class ReportService {
 	        studentRecordRepository.save(studentRecord);
 	        
 	        
-	        existingReport.setComplainant(updatedReport.getComplainant());
+	        existingReport.setComplaint(updatedReport.getComplaint());
 	        existingReport.setComplete(false);
 	        existingReport.setReceived(null);
 	        existingReport.setViewedByAdviser(false);
