@@ -27,9 +27,9 @@ public class ReportController {
 	@Autowired
 	ReportService reportService;
 	
-	@PostMapping("/insertReport")
-	public ResponseEntity<ReportEntity> insertReport(@RequestBody ReportEntity report) throws Exception {
-		  ReportEntity savedReport = reportService.insertReport(report);
+	@PostMapping("/insertReport/{id}")
+	public ResponseEntity<ReportEntity> insertReport( @PathVariable("id") Long id,  @RequestBody ReportEntity report) throws Exception {
+		  ReportEntity savedReport = reportService.insertReport(id, report);
 		   return ResponseEntity.ok(savedReport);
 	}
 	
@@ -69,12 +69,14 @@ public class ReportController {
         return reportService.getReportsExcludingComplainant(complainant);
     }
 	
-	@PutMapping("/updateReport/{reportId}")
+	@PutMapping("/updateReport/{reportId}/{id}/{monitored_record}")
 	public ResponseEntity<ReportEntity> updateReport(
 	    @PathVariable Long reportId, 
+	    @PathVariable String monitored_record,
+	    @PathVariable Long id,
 	    @RequestBody ReportEntity updatedReport) {
 	    try {
-	        ReportEntity report = reportService.updateReport(reportId, updatedReport);
+	        ReportEntity report = reportService.updateReport(reportId, id, monitored_record, updatedReport);
 	        return ResponseEntity.ok(report);
 	    } catch (Exception e) {
 	        return ResponseEntity.badRequest().body(null);

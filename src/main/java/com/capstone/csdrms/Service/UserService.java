@@ -70,7 +70,7 @@ public class UserService {
 	        GuidanceEntity existingUser6 = guidanceRepository.findByUsername(user.getUsername());
 
 	        if (existingUser1 != null || existingUser2 != null || existingUser3 != null || existingUser4 != null  || existingUser5 != null || existingUser6 != null) {
-	            throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
+	            throw new IllegalArgumentException("Username already exist");
 	        }
 
 	        if (user instanceof AdviserEntity) {
@@ -80,7 +80,7 @@ public class UserService {
 	                    .isPresent();
 
 	            if (adviserExists) {
-	                throw new IllegalArgumentException("Adviser with grade " + adviserUser.getGrade() + ", section " + adviserUser.getSection() + ", and school year " + adviserUser.getSchoolYear() + " already exists");
+	                throw new IllegalArgumentException("Adviser with the grade, section, and school year already exists");
 	            }
 	        } 
 

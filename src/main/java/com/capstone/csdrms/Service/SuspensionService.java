@@ -63,7 +63,7 @@ public class SuspensionService {
 	}
 	    
 	 private void insertStudentRecordFromSanction(SuspensionEntity suspension) {
-		    StudentEntity student = suspension.getReportEntity().getStudent(); // Direct access to the student entity
+		    StudentEntity student = suspension.getReportEntity().getRecord().getStudent(); // Direct access to the student entity
 
 		    if (student != null) {
 		        // Prepare and set the fields of StudentReportEntity
@@ -87,11 +87,11 @@ public class SuspensionService {
 	}
 	
 	public List<SuspensionEntity> getAllSuspensionsByStudentId(Long id){
-		return srepo.findByReportEntity_Student_Id(id);
+		return srepo.findByReportEntity_Record_Student_Id(id);
 	}
 	
 	public List<SuspensionEntity> getAllSuspensionsByGradeSectionAndSchoolYear(int grade, String section, String schoolYear){
-		return srepo.findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYear(grade, section, schoolYear);
+		return srepo.findAllByReportEntity_Record_Student_GradeAndReportEntity_Record_Student_SectionAndReportEntity_Record_Student_SchoolYear(grade, section, schoolYear);
 	}
 	
 	public List<SuspensionEntity> getAllSuspensionByComplainant(String username){
@@ -107,7 +107,7 @@ public class SuspensionService {
 	}
 	
 	public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(int grade, String section, String schoolYear){
-		return srepo.findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
+		return srepo.findAllByReportEntity_Record_Student_GradeAndReportEntity_Record_Student_SectionAndReportEntity_Record_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 	}
 	
 	public List<SuspensionEntity> getAllUnviewedSuspensionsForComplainant(String username){
@@ -127,7 +127,7 @@ public class SuspensionService {
 	 }
 	 
 	 public void markSuspensionsAsViewedForAdviser(int grade, String section, String schoolYear) {
-	        List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_Student_GradeAndReportEntity_Student_SectionAndReportEntity_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
+	        List<SuspensionEntity> suspensions = srepo.findAllByReportEntity_Record_Student_GradeAndReportEntity_Record_Student_SectionAndReportEntity_Record_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 	        suspensions.forEach(suspension -> suspension.setViewedByAdviser(true));
 	        srepo.saveAll(suspensions);
 	 }

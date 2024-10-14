@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,8 +16,6 @@ public class ReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
-
-    private Long studentId;
     
     private Long recordId; 
 
@@ -27,14 +26,14 @@ public class ReportEntity {
     private String complaint;
     private String complainant;
     private String received;
-    private String encoder; 
+    private String encoder;  
     private boolean complete;
     private boolean viewedByAdviser;
 	private boolean viewedBySso;
 
-    @ManyToOne
-    @JoinColumn(name = "studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    private StudentEntity student;
+    @OneToOne
+    @JoinColumn(name = "recordId", referencedColumnName = "recordId", insertable = false, updatable = false)
+    private StudentRecordEntity record;
 
     @ManyToOne
     @JoinColumn(name = "adviserId", referencedColumnName = "user_id", insertable = false, updatable = false)
@@ -61,30 +60,29 @@ public class ReportEntity {
     private PrincipalEntity principalComplainant;
     
     
-    public ReportEntity() {
+    public ReportEntity() { 
     }
 
 
-	public ReportEntity(Long reportId, Long studentId, Long recordId, Long adviserId, String date, String time,
-			String complaint, String complainant, String received, String encoder, boolean complete,
-			boolean viewedByAdviser, boolean viewedBySso, StudentEntity student, AdviserEntity adviser,
-			SSOEntity ssoComplainant, AdviserEntity adviserComplainant, TeacherEntity teacherComplainant,
-			GuidanceEntity guidanceComplainant, PrincipalEntity principalComplainant) {
+	public ReportEntity(Long reportId, Long recordId, Long adviserId, String date, String time, String complaint,
+			String complainant, String received, String encoder, boolean complete, boolean viewedByAdviser,
+			boolean viewedBySso, StudentRecordEntity record, AdviserEntity adviser, SSOEntity ssoComplainant,
+			AdviserEntity adviserComplainant, TeacherEntity teacherComplainant, GuidanceEntity guidanceComplainant,
+			PrincipalEntity principalComplainant) {
 		super();
 		this.reportId = reportId;
-		this.studentId = studentId;
 		this.recordId = recordId;
 		this.adviserId = adviserId;
 		this.date = date;
 		this.time = time;
 		this.complaint = complaint;
 		this.complainant = complainant;
-		this.received = received;
+		this.received = received; 
 		this.encoder = encoder;
 		this.complete = complete;
 		this.viewedByAdviser = viewedByAdviser;
 		this.viewedBySso = viewedBySso;
-		this.student = student;
+		this.record = record;
 		this.adviser = adviser;
 		this.ssoComplainant = ssoComplainant;
 		this.adviserComplainant = adviserComplainant;
@@ -104,16 +102,6 @@ public class ReportEntity {
 	}
 
 
-	public Long getStudentId() {
-		return studentId;
-	}
-
-
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
-	}
-
-
 	public Long getRecordId() {
 		return recordId;
 	}
@@ -128,7 +116,7 @@ public class ReportEntity {
 		return adviserId;
 	}
 
-
+ 
 	public void setAdviserId(Long adviserId) {
 		this.adviserId = adviserId;
 	}
@@ -224,13 +212,13 @@ public class ReportEntity {
 	}
 
 
-	public StudentEntity getStudent() {
-		return student;
+	public StudentRecordEntity getRecord() {
+		return record;
 	}
 
 
-	public void setStudent(StudentEntity student) {
-		this.student = student;
+	public void setRecord(StudentRecordEntity record) {
+		this.record = record;
 	}
 
 
@@ -294,4 +282,6 @@ public class ReportEntity {
 	}
     
     
+    
 }
+	

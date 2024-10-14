@@ -30,8 +30,8 @@ public class ReportService {
     @Autowired
     StudentRecordRepository studentRecordRepository;
 	
-    public ReportEntity insertReport(ReportEntity report) throws Exception {
-        Optional<StudentEntity> studentOptional = studentRepository.findById(report.getStudentId());
+    public ReportEntity insertReport(Long id, ReportEntity report) throws Exception {
+        Optional<StudentEntity> studentOptional = studentRepository.findById(id);
         if (studentOptional.isEmpty()) {
             throw new Exception("Student not found");
         }
@@ -108,13 +108,13 @@ public class ReportService {
         return reportRepository.findReportsExcludingComplainant(complainant);
     }
 	
-	public ReportEntity updateReport(Long reportId, ReportEntity updatedReport) throws Exception {
+	public ReportEntity updateReport(Long reportId, Long id, String monitored_record ,ReportEntity updatedReport) throws Exception {
 	    Optional<ReportEntity> existingReportOpt = reportRepository.findById(reportId);
 	    if (existingReportOpt.isPresent()) {
 	        ReportEntity existingReport = existingReportOpt.get();
 	        
 	        // Fetch the updated student using updatedReport's studentId
-	        Optional<StudentEntity> studentOptional = studentRepository.findById(updatedReport.getStudentId());
+	        Optional<StudentEntity> studentOptional = studentRepository.findById(id);
 	        if (studentOptional.isEmpty()) {
 	            throw new Exception("Student not found");
 	        }
@@ -122,7 +122,7 @@ public class ReportService {
 	        StudentEntity student = studentOptional.get();
 
 	        // Retrieve the adviser based on the student's section and school year
-	        Optional<AdviserEntity> adviserOptional = adviserRepository.findBySectionAndSchoolYear(student.getSection(), student.getSchoolYear());
+	        Optional<AdviserEntity> adviserOptional = adviserRepository.findByGradeAndSectionAndSchoolYear(student.getGrade(), student.getSection(), student.getSchoolYear());
 	        if (adviserOptional.isEmpty()) {
 	            throw new Exception("Adviser not found for the student's section and school year");
 	        }
@@ -130,11 +130,18 @@ public class ReportService {
 	        AdviserEntity adviser = adviserOptional.get();
 	        existingReport.setAdviserId(adviser.getUid());
 	        
-	        // Update the necessary fields
-	        existingReport.setStudentId(updatedReport.getStudentId());
-	        existingReport.setDate(updatedReport.getDate());
-	        existingReport.setTime(updatedReport.getTime());
-	        existingReport.setComplaint(updatedReport.getComplaint());
+	        Optional<StudentRecordEntity> studentRecordOpt = studentRecordRepository.findById(updatedReport.getRecordId());
+	        if (studentRecordOpt.isEmpty()) {
+	            throw new Exception("Student record not found with ID: " + updatedReport.getRecordId());
+	        }
+	        StudentRecordEntity studentRecord = studentRecordOpt.get();
+	        studentRecord.setId(id);
+	        studentRecord.setMonitored_record(monitored_record);
+	        studentRecord.setRemarks(updatedReport.getComplaint());
+	        
+	        studentRecordRepository.save(studentRecord);
+	        
+	        
 	        existingReport.setComplainant(updatedReport.getComplainant());
 	        existingReport.setComplete(false);
 	        existingReport.setReceived(null);
@@ -158,7 +165,7 @@ public class ReportService {
 	}
 	
 	public List<ReportEntity> getAllUnviewedReportsForAdviser(int grade, String section, String schoolYear){
-		return reportRepository.findAllByStudent_GradeAndStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
+		return reportRepository.findAllByRecord_Student_GradeAndRecord_Student_SectionAndRecord_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 	}
 	
 	public void markReportsAsViewedForSso() {
@@ -168,7 +175,7 @@ public class ReportService {
 	}
 	
 	public void markReportsAsViewedForAdviser(int grade, String section, String schoolYear) {
-		List<ReportEntity> reports = reportRepository.findAllByStudent_GradeAndStudent_SectionAndStudent_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
+		List<ReportEntity> reports = reportRepository.findAllByRecord_Student_GradeAndRecord_Student_SectionAndRecord_Student_SchoolYearAndViewedByAdviserFalse(grade, section, schoolYear);
 		reports.forEach(report -> report.setViewedByAdviser(true));
 		reportRepository.saveAll(reports);
 	}
