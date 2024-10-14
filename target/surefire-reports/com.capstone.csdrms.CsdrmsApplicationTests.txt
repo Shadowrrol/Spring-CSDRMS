@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.capstone.csdrms.CsdrmsApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.804 s - in com.capstone.csdrms.CsdrmsApplicationTests
