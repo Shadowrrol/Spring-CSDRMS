@@ -12,7 +12,7 @@ import com.capstone.csdrms.Methods.LoginRequest;
 import com.capstone.csdrms.Service.LoginService;
 
 @RestController
-@CrossOrigin(origins = "citujhs-successhub.vercel.app")
+@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
 @RequestMapping("/user")
 public class LoginController {
 	

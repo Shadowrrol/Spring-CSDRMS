@@ -17,7 +17,7 @@ import com.capstone.csdrms.Entity.FollowupEntity;
 import com.capstone.csdrms.Service.FollowupService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
 @RequestMapping("/followup")
 public class FollowupController {
     

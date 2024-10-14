@@ -17,7 +17,7 @@ import com.capstone.csdrms.Entity.FeedbackEntity;
 import com.capstone.csdrms.Service.FeedbackService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
 @RequestMapping("/feedback")
 public class FeedbackController {
 	
