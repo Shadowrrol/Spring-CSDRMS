@@ -23,7 +23,7 @@ import com.capstone.csdrms.Service.StudentService;
 
 
 @RestController
-@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/student")
 public class StudentController {
 
