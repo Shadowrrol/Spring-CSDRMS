@@ -13,7 +13,7 @@ import com.capstone.csdrms.Entity.ActivityLogEntity;
 import com.capstone.csdrms.Service.ActivityLogService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
 @RequestMapping("/activity-log")
 public class ActivityLogController {
 	

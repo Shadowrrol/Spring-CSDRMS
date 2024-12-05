@@ -19,7 +19,7 @@ import com.capstone.csdrms.Entity.ClassEntity;
 import com.capstone.csdrms.Service.ClassService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
 @RequestMapping("/class")
 public class ClassController {
 	
