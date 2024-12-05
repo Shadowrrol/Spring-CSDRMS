@@ -12,22 +12,21 @@ import com.capstone.csdrms.Entity.SuspensionEntity;
 @Repository
 public interface SuspensionRepository extends JpaRepository<SuspensionEntity, Long> {
 	
-	List<SuspensionEntity> findByRecord_Student_Id(Long id);
+	List<SuspensionEntity> findByReportEntity_Record_Student_Id(Long id);
 	
-	List<SuspensionEntity> findAllByRecord_Student_GradeAndRecord_Student_SectionAndRecord_Student_SchoolYear(int grade, String section, String schoolYear);
+	List<SuspensionEntity> findAllByReportEntity_Record_Student_GradeAndReportEntity_Record_Student_SectionAndReportEntity_Record_Student_SchoolYear(int grade, String section, String schoolYear);
 	
+	List<SuspensionEntity> findAllByViewedBySsoFalse();
 	
+	List<SuspensionEntity> findAllByViewedByPrincipalFalse();
 	
+	List<SuspensionEntity> findAllByReportEntity_Record_Student_GradeAndReportEntity_Record_Student_SectionAndReportEntity_Record_Student_SchoolYearAndViewedByAdviserFalse(int grade, String section, String schoolYear);
 	
-	Optional<SuspensionEntity> findByRecordId(Long reportId);
+	Optional<SuspensionEntity> findByReportId(Long reportId);
 	
-	List<SuspensionEntity> findAllByRecord_Complainant(String username);
+	List<SuspensionEntity> findAllByReportEntity_Complainant(String username);
 	
-	void deleteAllByRecord_Complainant(String complainant);
-	
-	void deleteAllByRecord_Id(Long id);
-
-	Optional<SuspensionEntity> findById(Long suspensionId);
+	List<SuspensionEntity> findAllByReportEntity_ComplainantAndViewedByComplainantFalse(String username);
 
 
 	

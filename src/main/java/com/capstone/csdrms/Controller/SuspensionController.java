@@ -1,17 +1,13 @@
 package com.capstone.csdrms.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,69 +23,81 @@ import com.capstone.csdrms.Service.SuspensionService;
 public class SuspensionController {
 
 	@Autowired
-	SuspensionService suspensionService;
+	SuspensionService sserv;
 	
 	@GetMapping("/getAllSuspensions")
 	public List<SuspensionEntity> getAllSuspensions(){
-		return suspensionService.getAllSuspensions();
+		return sserv.getAllSuspensions();
 	}
 	
-	@PostMapping("/insertSuspension/{initiator}")
-	public SuspensionEntity insertSuspension(@RequestBody SuspensionEntity suspension, @PathVariable Long initiator) {
-		return suspensionService.insertSuspension(suspension, initiator);
+	@PostMapping("/insertSuspension")
+	public SuspensionEntity insertSuspension(@RequestBody SuspensionEntity suspension) {
+		return sserv.insertSuspension(suspension);
 	}
 	
 	@GetMapping("/getSuspensionsByStudentId/{id}")
 	public List<SuspensionEntity> getAllSuspensionsByStudentId(@PathVariable Long id){
-		return suspensionService.getAllSuspensionsByStudentId(id);
+		return sserv.getAllSuspensionsByStudentId(id);
 	}
 	
+	@GetMapping("/getAllSuspensionsByGradeSectionAndSchoolYear")
+	public List<SuspensionEntity> getAllSuspensionsByGradeSectionAndSchoolYear(@RequestParam int grade, @RequestParam String section,@RequestParam String schoolYear){
+		return sserv.getAllSuspensionsByGradeSectionAndSchoolYear(grade, section, schoolYear);
+	}
+	
+	@GetMapping("/getAllSuspensionsByComplainant")
+	public List<SuspensionEntity> getAllSuspensionByComplainant(@RequestParam String username){
+		return sserv.getAllSuspensionByComplainant(username);
+	}
+	
+	@GetMapping("/unviewedForSso")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForSso() {
+        return sserv.getAllUnviewedSuspensionsForSso();
+    }
 
-    @PostMapping("/markAsViewedForPrincipal/{suspensionId}/{initiator}")
-    public void markSuspensionsAsViewedForPrincipal(@PathVariable Long suspensionId, @PathVariable Long initiator ) {
-    	suspensionService.markSuspensionsAsViewedForPrincipal(suspensionId,initiator);
+    @GetMapping("/unviewedForPrincipal")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForPrincipal() {
+        return sserv.getAllUnviewedSuspensionsForPrincipal();
     }
-    
-    @GetMapping("/getSuspensionByRecord/{recordId}")
-    public ResponseEntity<SuspensionEntity> getSuspensionByRecordId(@PathVariable Long recordId) {
-    	Optional<SuspensionEntity> suspension = suspensionService.getSuspensionByRecordId(recordId);
-        
-        if (suspension.isPresent()) {
-            return ResponseEntity.ok(suspension.get());
-        } else {
-            return ResponseEntity.noContent().build();  // No content instead of 404
-        }
-    }
-    
-    @DeleteMapping("/delete/{suspensionId}/{initiator}")
-    public ResponseEntity<String> deleteSuspension(@PathVariable Long suspensionId,  @PathVariable Long initiator) {
-        try {
-            suspensionService.deleteSuspension(suspensionId,initiator);
-            return ResponseEntity.ok("Suspension deleted successfully.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
-    }
-    
-    @PutMapping("/update/{suspensionId}/{initiator}")
-    public ResponseEntity<SuspensionEntity> updateSuspension(
-            @PathVariable Long suspensionId,
-            @RequestBody SuspensionEntity updatedSuspensionData,
-            @PathVariable Long initiator) {
 
-        try {
-            SuspensionEntity updatedSuspension = suspensionService.updateSuspension(suspensionId, updatedSuspensionData,initiator);
-            return new ResponseEntity<>(updatedSuspension, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/unviewedForAdviser")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForAdviser(@RequestParam int grade, @RequestParam String section, @RequestParam String schoolYear) {
+        return sserv.getAllUnviewedSuspensionsForAdviser(grade, section, schoolYear);
     }
     
-	@PostMapping("/approveSuspension/{initiator}")
-	public boolean approveSuspension(@RequestParam Long suspensionId, @PathVariable Long initiator) {
-		return suspensionService.approveSuspension(suspensionId, initiator);
-	} 
+    @GetMapping("/unviewedForComplainant")
+    public List<SuspensionEntity> getAllUnviewedSuspensionsForComplainant(@RequestParam String username){
+    	return sserv.getAllUnviewedSuspensionsForComplainant(username);
+    }
     
+    // New methods to mark suspensions as viewed
+
+    @PostMapping("/markAsViewedForSso")
+    public void markSuspensionsAsViewedForSso() {
+        sserv.markSuspensionsAsViewedForSso();
+    }
+
+    @PostMapping("/markAsViewedForPrincipal")
+    public void markSuspensionsAsViewedForPrincipal() {
+        sserv.markSuspensionsAsViewedForPrincipal();
+    }
+
+    @PostMapping("/markAsViewedForAdviser")
+    public void markSuspensionsAsViewedForAdviser(@RequestParam int grade, @RequestParam String section, @RequestParam String schoolYear) {
+        sserv.markSuspensionsAsViewedForAdviser(grade, section, schoolYear);
+    }
+    
+    @PostMapping("/markAsViewedForComplainant")
+    public void markSuspensionsAsViewedForComplainant(@RequestParam String username) {
+    	 sserv.markSuspensionsAsViewedForComplainant(username);
+    }
+    
+    @GetMapping("/getSuspensionByReport/{reportId}")
+    public ResponseEntity<SuspensionEntity> getSuspensionByReportId(@PathVariable Long reportId) {
+        return sserv.getSuspensionByReportId(reportId)
+                   .map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 	
 	
 
@@ -98,7 +106,10 @@ public class SuspensionController {
 //		return sserv.getAllSanctionsById(id);
 //	}
 //	
-
+//	@PostMapping("/approveSanction")
+//	public boolean approveSanction(@RequestParam int sanctionId) {
+//		return sserv.approveSanction(sanctionId);
+//	} 
 //	
 //	@PostMapping("/declineSanction")
 //	public boolean declineSanction(@RequestParam int sanctionId) {

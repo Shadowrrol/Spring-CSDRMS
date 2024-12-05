@@ -13,8 +13,5 @@ public interface TimeLogRepository extends JpaRepository<TimeLogEntity, Long>{
 	TimeLogEntity findFirstByUserIdOrderByLoginTimeDesc(Long userId);
 	
 	List<TimeLogEntity> findAllByUserId(Long userId);
-	
-	 void deleteAllByUserId(Long userId);
-
 
 }

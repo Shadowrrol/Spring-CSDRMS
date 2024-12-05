@@ -17,36 +17,42 @@ public class SuspensionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long suspensionId;
 	
-	private Long recordId;
+	private Long reportId;
 	private String dateSubmitted;
 	private int days;
 	private String startDate;
-	private String endDate;  
+	private String endDate;
 	private String returnDate;
-	private boolean viewedByPrincipal = false;
-	private boolean approved = false;
-	 
+	private boolean viewedByPrincipal;
+	private boolean viewedByAdviser;
+	private boolean viewedBySso;
+	private boolean viewedByComplainant;
+	
+	
 	@ManyToOne
-    @JoinColumn(name = "recordId", insertable = false, updatable = false)
-    private RecordEntity record;
+    @JoinColumn(name = "reportId", insertable = false, updatable = false)
+    private ReportEntity reportEntity;
 	
 	public SuspensionEntity() {
 		super();
 	}
 
-	public SuspensionEntity(Long suspensionId, Long recordId, String dateSubmitted, int days, String startDate,
-			String endDate, String returnDate, boolean viewedByPrincipal, boolean approved, RecordEntity record) {
+	public SuspensionEntity(Long suspensionId, Long reportId, String dateSubmitted, int days, String startDate,
+			String endDate, String returnDate, boolean viewedByPrincipal, boolean viewedByAdviser, boolean viewedBySso,
+			boolean viewedByComplainant, ReportEntity reportEntity) {
 		super();
 		this.suspensionId = suspensionId;
-		this.recordId = recordId;
+		this.reportId = reportId;
 		this.dateSubmitted = dateSubmitted;
 		this.days = days;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.returnDate = returnDate;
 		this.viewedByPrincipal = viewedByPrincipal;
-		this.approved = approved;
-		this.record = record;
+		this.viewedByAdviser = viewedByAdviser;
+		this.viewedBySso = viewedBySso;
+		this.viewedByComplainant = viewedByComplainant;
+		this.reportEntity = reportEntity;
 	}
 
 	public Long getSuspensionId() {
@@ -57,12 +63,12 @@ public class SuspensionEntity {
 		this.suspensionId = suspensionId;
 	}
 
-	public Long getRecordId() {
-		return recordId;
+	public Long getReportId() {
+		return reportId;
 	}
 
-	public void setRecordId(Long recordId) {
-		this.recordId = recordId;
+	public void setReportId(Long reportId) {
+		this.reportId = reportId;
 	}
 
 	public String getDateSubmitted() {
@@ -113,22 +119,38 @@ public class SuspensionEntity {
 		this.viewedByPrincipal = viewedByPrincipal;
 	}
 
-	public boolean isApproved() {
-		return approved;
+	public boolean isViewedByAdviser() {
+		return viewedByAdviser;
 	}
 
-	public void setApproved(boolean approved) {
-		this.approved = approved;
+	public void setViewedByAdviser(boolean viewedByAdviser) {
+		this.viewedByAdviser = viewedByAdviser;
 	}
 
-	public RecordEntity getRecord() {
-		return record;
+	public boolean isViewedBySso() {
+		return viewedBySso;
 	}
 
-	public void setRecord(RecordEntity record) {
-		this.record = record;
+	public void setViewedBySso(boolean viewedBySso) {
+		this.viewedBySso = viewedBySso;
+	}
+
+	public boolean isViewedByComplainant() {
+		return viewedByComplainant;
+	}
+
+	public void setViewedByComplainant(boolean viewedByComplainant) {
+		this.viewedByComplainant = viewedByComplainant;
+	}
+
+	public ReportEntity getReportEntity() {
+		return reportEntity;
+	}
+
+	public void setReportEntity(ReportEntity reportEntity) {
+		this.reportEntity = reportEntity;
 	}
 
 	
-	
+ 
 }

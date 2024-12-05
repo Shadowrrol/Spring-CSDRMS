@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.capstone.csdrms.Entity.UserEntity;
 import com.capstone.csdrms.Methods.LoginRequest;
 import com.capstone.csdrms.Service.LoginService;
 
@@ -20,7 +18,7 @@ public class LoginController {
 	
 	
 	@Autowired
-	LoginService loginService;
+	LoginService sserv;
 	
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
@@ -28,11 +26,15 @@ public class LoginController {
 	    String password = loginRequest.getPassword();
 
 	    // Call the login method in LoginService
-	    try {
-	        UserEntity user = loginService.login(username, password);
-	        return new ResponseEntity<>(user, HttpStatus.OK);
-	    } catch (RuntimeException e) {
-	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	    Object loggedInUser = sserv.login(username, password);
+
+	    if (loggedInUser != null) {
+	        // Return user details if login is successful
+	        return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
+	    } else {
+	        // Return error message if login fails
+	        return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
 	    }
-	 }
+	}
+
 }
