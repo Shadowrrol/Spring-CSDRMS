@@ -15,18 +15,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.capstone.csdrms.Entity.CaseEntity;
-import com.capstone.csdrms.Entity.FeedbackEntity;
-import com.capstone.csdrms.Entity.FollowupEntity;
 import com.capstone.csdrms.Entity.SuspensionEntity;
 import com.capstone.csdrms.Entity.StudentEntity;
-import com.capstone.csdrms.Entity.StudentRecordEntity;
-import com.capstone.csdrms.Repository.CaseRepository;
-import com.capstone.csdrms.Repository.FeedbackRepository;
-import com.capstone.csdrms.Repository.FollowupRepository;
+import com.capstone.csdrms.Entity.RecordEntity;
 import com.capstone.csdrms.Repository.SuspensionRepository;
-import com.capstone.csdrms.Repository.StudentRecordRepository;
+
+import jakarta.transaction.Transactional;
+
+import com.capstone.csdrms.Repository.RecordRepository;
 import com.capstone.csdrms.Repository.StudentRepository;
 
 
@@ -35,56 +31,101 @@ import com.capstone.csdrms.Repository.StudentRepository;
 public class StudentService {
 
 	@Autowired
-	StudentRepository srepo;
+	StudentRepository studentRepository;
 	
 	@Autowired
-	StudentRecordRepository studentrepo;
+	RecordRepository recordRepository;
 	
 	@Autowired
-	FeedbackRepository feedbackrepo;
+    SuspensionRepository suspensionRepository;
 	
 	@Autowired
-	CaseRepository caserepo;
+	ActivityLogService activityLogService;
 	
-	@Autowired
-	SuspensionRepository sanctionrepo;
 	
-	@Autowired
-	FollowupRepository followuprepo;
 	 
-	
 	public boolean studentExists(String sid, String schoolYear) {
-	    return srepo.existsBySidAndSchoolYear(sid, schoolYear);
+	    return studentRepository.existsBySidAndSchoolYear(sid, schoolYear);
 	}
 
-	public StudentEntity insertStudent(StudentEntity student) {
+	public StudentEntity insertStudent(StudentEntity student, Long initiator) {
 	    if (studentExists(student.getSid(), student.getSchoolYear())) {
 	        throw new IllegalStateException("Student with this ID and school year already exists.");
 	    }
 
-	    List<StudentEntity> existingStudents = srepo.findAllBySid(student.getSid());
+	    List<StudentEntity> existingStudents = studentRepository.findAllBySid(student.getSid());
 	    
 	    if (!existingStudents.isEmpty()) {
 	        for (StudentEntity existingStudent : existingStudents) {
 	            existingStudent.setCurrent(0); 
-	            srepo.save(existingStudent);   
+	            studentRepository.save(existingStudent);   
 	        }
 	    }
-	    return srepo.save(student);
+	    activityLogService.logActivity("Student Added", "Student " + student.getSid() + " (" +student.getName()+")" + " added by SSO", initiator);
+	    return studentRepository.save(student);
 	}
 	
-	public List<StudentEntity> getAllStudents(){
-		return srepo.findAll();
-	}
- 
-	 
 	public List<StudentEntity> getCurrentStudents(){
-		return srepo.findAllByCurrent(1);
+		return studentRepository.findAllByCurrent(1);
 	}
 	
 	public List<StudentEntity> getStudentsByAdviser(int grade, String section, String schoolYear) {
-        return srepo.findByCurrentAndGradeAndSectionAndSchoolYear(1,grade, section, schoolYear);
+        return studentRepository.findByCurrentAndGradeAndSectionAndSchoolYear(1,grade, section, schoolYear);
     }
+	
+	 public StudentEntity updateStudent(Long id, StudentEntity studentDetails, Long initiator) {
+	        // Find the existing student by ID
+	        StudentEntity existingStudent = studentRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Student not found for id: " + id));
+	        
+	        // Update fields
+	        existingStudent.setSid(studentDetails.getSid());
+	        existingStudent.setName(studentDetails.getName());
+	        existingStudent.setGrade(studentDetails.getGrade());
+	        existingStudent.setSection(studentDetails.getSection());
+	        existingStudent.setGender(studentDetails.getGender());
+	        existingStudent.setEmail(studentDetails.getEmail());
+	        existingStudent.setHomeAddress(studentDetails.getHomeAddress());
+	       // existingStudent.setContactNumber(studentDetails.getContactNumber());
+	        existingStudent.setEmergencyNumber(studentDetails.getEmergencyNumber());
+	        existingStudent.setSchoolYear(studentDetails.getSchoolYear());
+	        existingStudent.setCurrent(studentDetails.getCurrent());
+	        
+	        
+	        activityLogService.logActivity("Student Edited", "Student " + existingStudent.getSid() + " (" +existingStudent.getName()+")" + " information edited by SSO", initiator);
+	        // Save the updated student back to the database
+	        return studentRepository.save(existingStudent);
+	    }
+	 
+	 @Transactional
+	 public void deleteLatestAndSetPreviousAsCurrent(Long id, Long initiator) {
+		 Optional<StudentEntity> optionalStudent = studentRepository.findById(id);
+		 if(optionalStudent.isPresent()) {
+			 StudentEntity student = optionalStudent.get();
+			 String sid = student.getSid();
+			 
+			 suspensionRepository.deleteAllByRecord_Id(id);
+			 recordRepository.deleteAllById(id);
+			 studentRepository.delete(student);
+			 
+			 activityLogService.logActivity("Student Deleted", "Student " + student.getSid() + " (" +student.getName()+")" + " and its associated records, reports, and suspesion deleted by SSO", initiator);
+			 
+			 
+			 //Find the previous record by sorting by `schoolYear` in descending order
+			  List<StudentEntity> sortedStudents = studentRepository.findStudentsBySidOrderBySchoolYearDesc(sid);
+		        if (!sortedStudents.isEmpty()) {
+		        	// Set the first record in the sorted list to `current = 1`
+		            StudentEntity previousStudent = sortedStudents.get(0);
+		            previousStudent.setCurrent(1);
+		            studentRepository.save(previousStudent);
+		        }
+			  
+		 }
+		 else {
+	            throw new RuntimeException("Student not found for id: " + id);
+	        }
+	       
+	    }
 	
 
 //	@SuppressWarnings("finally")
@@ -134,17 +175,52 @@ public class StudentService {
 ////	        return "Student " + sid + " does not exist";
 ////	    }
 //	}
+
 	
-	public Optional<StudentEntity> getCurrentStudentById(Long id) {
-		return srepo.findByIdAndCurrent(id, 1);
-	}
+	public static int getGrade(int number) {
+        switch (number) {
+            case 4:
+                return 10;
+            case 3:
+                return 9;
+            case 2:
+                return 8;
+            case 1:
+                return 7;
+            default:
+                throw new IllegalArgumentException("Invalid number: " + number);
+        }
+    }
 	
-	public Optional<StudentEntity> getStudentById(Long id){
-		return srepo.findById(id);
+	public String formatSection(String section) {
+	    // Use regex to remove any numeric suffix after a dash
+	    return section.replaceAll("-\\d+$", "");
 	}
+
 	
 	public void importStudentData(MultipartFile file, String schoolYear) throws Exception {
 	    List<StudentEntity> students = new ArrayList<>();
+	    
+	    // Pre-check for existing students before processing
+	    try (InputStream is = file.getInputStream(); Workbook workbook = new XSSFWorkbook(is)) {
+	        Sheet sheet = workbook.getSheetAt(0);  // Assuming data is in the first sheet
+
+	        for (Row row : sheet) {
+	            if (row.getRowNum() == 0) continue;  // Skip header row
+
+	            String sid;
+	            if (row.getCell(0).getCellType() == CellType.NUMERIC) {
+	                sid = String.valueOf((long) row.getCell(0).getNumericCellValue());
+	            } else {
+	                sid = row.getCell(0).getStringCellValue();
+	            }
+
+	            // Check if the student with this SID and school year already exists
+	            if (studentExists(sid, schoolYear)) {
+	                throw new Exception("Import aborted: Student with SID " + sid + " and school year " + schoolYear + " already exists.");
+	            }
+	        }
+	    }
 
 	    try (InputStream is = file.getInputStream(); Workbook workbook = new XSSFWorkbook(is)) {
 	        Sheet sheet = workbook.getSheetAt(0);  // Assuming data is in the first sheet
@@ -154,31 +230,66 @@ public class StudentService {
 
 	            StudentEntity student = new StudentEntity();
 	            
-	            student.setName(row.getCell(0).getStringCellValue());
-	            
-	            student.setGrade((int) row.getCell(1).getNumericCellValue());
-	            
-	            student.setSection(row.getCell(2).getStringCellValue());
-	            
-	            // Handle SID (which could be numeric in Excel)
-	            if (row.getCell(3).getCellType() == CellType.NUMERIC) {
-	                student.setSid(String.valueOf((long) row.getCell(0).getNumericCellValue()));
+	            String sid;
+	            if (row.getCell(0).getCellType() == CellType.NUMERIC) {
+	                sid = String.valueOf((long) row.getCell(0).getNumericCellValue());
 	            } else {
-	                student.setSid(row.getCell(3).getStringCellValue());
+	                sid = row.getCell(0).getStringCellValue();
 	            }
+	            student.setSid(sid);
 	            
-	            student.setGender(row.getCell(4).getStringCellValue());
+	            String name = row.getCell(1).getStringCellValue() + ", " + row.getCell(2).getStringCellValue() + " " +  row.getCell(3).getStringCellValue();
+	            
+	            student.setName(name);
+	            
+	            int gradeNumber;
+	            if (row.getCell(5).getCellType() == CellType.NUMERIC) {
+	                // If the cell is of numeric type, cast to int directly
+	                gradeNumber = (int) row.getCell(5).getNumericCellValue();
+	            } else if (row.getCell(5).getCellType() == CellType.STRING) {
+	                // If the cell is a string, parse it as an integer
+	                gradeNumber = Integer.parseInt(row.getCell(5).getStringCellValue());
+	            } else {
+	                // Handle any unexpected cell type here (optional)
+	                throw new IllegalArgumentException("Unexpected cell type in grade column");
+	            }
+
+	            // Now you can use gradeNumber as an int
+	            int grade = getGrade(gradeNumber);
+	            student.setGrade(grade);
+	            
+	            student.setSection(formatSection(row.getCell(6).getStringCellValue()));
+	            
+	            student.setGender(row.getCell(7).getStringCellValue());
+	            
+	            student.setHomeAddress(row.getCell(8).getStringCellValue());
+	            
+	            //student.setContactNumber(row.getCell(9).getStringCellValue());
+	            
+	            student.setEmail(row.getCell(9).getStringCellValue());
+	            
+	            student.setEmergencyNumber(row.getCell(10).getStringCellValue());
+	            
 	            
 	            // Handle School Year
 	            student.setSchoolYear(schoolYear);
 
 	            student.setCurrent(1);
+	            
+	            Optional<StudentEntity> existingStudent = studentRepository.findBySidAndCurrent(sid, 1);
+	            if (existingStudent.isPresent() && !existingStudent.get().getSchoolYear().equals(schoolYear)) {
+	                // Set current status of the existing student to 0
+	                StudentEntity oldStudent = existingStudent.get();
+	                oldStudent.setCurrent(0);
+	                studentRepository.save(oldStudent);
+	            }
 
-	            students.add(student);
+
+	            students.add(student); 
 	        }
 	    }
 
-	    srepo.saveAll(students);
+	    studentRepository.saveAll(students);
 	}
 
 
