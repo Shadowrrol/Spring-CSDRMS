@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
+@CrossOrigin(origins = "https://jhs-success-hub.vercel.app")
 @RequestMapping("/api/cases")
 public class CaseController {
 
