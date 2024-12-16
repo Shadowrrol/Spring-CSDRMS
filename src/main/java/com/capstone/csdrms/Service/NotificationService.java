@@ -17,6 +17,8 @@ import com.capstone.csdrms.Repository.RecordRepository;
 import com.capstone.csdrms.Repository.UserNotificationRepository;
 import com.capstone.csdrms.Repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class NotificationService {
 
@@ -39,7 +41,7 @@ public class NotificationService {
 	        notification = notificationRepository.save(notification);
 	        
 	        Optional<RecordEntity> recordOptional = recordRepository.findById(recordId);
-	        Long encoderId = recordOptional.get().getEncoderId();
+	        Long userId = recordOptional.get().getUserId();
 	        
 
 	     // Find users by their userType and create UserNotification records
@@ -102,7 +104,7 @@ public class NotificationService {
 	                        }
 	                    });
 		            
-		            	 Optional<UserEntity> encoderAdviser = userRepository.findByUserIdAndDeleted(encoderId, false);
+		            	 Optional<UserEntity> encoderAdviser = userRepository.findByUserIdAndDeleted(userId, false);
 		            	 encoderAdviser.ifPresent(user -> {
 		                        if (!users.contains(user) && user.getUserType() == 3) {  // Avoid duplicate entry
 		                            users.add(user);
@@ -118,7 +120,7 @@ public class NotificationService {
 	            			Optional<UserEntity> optionalUser = userRepository.findByUserTypeAndDeleted(userType, false);
 		            		
 	            			optionalUser.ifPresent(user -> {
-		                        if (!users.contains(user) && user.getUserId().equals(encoderId)) {  
+		                        if (!users.contains(user) && user.getUserId().equals(userId)) {  
 		                            users.add(user);
 		                        }
 		                    });
@@ -143,6 +145,11 @@ public class NotificationService {
 	    // Retrieve notifications for a specific user
 	    public List<UserNotification> getNotificationsForUser(Long userId) {
 	        return userNotificationRepository.findByUser_UserId(userId);
+	    }
+	    
+	    @Transactional
+	    public void deleteUserNotification(Long userNotificationId) {
+	        userNotificationRepository.deleteByUserNotificationId(userNotificationId);
 	    }
 
 	    

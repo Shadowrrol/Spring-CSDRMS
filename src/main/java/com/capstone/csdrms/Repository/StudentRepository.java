@@ -28,5 +28,8 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 	
 	@Query("SELECT s FROM StudentEntity s WHERE s.sid = :sid ORDER BY FUNCTION('SUBSTRING', s.schoolYear, 1, 4) DESC")
 	List<StudentEntity> findStudentsBySidOrderBySchoolYearDesc(@Param("sid") String sid);
+	
+	Optional<StudentEntity> findByName(String name);       
+ 
 
 }  

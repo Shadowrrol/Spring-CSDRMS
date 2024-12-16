@@ -23,7 +23,7 @@ import com.capstone.csdrms.Service.StudentService;
 
 
 @RestController
-@CrossOrigin(origins = "https://citujhs-successhub.vercel.app")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/student")
 public class StudentController {
 
@@ -90,5 +90,6 @@ public class StudentController {
 		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
 		        } 
 		    }
-	
+		 
+	 
 }
