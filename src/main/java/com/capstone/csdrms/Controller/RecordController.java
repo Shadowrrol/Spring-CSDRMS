@@ -25,7 +25,7 @@ import com.capstone.csdrms.Service.RecordService;
 
 
 @RestController
-@CrossOrigin(origins = "https://jhs-success-hub.vercel.app")
+@CrossOrigin(origins = "*")
 @RequestMapping("/record")
 public class RecordController {
  
